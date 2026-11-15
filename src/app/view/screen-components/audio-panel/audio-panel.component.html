@@ -5,7 +5,7 @@
       <h2 id="audio-title">Luzes noturnas, nota por nota.</h2>
       <p>{{ records[0].description }}</p>
     </div>
-    <a href="#observatory">Explorar o globo ↓</a>
+    <a href="#observatory">Voltar ao globo ↑</a>
   </header>
 
   <div class="audio-layout" *ngIf="playback.state() as state">
@@ -72,7 +72,8 @@
     <p><a [href]="records[0].originUrl" target="_blank" rel="noopener noreferrer">Fonte NASA SVS 5276</a> · <a href="https://svs.gsfc.nasa.gov/5313/" target="_blank" rel="noopener noreferrer">Versão relacionada do EIC</a> · <a href="data/night-lights/manifest.json" target="_blank" rel="noopener noreferrer">Manifesto e hashes</a></p>
     <p>{{ records[0].credits }} <a [href]="records[0].usageUrl" target="_blank" rel="noopener noreferrer">Condições de uso NASA</a>.</p>
     <p>{{ records[0].limitations }}</p>
-    <p>Explore sonoro por latitude/longitude indisponível: a transformação geográfica desta imagem ainda não foi validada. O globo abaixo permanece independente.</p>
+    <p>Explore sonoro por latitude/longitude indisponível: a transformação geográfica desta imagem ainda não foi validada. O globo permanece independente.</p>
+    <p>Software developed with AI assistance. Audio is synthesized by deterministic image-to-sound rules. <a href="project-metadata.json" target="_blank" rel="noopener noreferrer">AI usage and project metadata</a>.</p>
     <p *ngIf="playback.globePoint() as point">Ponto recebido do globo: {{ point.lat | number:'1.0-2' }}°, {{ point.lon | number:'1.0-2' }}°. Essa seleção não altera o som.</p>
   </footer>
 </section>

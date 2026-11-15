@@ -1,5 +1,7 @@
 # TheEarthInformationJukebox
 
+Na `brain`, a experiência reúne o Observatório Âmbar e a sonificação de imagens NASA de luzes noturnas. A página abre no planeta; o painel de som está abaixo, acessível pelo link **Ouvir dados NASA**. Escolha 2012 ou 2023 e pressione **Reproduzir**: o som descreve o brilho das regiões da imagem 2D. A seleção no globo continua independente, sem associação geográfica inventada. Veja [o que falta para fechar a entrega frente ao desafio NASA](docs/brain/nasa-readiness.md).
+
 ## MVP — Observatório Âmbar
 
 A branch `luiz` contém o MVP de exploração livre do planeta: rotação, zoom, seleção geográfica, destinos e teclado, sem camadas científicas ou áudio. O dashboard anterior foi preservado no código; a tela inicial desta entrega monta o mundo. Veja [implementação, validação e limites](docs/observatorio-ambar-mvp.md).

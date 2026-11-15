@@ -1,5 +1,17 @@
 # Handoff operacional
 
+## Continuidade atual — layout e fechamento NASA, 15/11/2026
+
+- **Branch:** `brain`, revisão sobre `3b5793a6939505664f32f489b6f8eadb92525645`. O usuário autorizou corrigir o painel, conferir os requisitos NASA, fazer o plano e começar a execução. Nenhuma alteração ou push na `luiz` nesta revisão.
+- **Correção:** o mundo abre a página, com link ao painel sonoro abaixo e retorno ao globo. O motor e os dados não mudaram; o texto do globo agora limita a ausência de áudio à seleção geográfica, evitando negar o áudio existente na outra seção.
+- **Plano em execução:** [fechamento mínimo](finalization-plan.md). Comparativo com o site oficial em [nasa-readiness](nasa-readiness.md); texto/roteiro de demo em [inglês](submission-draft-en.md). Uso de IA declarado em `AI_USAGE.md`, metadados JSON publicados como asset e link na interface.
+- **Reprodução atual:** cópia isolada no Windows, Node 22.23.5/npm 10.9.9, instalação limpa do lockfile com lifecycle scripts desativados (1.158 pacotes). Build de produção sem erro SSR, uma rota prerenderizada; Karma ChromeHeadless 157 com **74/74** e Node **8/8**. Os testes passaram antes dos ajustes finais apenas textuais de créditos/legenda; após esses ajustes foram repetidos build, smoke SSR/HTTP/assets e verificação do aplicativo compilado.
+- **Navegador atual:** planeta primeiro no desktop; destino Amazônia correto; links de ida/volta; seleção 2012/2023, estado Play/Pause e mute operantes. Larguras 390 e 320 CSS px sem overflow horizontal observado. Entrada no painel por Enter verificada; nenhum erro/warning de console observado. Isso não substitui escuta humana nem auditoria completa de teclado/leitor de tela.
+- **Integridade:** hashes e bytes dos dois PNGs conferem com o manifesto; package/lock e algoritmos de sonificação inalterados. Revisão independente do diff não identificou problema importante. Alertas preexistentes de dependências continuam pendentes, sem certificação de risco zero.
+- **Próximo passo exato:** preparar/revisar a versão em inglês da interface e materiais vinculados; completar escuta e validação assistiva, demo final e links. O guia oficial foi lido: vídeo ≤30 s ou slides ≤7, inglês, links públicos e declaração de IA/SI. Confirmar autoria/origem da ideia e o evento/fuso da equipe. Nenhuma publicação de site, aceite de termos ou submissão oficial foi executada.
+
+## Entrega de sonificação — registro histórico
+
 ## Continuidade atual — sonificação, 15/11/2026
 
 - **Branch:** `feat/f3-sonification`, criada da brain limpa em `64659fba8e45fd6f635df909e69923588db92d44`; entrega local sem commit/push/merge/deploy. Não houve alteração de main ou das branches de colaboradores.

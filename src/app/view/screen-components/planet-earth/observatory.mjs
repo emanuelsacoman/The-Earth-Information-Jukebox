@@ -108,7 +108,7 @@ export function mountObservatory(host, options = {}) {
   motionLabel.append(motionInput, element('span', '', 'Reduzir movimento'));
   motionInput.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
   media.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
-  inspector.append(readout, announcement, navigation, motionLabel, element('p', 'amber-inspector-note', 'Coordenadas geográficas. Sem camada científica ou reprodução de áudio nesta versão.'));
+  inspector.append(readout, announcement, navigation, motionLabel, element('p', 'amber-inspector-note', 'Coordenadas geográficas. Sem camada científica ou áudio associado ao ponto selecionado.'));
   layout.append(intro, viewport, inspector);
 
   const footer = element('footer', 'amber-footer');

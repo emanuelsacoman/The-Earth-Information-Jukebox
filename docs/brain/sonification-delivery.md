@@ -1,5 +1,7 @@
 # Entrega de sonificação — 15/11/2026
 
+Atualização de layout posterior à integração em `brain`/`3b5793a`: o planeta passa a abrir a página e o painel sonoro fica abaixo, com links de ida/volta. O relato original abaixo, incluindo “antes do globo”, descreve a entrega anterior. Critérios atuais de fechamento em [comparativo com o desafio NASA](nasa-readiness.md).
+
 ## Referência e autorização
 
 Execução por Codex em `feat/f3-sonification`, criada da `brain` limpa em `64659fba8e45fd6f635df909e69923588db92d44` (merge do PR #6, que já integra o Observatório Âmbar). Alterações locais, sem commit, push, merge ou deploy. Responsáveis humanos continuam **UNASSIGNED**. A tarefa anexada nesta sessão autoriza F3-01/02/03, integração mínima F4-01/02 e as partes necessárias de F2-01/02/03; substitui a restrição histórica da TASK 0 para este escopo.
