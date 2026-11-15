@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="pt-BR"><meta charset="utf-8"><title>Testes do Observatório Âmbar</title>
+<link rel="stylesheet" href="../src/app/view/screen-components/planet-earth/observatory.css">
+<div id="results" role="status">Executando…</div><div id="fixture"></div>
+<script type="module">
+import {mountObservatory} from '../src/app/view/screen-components/planet-earth/observatory.mjs';
+const results = document.querySelector('#results');
+const host = document.querySelector('#fixture');
+let app;
+const assert = (condition, message) => { if (!condition) throw new Error(message); };
+const click = name => [...host.querySelectorAll('button')].find(b => b.textContent.trim() === name || b.getAttribute('aria-label') === name).click();
+try {
+  app = mountObservatory(host);
+  assert(host.querySelector('canvas'), 'O mundo precisa montar um canvas real');
+  click('Amazônia');
+  assert(host.querySelector('[data-coordinate="lat"]').textContent.includes('3.00'), 'Destino precisa selecionar latitude real');
+  assert(host.querySelector('[data-coordinate="lon"]').textContent.includes('60.00'), 'Destino precisa selecionar longitude real');
+  const canvas = host.querySelector('canvas');
+  canvas.dispatchEvent(new KeyboardEvent('keydown', {key:'ArrowRight', bubbles:true, cancelable:true}));
+  assert(host.querySelector('[data-coordinate="lon"]').textContent.includes('55.00'), 'Seta deve mover cinco graus');
+  click('Aproximar');
+  assert(host.querySelector('[data-zoom]').textContent !== '100%', 'Zoom deve mudar');
+  click('Restaurar vista');
+  assert(host.querySelector('[data-zoom]').textContent === '100%', 'Reset deve restaurar zoom');
+  assert(host.querySelector('[data-coordinate="lat"]').textContent === '—', 'Reset deve limpar seleção');
+  const motion = host.querySelector('input[type="checkbox"]');
+  motion.checked = true;
+  motion.dispatchEvent(new Event('change', {bubbles:true}));
+  assert(host.querySelector('[data-rotation]').disabled, 'Movimento reduzido bloqueia rotação automática');
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  assert(canvas.width > 0 && canvas.height > 0, 'Canvas deve ser desenhado');
+  const data = canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+  assert(data.some((value,index) => index % 4 === 3 && value > 0), 'Desenho deve conter pixels visíveis');
+  app.dispose();
+  assert(!host.querySelector('canvas'), 'Teardown deve remover a interface');
+  app = mountObservatory(host);
+  assert(host.querySelectorAll('canvas').length === 1, 'Remontagem não duplica canvas');
+  results.textContent = 'PASS — destinos, teclado, zoom, reset, movimento reduzido, desenho e teardown';
+  results.dataset.result = 'pass';
+} catch (error) {
+  results.textContent = 'FAIL — ' + error.message;
+  results.dataset.result = 'fail';
+} finally { app?.dispose(); }
+</script></html>

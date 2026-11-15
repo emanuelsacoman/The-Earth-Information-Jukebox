@@ -1,8 +1,28 @@
 # TheEarthInformationJukebox
 
-## Cérebro de engenharia
+## MVP — Observatório Âmbar
 
-Antes de contribuir, leia [AGENTS.md](AGENTS.md) e o [cérebro do projeto](docs/brain/README.md), com diagnóstico, contratos, roadmap e handoff. O MVP ainda não está implementado; consulte as [verificações e limitações atuais](docs/brain/current-state.md).
+A branch `luiz` contém o MVP de exploração livre do planeta: rotação, zoom, seleção geográfica, destinos e teclado, sem camadas científicas ou áudio. O dashboard anterior foi preservado no código; a tela inicial desta entrega monta o mundo. Veja [implementação, validação e limites](docs/observatorio-ambar-mvp.md).
+
+Validação executada com Node **22.23.5** e npm **10.9.9**, sem alteração do runtime global. Instalação do lockfile com scripts de instalação desativados:
+
+```powershell
+npm ci --ignore-scripts
+$env:NG_CLI_ANALYTICS = 'false'
+$env:NG_BUILD_MAX_WORKERS = '1'
+npm run build
+npm test -- --watch=false --browsers=ChromeHeadless
+node --test tests/amber-earth.test.mjs
+node tests/production-smoke.mjs
+```
+
+O teste Karma precisa de Chrome instalado. Para executar o resultado compilado:
+
+```powershell
+npm run serve:ssr:The-Earth-Information-Jukebox
+```
+
+O endereço padrão é `http://127.0.0.1:4000`. `PORT` define a porta e `HOST` permite configurar a interface explicitamente. As dependências preexistentes têm alertas conhecidos e avisos de engines/depreciação; este MVP não inicializa Firebase/Auth, e validação local não significa aprovação de deploy público. Não use `npm audit fix --force` automaticamente.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
 
