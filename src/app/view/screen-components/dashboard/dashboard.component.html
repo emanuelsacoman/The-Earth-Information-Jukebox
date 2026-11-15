@@ -1,381 +1,391 @@
 <div
   class="dash"
-  [class.high-contrast]="a11y.highContrast"
-  [class.large-text]="a11y.largeText"
-  [class.reduced-motion]="a11y.reducedMotion"
+  [class.alto-contraste]="acess.altoContraste"
+  [class.texto-grande]="acess.textoGrande"
+  [class.menos-movimento]="acess.menosMovimento"
 >
-  <!-- Text read by the screen reader -->
-  <p class="sr-only" aria-live="polite">{{ announcement }}</p>
+  <!-- Texto lido pelo leitor de tela -->
+  <p class="so-leitor" aria-live="polite">{{ anuncio }}</p>
 
   <!-- ====================================================================
-       TOP BAR: brand + navigation between the panel pages
+       BARRA SUPERIOR: marca + navegação entre as páginas do painel
        ==================================================================== -->
-  <header class="topbar">
-    <div class="brand">
-      <svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true">
+  <header class="topo">
+    <div class="marca">
+      <svg class="marca-icone" viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z"></path>
       </svg>
-      <span class="brand-name">Earth Jukebox</span>
+      <span class="marca-nome">Earth Jukebox</span>
     </div>
 
     <nav class="nav" aria-label="Panel pages">
       <button
-        *ngFor="let s of sections; let i = index"
+        *ngFor="let s of secoes; let i = index"
         type="button"
-        class="nav-button"
-        [class.active]="s.id === activeSection && panelOpen"
-        [attr.aria-current]="s.id === activeSection && panelOpen ? 'page' : null"
-        [attr.title]="s.label + ' (key ' + (i + 1) + ')'"
-        (click)="openSection(s.id)"
+        class="nav-botao"
+        [class.ativo]="s.id === secaoAtiva && painelAberto"
+        [attr.aria-current]="s.id === secaoAtiva && painelAberto ? 'page' : null"
+        [attr.title]="s.rotulo + ' (key ' + (i + 1) + ')'"
+        (click)="abrirSecao(s.id)"
       >
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="s.icon"></path></svg>
-        <span>{{ s.label }}</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path [attr.d]="s.icone"></path></svg>
+        <span>{{ s.rotulo }}</span>
       </button>
     </nav>
 
-    <button type="button" class="button-outline" (click)="openShare()">
+    <button type="button" class="botao-contorno" (click)="abrirCompartilhar()">
       Share
     </button>
   </header>
 
   <!-- ====================================================================
-       STAGE: globe in the center, panel on the left, zoom and legend on the right
+       PALCO: globo no centro, painel à esquerda, zoom e legenda à direita
        ==================================================================== -->
-  <main class="stage">
-    <!-- 3D GLOBE AREA
-         Replace the content of this div with the globe component, for example:
-         <app-globe [record]="currentRecord" [frame]="currentFrame"></app-globe> -->
-    <div class="globe-area" id="globe-3d">
-      <div class="globe-placeholder" role="img" aria-label="Placeholder for the 3D globe">
-        <span>3D globe area</span>
+  <main class="palco">
+    <!-- ESPAÇO DO GLOBO 3D
+         Substituir o conteúdo desta div pelo componente do globo, por exemplo:
+         <app-globo [disco]="discoAtual" [quadro]="quadroAtual"></app-globo> -->
+    <div class="globo-espaco" id="globo-3d">
+      <div class="globo-reserva" role="img" aria-label="Placeholder for the 3D globe">
+        <span>3D globe goes here</span>
       </div>
     </div>
 
-    <div class="stage-title">
-      <h1>{{ currentRecord.title }}</h1>
-      <p>{{ currentRecord.period }}</p>
+    <div class="palco-titulo">
+      <h1>{{ discoAtual.titulo }}</h1>
+      <p>{{ discoAtual.periodo }}</p>
     </div>
 
     <!-- ------------------------------------------------------------------
-         PANEL: one page per section
+         PAINEL: uma página por divisão
          ------------------------------------------------------------------ -->
-    <aside class="panel" *ngIf="panelOpen" [attr.aria-label]="sectionTitle">
-      <div class="panel-header">
-        <h2>{{ sectionTitle }}</h2>
-        <button type="button" class="button-icon" aria-label="Close panel" (click)="closePanel()">
+    <aside class="painel" *ngIf="painelAberto" [attr.aria-label]="tituloDaSecao">
+      <div class="painel-cabecalho">
+        <h2>{{ tituloDaSecao }}</h2>
+        <button type="button" class="botao-icone" aria-label="Close panel" (click)="fecharPainel()">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
         </button>
       </div>
 
-      <!-- ================= PAGE 1: RECORDS ================= -->
-      <div class="page" *ngIf="activeSection === 'records'">
-        <ul class="record-list">
-          <li *ngFor="let r of records">
+      <!-- ================= PÁGINA 1: DISCOS ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'discos'">
+        <ul class="lista-discos">
+          <li *ngFor="let d of discos">
             <button
               type="button"
-              class="record"
-              [class.active]="r.id === currentRecord.id"
-              [attr.aria-pressed]="r.id === currentRecord.id"
-              (click)="selectRecord(r)"
+              class="disco"
+              [class.ativo]="d.id === discoAtual.id"
+              [attr.aria-pressed]="d.id === discoAtual.id"
+              (click)="selecionarDisco(d)"
             >
-              <span class="record-cover" aria-hidden="true" [style.background]="'linear-gradient(135deg, ' + r.colors.join(', ') + ')'"></span>
-              <span class="record-text">
-                <span class="record-title">{{ r.title }}</span>
-                <span class="record-subtitle">{{ r.id === currentRecord.id ? 'Selected' : r.period }}</span>
+              <span class="disco-capa" aria-hidden="true" [style.background]="'linear-gradient(135deg, ' + d.cores.join(', ') + ')'"></span>
+              <span class="disco-texto">
+                <span class="disco-titulo">{{ d.titulo }}</span>
+                <span class="disco-sub">{{ d.id === discoAtual.id ? 'Selected' : d.periodo }}</span>
               </span>
             </button>
           </li>
         </ul>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Now playing</h3>
-          <p class="highlight">{{ currentRecord.title }}</p>
-          <p>{{ currentRecord.description }}</p>
-          <dl class="data-list">
-            <div><dt>Period</dt><dd>{{ currentRecord.period }}</dd></div>
-            <div><dt>Source</dt><dd>{{ currentRecord.source }}</dd></div>
+          <p class="destaque">{{ discoAtual.titulo }}</p>
+          <p>{{ discoAtual.descricao }}</p>
+          <dl class="dados">
+            <div><dt>Period</dt><dd>{{ discoAtual.periodo }}</dd></div>
+            <div><dt>Source</dt><dd>{{ discoAtual.fonte }}</dd></div>
           </dl>
         </section>
 
-        <div class="row">
-          <button type="button" class="button-outline" (click)="previousRecord()">Previous</button>
-          <button type="button" class="button-outline" (click)="nextRecord()">Next</button>
+        <div class="linha">
+          <button type="button" class="botao-contorno" (click)="discoAnterior()">Previous</button>
+          <button type="button" class="botao-contorno" (click)="proximoDisco()">Next</button>
         </div>
 
-        <button type="button" role="switch" class="switch" [attr.aria-checked]="playInSequence" (click)="toggleSequence()">
-          <span class="switch-track" aria-hidden="true"></span>
-          <span class="switch-text">
+        <button type="button" role="switch" class="chave" [attr.aria-checked]="tocarEmSequencia" (click)="alternarSequencia()">
+          <span class="chave-trilho" aria-hidden="true"></span>
+          <span class="chave-texto">
             <span>Play in sequence</span>
-            <small>Moves on to the next record when finished.</small>
+            <small>Moves to the next disc when one ends.</small>
           </span>
         </button>
       </div>
 
-      <!-- ================= PAGE 2: SOUND ================= -->
-      <div class="page" *ngIf="activeSection === 'sound'">
-        <section class="block">
+      <!-- ================= PÁGINA 2: SOM ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'som'">
+        <section class="bloco">
           <h3>Presets</h3>
-          <div class="grid-3">
+          <div class="grade-3">
             <button
-              *ngFor="let p of presets"
+              *ngFor="let p of predefinicoes"
               type="button"
-              class="option-card"
-              [class.active]="p.id === activePreset"
-              [attr.aria-pressed]="p.id === activePreset"
-              (click)="applyPreset(p)"
+              class="cartao-opcao"
+              [class.ativo]="p.id === predefinicaoAtiva"
+              [attr.aria-pressed]="p.id === predefinicaoAtiva"
+              (click)="aplicarPredefinicao(p)"
             >
-              <span class="option-card-title">{{ p.label }}</span>
-              <small>{{ p.description }}</small>
+              <span class="cartao-titulo">{{ p.rotulo }}</span>
+              <small>{{ p.descricao }}</small>
             </button>
           </div>
         </section>
 
-        <section class="block">
-          <h3 id="mode-label">Reading mode</h3>
-          <div class="segments" role="group" aria-labelledby="mode-label">
-            <button type="button" [class.active]="sound.mode === 'sweep'" [attr.aria-pressed]="sound.mode === 'sweep'" (click)="setMode('sweep')">Sweep</button>
-            <button type="button" [class.active]="sound.mode === 'explore'" [attr.aria-pressed]="sound.mode === 'explore'" (click)="setMode('explore')">Explore</button>
+        <section class="bloco">
+          <h3 id="rotulo-modo">Reading mode</h3>
+          <div class="segmentos" role="group" aria-labelledby="rotulo-modo">
+            <button type="button" [class.ativo]="som.modo === 'varredura'" [attr.aria-pressed]="som.modo === 'varredura'" (click)="definirModo('varredura')">Sweep</button>
+            <button type="button" [class.ativo]="som.modo === 'explorar'" [attr.aria-pressed]="som.modo === 'explorar'" (click)="definirModo('explorar')">Explore</button>
           </div>
-          <p class="help" *ngIf="sound.mode === 'sweep'">A line travels across the globe and plays what it finds.</p>
-          <p class="help" *ngIf="sound.mode === 'explore'">The point under the cursor plays. Use the mouse, your finger or the arrow keys.</p>
+          <p class="ajuda" *ngIf="som.modo === 'varredura'">A line sweeps across the globe and plays what it finds.</p>
+          <p class="ajuda" *ngIf="som.modo === 'explorar'">The point under the cursor plays. Use the mouse, your finger or the arrow keys.</p>
         </section>
 
-        <div class="field">
-          <label for="scale">Musical scale</label>
-          <select id="scale" (change)="setScale($any($event.target).value)">
-            <option *ngFor="let s of scales" [value]="s.id" [selected]="s.id === sound.scale">{{ s.label }}</option>
+        <div class="campo">
+          <label for="escala">Musical scale</label>
+          <select id="escala" (change)="definirEscala($any($event.target).value)">
+            <option *ngFor="let e of escalas" [value]="e.id" [selected]="e.id === som.escala">{{ e.rotulo }}</option>
           </select>
         </div>
 
-        <div class="field">
-          <label for="instrument">Instrument</label>
-          <select id="instrument" (change)="setInstrument($any($event.target).value)">
-            <option *ngFor="let i of instruments" [value]="i.id" [selected]="i.id === sound.instrument">{{ i.label }}</option>
+        <div class="campo">
+          <label for="instrumento">Instrument</label>
+          <select id="instrumento" (change)="definirInstrumento($any($event.target).value)">
+            <option *ngFor="let i of instrumentos" [value]="i.id" [selected]="i.id === som.instrumento">{{ i.rotulo }}</option>
           </select>
         </div>
 
-        <div class="field">
-          <label for="speed">Speed <span class="value">{{ sound.speed }} bpm</span></label>
-          <input id="speed" type="range" [min]="speedMin" [max]="speedMax" [value]="sound.speed" (input)="setSpeed($any($event.target).value)" />
+        <div class="campo">
+          <label for="velocidade">Speed <span class="valor">{{ som.velocidade }} bpm</span></label>
+          <input id="velocidade" type="range" [min]="velocidadeMin" [max]="velocidadeMax" [value]="som.velocidade" (input)="definirVelocidade($any($event.target).value)" />
         </div>
 
-        <div class="field">
-          <label for="volume">Volume <span class="value">{{ sound.muted ? 'muted' : sound.volume + '%' }}</span></label>
-          <input id="volume" type="range" min="0" max="100" [value]="sound.volume" (input)="setVolume($any($event.target).value)" />
+        <div class="campo">
+          <label for="volume">Volume <span class="valor">{{ som.mudo ? 'muted' : som.volume + '%' }}</span></label>
+          <input id="volume" type="range" min="0" max="100" [value]="som.volume" (input)="definirVolume($any($event.target).value)" />
         </div>
       </div>
 
-      <!-- ================= PAGE 3: LISTENING ================= -->
-      <div class="page" *ngIf="activeSection === 'listening'">
-        <section class="block">
+      <!-- ================= PÁGINA 3: OUVINDO ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'ouvindo'">
+        <section class="bloco">
           <h3>Live reading</h3>
-          <dl class="data-list data-list-large">
-            <div><dt>Region</dt><dd>{{ reading.region }}</dd></div>
-            <div><dt>Value</dt><dd>{{ reading.value }}</dd></div>
-            <div><dt>Note</dt><dd>{{ reading.note }}</dd></div>
-            <div *ngIf="sound.mode === 'explore'">
+          <dl class="dados dados-grandes">
+            <div><dt>Region</dt><dd>{{ leitura.regiao }}</dd></div>
+            <div><dt>Value</dt><dd>{{ leitura.valor }}</dd></div>
+            <div><dt>Note</dt><dd>{{ leitura.nota }}</dd></div>
+            <div *ngIf="som.modo === 'explorar'">
               <dt>Cursor</dt>
               <dd>{{ cursor.lat }}° lat, {{ cursor.lon }}° lon</dd>
             </div>
           </dl>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Audio visualizer</h3>
-          <div class="visualizer" [class.playing]="playing && !sound.muted" aria-hidden="true">
-            <span *ngFor="let b of bars" [style.animation-delay.ms]="b * 70"></span>
+          <div class="visualizador" [class.tocando]="tocando && !som.mudo" aria-hidden="true">
+            <span *ngFor="let b of barras" [style.animation-delay.ms]="b * 70"></span>
           </div>
-          <p class="help">{{ playing ? 'Playing.' : 'Paused.' }} The bars follow the sound for people who cannot hear it.</p>
+          <p class="ajuda">{{ tocando ? 'Playing.' : 'Paused.' }} The bars follow the sound for people who can't hear it.</p>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>How the image becomes sound</h3>
-          <div class="legend-bar" [style.background]="legendGradient" aria-hidden="true"></div>
-          <div class="legend-ends">
-            <span>{{ currentRecord.legendMin }} · low</span>
-            <span>{{ currentRecord.legendMax }} · high</span>
+          <div class="legenda-barra" [style.background]="gradienteDaLegenda" aria-hidden="true"></div>
+          <div class="legenda-pontas">
+            <span>{{ discoAtual.legendaMin }} · low</span>
+            <span>{{ discoAtual.legendaMax }} · high</span>
           </div>
-          <ul class="mapping">
-            <li *ngFor="let m of mapping">
-              <span class="mapping-pair"><strong>{{ m.visual }}</strong> ? {{ m.sound }}</span>
-              <small>{{ m.detail }}</small>
+          <ul class="mapeamento">
+            <li *ngFor="let m of mapeamento">
+              <span class="mapeamento-par"><strong>{{ m.visual }}</strong> ? {{ m.sonoro }}</span>
+              <small>{{ m.detalhe }}</small>
             </li>
           </ul>
         </section>
       </div>
 
-      <!-- ================= PAGE 4: GLOBE AND TIME ================= -->
-      <div class="page" *ngIf="activeSection === 'globe'">
-        <div class="field">
-          <label for="frame">Timeline <span class="value">frame {{ currentFrame + 1 }} of {{ currentRecord.totalFrames }}</span></label>
-          <input id="frame" type="range" min="0" [max]="currentRecord.totalFrames - 1" [value]="currentFrame" (input)="setFrame($any($event.target).value)" />
-          <p class="help">{{ frameDate }}</p>
+      <!-- ================= PÁGINA 4: GLOBO E TEMPO ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'globo'">
+        <div class="campo">
+          <label for="quadro">Timeline <span class="valor">frame {{ quadroAtual + 1 }} of {{ discoAtual.totalQuadros }}</span></label>
+          <input id="quadro" type="range" min="0" [max]="discoAtual.totalQuadros - 1" [value]="quadroAtual" (input)="definirQuadro($any($event.target).value)" />
+          <p class="ajuda">{{ dataDoQuadro }}</p>
         </div>
 
-        <section class="block">
+        <div class="campo">
+           <label for="rotacao">Rotate the globe <span class="valor">{{ rotacao }}°</span></label>
+           <input id="rotacao" type="range" min="-180" max="180" step="5"
+           [value]="rotacao" (input)="definirRotacao($any($event.target).value)" />
+        </div>
+
+        <section class="bloco">
           <h3>Rotation and zoom</h3>
-          <div class="grid-2">
-            <button type="button" class="button-outline" (click)="rotate('left')">Rotate left</button>
-            <button type="button" class="button-outline" (click)="rotate('right')">Rotate right</button>
-            <button type="button" class="button-outline" (click)="zoom('in')">Zoom in</button>
-            <button type="button" class="button-outline" (click)="zoom('out')">Zoom out</button>
+          <div class="grade-2">
+            <button type="button" class="botao-contorno" (click)="girar('esquerda')">Rotate left</button>
+            <button type="button" class="botao-contorno" (click)="girar('direita')">Rotate right</button>
+            <button type="button" class="botao-contorno" (click)="zoom('mais')">Zoom in</button>
+            <button type="button" class="botao-contorno" (click)="zoom('menos')">Zoom out</button>
           </div>
-          <button type="button" role="switch" class="switch" [attr.aria-checked]="autoRotate" (click)="toggleAutoRotate()">
-            <span class="switch-track" aria-hidden="true"></span>
-            <span class="switch-text"><span>Auto-rotate</span></span>
+          <button type="button" role="switch" class="chave" [attr.aria-checked]="rotacaoAutomatica" (click)="alternarRotacaoAutomatica()">
+            <span class="chave-trilho" aria-hidden="true"></span>
+            <span class="chave-texto"><span>Auto-rotate</span></span>
           </button>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Go to a region</h3>
-          <div class="tags">
+          <div class="etiquetas">
             <button
-              *ngFor="let r of regions"
+              *ngFor="let r of regioes"
               type="button"
-              class="tag"
-              [class.active]="r.id === activeRegion"
-              [attr.aria-pressed]="r.id === activeRegion"
-              (click)="goToRegion(r)"
+              class="etiqueta"
+              [class.ativo]="r.id === regiaoAtiva"
+              [attr.aria-pressed]="r.id === regiaoAtiva"
+              (click)="irParaRegiao(r)"
             >
-              {{ r.label }}
+              {{ r.rotulo }}
             </button>
           </div>
         </section>
       </div>
 
-      <!-- ================= PAGE 5: ACCESSIBILITY ================= -->
-      <div class="page" *ngIf="activeSection === 'accessibility'">
+      <!-- ================= PÁGINA 5: ACESSIBILIDADE ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'acessibilidade'">
         <button
-          *ngFor="let o of accessibilityOptions"
+          *ngFor="let o of opcoesDeAcessibilidade"
           type="button"
           role="switch"
-          class="switch"
-          [attr.aria-checked]="a11y[o.key]"
-          (click)="toggleAccessibility(o.key)"
+          class="chave"
+          [attr.aria-checked]="acess[o.chave]"
+          (click)="alternarAcessibilidade(o.chave)"
         >
-          <span class="switch-track" aria-hidden="true"></span>
-          <span class="switch-text">
-            <span>{{ o.label }}</span>
-            <small>{{ o.description }}</small>
+          <span class="chave-trilho" aria-hidden="true"></span>
+          <span class="chave-texto">
+            <span>{{ o.rotulo }}</span>
+            <small>{{ o.descricao }}</small>
           </span>
         </button>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Keyboard shortcuts</h3>
-          <dl class="shortcuts">
-            <div *ngFor="let s of shortcuts">
-              <dt><kbd>{{ s.key }}</kbd></dt>
-              <dd>{{ s.action }}</dd>
+          <dl class="atalhos">
+            <div *ngFor="let a of atalhos">
+              <dt><kbd>{{ a.tecla }}</kbd></dt>
+              <dd>{{ a.acao }}</dd>
             </div>
           </dl>
         </section>
       </div>
 
-      <!-- ================= PAGE 6: ABOUT ================= -->
-      <div class="page" *ngIf="activeSection === 'about'">
-        <section class="block">
+      <!-- ================= PÁGINA 6: SOBRE ================= -->
+      <div class="pagina" *ngIf="secaoAtiva === 'sobre'">
+        <section class="bloco">
           <h3>What it is</h3>
           <p>
-            Earth Jukebox turns NASA Earth Information Center visualizations into sound,
-            so that Earth data can be heard as well as seen.
+            Earth Jukebox turns visualizations from NASA's Earth Information Center into sound,
+            so Earth data can be heard as well as seen.
           </p>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>How to use</h3>
-          <ol class="steps">
-            <li *ngFor="let s of steps">{{ s }}</li>
+          <ol class="passos">
+            <li *ngFor="let p of passos">{{ p }}</li>
           </ol>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Share</h3>
-          <p class="help">The link opens the site with the current record and sound settings.</p>
-          <button type="button" class="button-primary" (click)="share()">Copy link</button>
-          <div class="field" *ngIf="shareLink">
-            <label for="link">{{ linkCopied ? 'Link copied' : 'Copy the link below' }}</label>
-            <input id="link" type="text" readonly [value]="shareLink" />
+          <p class="ajuda">The link opens the site with the current disc and sound settings.</p>
+          <button type="button" class="botao-principal" (click)="compartilhar()">Copy link</button>
+          <div class="campo" *ngIf="linkCompartilhavel">
+            <label for="link">{{ linkCopiado ? 'Link copied' : 'Copy the link below' }}</label>
+            <input id="link" type="text" readonly [value]="linkCompartilhavel" />
           </div>
         </section>
 
-        <section class="block">
+        <section class="bloco">
           <h3>Credits</h3>
-          <p>Visualizations: NASA Earth Information Center. Project for the NASA Space Apps Challenge 2026.</p>
-          <p>[Team names and other resources used]</p>
+          <p>Visualizations: NASA Earth Information Center. A NASA Space Apps Challenge 2026 project.</p>
+          <p>Angular Lovers<br>
+
+We are Angular Lovers, a team of four: Emanuel Vinicius Sacoman, Guilherme de Souza Mota, Luiz Otavio dos Santos Morais and Yanna Himawari Ondani Tanigawa. For the NASA Space Apps Challenge 2026, we built Earth Jukebox, an interface that turns NASA Earth Information Center visualizations into sound, so that Earth science can be heard as well as seen.<br>
+
+Built with: Angular and TypeScript for the application; HTML (HyperText Markup Language) and CSS (Cascading Style Sheets) for structure and design; SVG for the icons; ARIA attributes for screen reader support; Node.js, npm (Node Package Manager) and nvm (Node Version Manager) for the development environment; and the Plus Jakarta Sans, Space Grotesk and JetBrains Mono typefaces.</p>
         </section>
       </div>
     </aside>
 
-    <!-- Quick zoom, next to the globe -->
+    <!-- Zoom rápido, ao lado do globo -->
     <div class="zoom" role="group" aria-label="Globe zoom">
-      <button type="button" class="button-icon" aria-label="Zoom in" (click)="zoom('in')">
+      <button type="button" class="botao-icone" aria-label="Zoom in" (click)="zoom('mais')">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
       </button>
-      <button type="button" class="button-icon" aria-label="Zoom out" (click)="zoom('out')">
+      <button type="button" class="botao-icone" aria-label="Zoom out" (click)="zoom('menos')">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"></path></svg>
       </button>
     </div>
 
-    <!-- Color legend of the current record -->
-    <div class="legend">
-      <span class="legend-title">{{ currentRecord.title }}</span>
-      <div class="legend-bar" [style.background]="legendGradient" aria-hidden="true"></div>
-      <div class="legend-ends">
-        <span>{{ currentRecord.legendMin }}</span>
-        <span>{{ currentRecord.legendMax }}</span>
+    <!-- Legenda de cores do disco atual -->
+    <div class="legenda">
+      <span class="legenda-titulo">{{ discoAtual.titulo }}</span>
+      <div class="legenda-barra" [style.background]="gradienteDaLegenda" aria-hidden="true"></div>
+      <div class="legenda-pontas">
+        <span>{{ discoAtual.legendaMin }}</span>
+        <span>{{ discoAtual.legendaMax }}</span>
       </div>
     </div>
   </main>
 
   <!-- ====================================================================
-       BOTTOM BAR: transport
+       BARRA INFERIOR: transporte
        ==================================================================== -->
-  <footer class="transport">
-    <span class="date">{{ frameDate }}</span>
+  <footer class="transporte">
+    <span class="data">{{ dataDoQuadro }}</span>
 
-    <button type="button" class="button-play" (click)="togglePlayback()">
+    <button type="button" class="botao-tocar" (click)="alternarReproducao()">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path *ngIf="!playing" class="filled" d="M8 5l11 7-11 7z"></path>
-        <path *ngIf="playing" d="M9 5v14M15 5v14"></path>
+        <path *ngIf="!tocando" class="preenchido" d="M8 5l11 7-11 7z"></path>
+        <path *ngIf="tocando" d="M9 5v14M15 5v14"></path>
       </svg>
-      {{ playing ? 'Pause' : 'Play' }}
+      {{ tocando ? 'Pause' : 'Play' }}
     </button>
 
-    <div class="segments" role="group" aria-label="Reading mode">
-      <button type="button" [class.active]="sound.mode === 'sweep'" [attr.aria-pressed]="sound.mode === 'sweep'" (click)="setMode('sweep')">Sweep</button>
-      <button type="button" [class.active]="sound.mode === 'explore'" [attr.aria-pressed]="sound.mode === 'explore'" (click)="setMode('explore')">Explore</button>
+    <div class="segmentos" role="group" aria-label="Reading mode">
+      <button type="button" [class.ativo]="som.modo === 'varredura'" [attr.aria-pressed]="som.modo === 'varredura'" (click)="definirModo('varredura')">Sweep</button>
+      <button type="button" [class.ativo]="som.modo === 'explorar'" [attr.aria-pressed]="som.modo === 'explorar'" (click)="definirModo('explorar')">Explore</button>
     </div>
 
-    <div class="transport-field">
-      <label for="speed-bar">Speed</label>
-      <input id="speed-bar" type="range" [min]="speedMin" [max]="speedMax" [value]="sound.speed" (input)="setSpeed($any($event.target).value)" />
-      <span class="value">{{ sound.speed }} bpm</span>
+    <div class="transporte-campo">
+      <label for="velocidade-barra">Speed</label>
+      <input id="velocidade-barra" type="range" [min]="velocidadeMin" [max]="velocidadeMax" [value]="som.velocidade" (input)="definirVelocidade($any($event.target).value)" />
+      <span class="valor">{{ som.velocidade }} bpm</span>
     </div>
 
-    <div class="transport-field transport-volume">
-      <button type="button" class="button-icon" [attr.aria-label]="sound.muted ? 'Unmute' : 'Mute'" [attr.aria-pressed]="sound.muted" (click)="toggleMute()">
+    <div class="transporte-campo transporte-volume">
+      <button type="button" class="botao-icone" [attr.aria-label]="som.mudo ? 'Unmute' : 'Mute'" [attr.aria-pressed]="som.mudo" (click)="alternarMudo()">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 10v4h3l5 4V6L7 10z"></path>
-          <path *ngIf="!sound.muted" d="M16 9c1.5 1.5 1.5 4.5 0 6"></path>
-          <path *ngIf="sound.muted" d="M16 9l5 6M21 9l-5 6"></path>
+          <path *ngIf="!som.mudo" d="M16 9c1.5 1.5 1.5 4.5 0 6"></path>
+          <path *ngIf="som.mudo" d="M16 9l5 6M21 9l-5 6"></path>
         </svg>
       </button>
-      <label class="sr-only" for="volume-bar">Volume</label>
-      <input id="volume-bar" type="range" min="0" max="100" [value]="sound.volume" (input)="setVolume($any($event.target).value)" />
+      <label class="so-leitor" for="volume-barra">Volume</label>
+      <input id="volume-barra" type="range" min="0" max="100" [value]="som.volume" (input)="definirVolume($any($event.target).value)" />
     </div>
   </footer>
 
   <!-- ====================================================================
-       WELCOME SCREEN
+       TELA DE ABERTURA
        ==================================================================== -->
-  <div class="welcome" *ngIf="showWelcome" role="dialog" aria-modal="true" aria-labelledby="welcome-title">
-    <div class="welcome-box">
-      <h2 id="welcome-title">Listen to the Earth</h2>
-      <p>NASA Earth Information Center visualizations turned into sound.</p>
-      <ol class="steps">
-        <li *ngFor="let s of steps">{{ s }}</li>
+  <div class="abertura" *ngIf="mostrarBoasVindas" role="dialog" aria-modal="true" aria-labelledby="abertura-titulo">
+    <div class="abertura-caixa">
+      <h2 id="abertura-titulo">Listen to the Earth</h2>
+      <p>Visualizations from NASA's Earth Information Center, turned into sound.</p>
+      <ol class="passos">
+        <li *ngFor="let p of passos">{{ p }}</li>
       </ol>
-      <button #startButton type="button" class="button-primary button-large" (click)="start()">Start listening</button>
+      <button #botaoComecar type="button" class="botao-principal botao-grande" (click)="comecar()">Start listening</button>
     </div>
   </div>
 </div>

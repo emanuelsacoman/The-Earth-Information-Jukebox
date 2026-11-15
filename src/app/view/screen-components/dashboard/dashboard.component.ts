@@ -1,684 +1,745 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http'; 
 
 /* ============================================================================
- * TYPES
+ * TIPOS
  * ========================================================================== */
 
-type SectionId = 'records' | 'sound' | 'listening' | 'globe' | 'accessibility' | 'about';
-type Mode = 'sweep' | 'explore';
+type SecaoId = 'discos' | 'som' | 'ouvindo' | 'globo' | 'acessibilidade' | 'sobre';
+type Modo = 'varredura' | 'explorar';
 
-interface Section {
-  id: SectionId;
-  label: string;
-  /** The "d" attribute of the icon (24x24 SVG, outline only). */
-  icon: string;
+interface Secao {
+  id: SecaoId;
+  rotulo: string;
+  /** Atributo "d" do ícone (SVG 24x24, só contorno). */
+  icone: string;
 }
 
-interface RecordItem {
+interface Disco {
   id: string;
-  title: string;
-  description: string;
-  period: string;
-  source: string;
-  /** Legend colors, from the lowest value to the highest. */
-  colors: string[];
-  legendMin: string;
-  legendMax: string;
-  totalFrames: number;
+  titulo: string;
+  descricao: string;
+  periodo: string;
+  fonte: string;
+  /** Cores da legenda, do valor mais baixo ao mais alto. */
+  cores: string[];
+  legendaMin: string;
+  legendaMax: string;
+  totalQuadros: number;
 }
 
-interface Option {
+interface Opcao {
   id: string;
-  label: string;
+  rotulo: string;
 }
 
-interface Preset {
+interface Predefinicao {
   id: string;
-  label: string;
-  description: string;
-  scale: string;
-  instrument: string;
-  speed: number;
+  rotulo: string;
+  descricao: string;
+  escala: string;
+  instrumento: string;
+  velocidade: number;
 }
 
-interface Region {
+interface Regiao {
   id: string;
-  label: string;
+  rotulo: string;
   lat: number;
   lon: number;
 }
 
-/** What the audio engine reports to the dashboard on every note played. */
-interface Reading {
-  region: string;
-  value: string;
-  note: string;
+/** O que o motor de áudio informa ao dashboard a cada nota tocada. */
+interface Leitura {
+  regiao: string;
+  valor: string;
+  nota: string;
 }
 
-interface SoundSettings {
-  mode: Mode;
-  scale: string;
-  instrument: string;
-  speed: number;
+interface AjustesDeSom {
+  modo: Modo;
+  escala: string;
+  instrumento: string;
+  velocidade: number;
   volume: number;
-  muted: boolean;
+  mudo: boolean;
 }
 
-interface Accessibility {
-  highContrast: boolean;
-  largeText: boolean;
-  reducedMotion: boolean;
-  vibration: boolean;
-  announcements: boolean;
+interface Acessibilidade {
+  altoContraste: boolean;
+  textoGrande: boolean;
+  menosMovimento: boolean;
+  vibracao: boolean;
+  anuncios: boolean;
 }
 
-interface AccessibilityOption {
-  key: keyof Accessibility;
-  label: string;
-  description: string;
+interface OpcaoDeAcessibilidade {
+  chave: keyof Acessibilidade;
+  rotulo: string;
+  descricao: string;
 }
 
-const PREFERENCES_KEY = 'earth-jukebox:accessibility';
+const CHAVE_PREFERENCIAS = 'earth-jukebox:acessibilidade';
 
 @Component({
   selector: 'app-dashboard',
-  // If the project uses app.module.ts (NgModule), delete the two lines below
-  // and declare DashboardComponent in the module.
+  // Se o projeto usa app.module.ts (NgModule), apague as duas linhas abaixo
+  // e declare o DashboardComponent no módulo.
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  @ViewChild('startButton') startButton?: ElementRef<HTMLButtonElement>;
+  @ViewChild('botaoComecar') botaoComecar?: ElementRef<HTMLButtonElement>;
 
   /* ==========================================================================
-   * NAVIGATION BETWEEN PANEL PAGES
+   * NAVEGAÇÃO ENTRE AS PÁGINAS DO PAINEL
    * ======================================================================== */
 
-  readonly sections: Section[] = [
-    { id: 'records', label: 'Records', icon: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z' },
-    { id: 'sound', label: 'Sound', icon: 'M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4M16 4v4M8 10v4M14 16v4' },
-    { id: 'listening', label: 'Listening', icon: 'M4 10v4M8 7v10M12 4v16M16 8v8M20 10v4' },
-    { id: 'globe', label: 'Globe and time', icon: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18' },
-    { id: 'accessibility', label: 'Accessibility', icon: 'M12 3.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zM5 9h14M12 9v5M12 14l-3 6M12 14l3 6' },
-    { id: 'about', label: 'About', icon: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 11v6M12 7v1' },
+  readonly secoes: Secao[] = [
+    { id: 'discos', rotulo: 'Discs', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z' },
+    { id: 'som', rotulo: 'Sound', icone: 'M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4M16 4v4M8 10v4M14 16v4' },
+    { id: 'ouvindo', rotulo: 'Listening', icone: 'M4 10v4M8 7v10M12 4v16M16 8v8M20 10v4' },
+    { id: 'globo', rotulo: 'Globe and time', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18' },
+    { id: 'acessibilidade', rotulo: 'Accessibility', icone: 'M12 3.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zM5 9h14M12 9v5M12 14l-3 6M12 14l3 6' },
+    { id: 'sobre', rotulo: 'About', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 11v6M12 7v1' },
   ];
 
-  activeSection: SectionId = 'records';
-  panelOpen = true;
-  showWelcome = true;
+  secaoAtiva: SecaoId = 'discos';
+  painelAberto = true;
+  mostrarBoasVindas = true;
 
   /* ==========================================================================
-   * 1. RECORDS (EIC visualizations)
+   * 1. DISCOS (visualizações do EIC)
    * ======================================================================== */
 
   /**
-   * Sample catalog. Text in square brackets is a placeholder:
-   * the real content should come from loadRecords() (backend).
+   * Catálogo de exemplo. Os textos entre colchetes são espaços reservados:
+   * o conteúdo real deve vir de carregarDiscos() (backend).
    */
-  records: RecordItem[] = [
+  discos: Disco[] = [
     {
-      id: 'temperature',
-      title: 'Global temperature',
-      description: '[Visualization description: what it shows and how to read the colors.]',
-      period: '[Data period]',
-      source: 'NASA Earth Information Center',
-      colors: ['#1D4ED8', '#7DD3FC', '#FDE68A', '#F97316', '#B91C1C'],
-      legendMin: '[min.]',
-      legendMax: '[max.]',
-      totalFrames: 100,
+      id: 'temperatura',
+      titulo: 'Global temperature',
+      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      periodo: '[Data period]',
+      fonte: 'NASA Earth Information Center',
+      cores: ['#1D4ED8', '#7DD3FC', '#FDE68A', '#F97316', '#B91C1C'],
+      legendaMin: '[min]',
+      legendaMax: '[max]',
+      totalQuadros: 100,
     },
     {
-      id: 'currents',
-      title: 'Ocean currents',
-      description: '[Visualization description: what it shows and how to read the colors.]',
-      period: '[Data period]',
-      source: 'NASA Earth Information Center',
-      colors: ['#082F49', '#0369A1', '#38BDF8', '#E0F2FE'],
-      legendMin: '[min.]',
-      legendMax: '[max.]',
-      totalFrames: 100,
+      id: 'correntes',
+      titulo: 'Ocean currents',
+      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      periodo: '[Data period]',
+      fonte: 'NASA Earth Information Center',
+      cores: ['#082F49', '#0369A1', '#38BDF8', '#E0F2FE'],
+      legendaMin: '[min]',
+      legendaMax: '[max]',
+      totalQuadros: 100,
     },
     {
-      id: 'record-3',
-      title: '[3rd visualization]',
-      description: '[Visualization description: what it shows and how to read the colors.]',
-      period: '[Data period]',
-      source: 'NASA Earth Information Center',
-      colors: ['#0F172A', '#475569', '#CBD5E1'],
-      legendMin: '[min.]',
-      legendMax: '[max.]',
-      totalFrames: 100,
+      id: 'disco-3',
+      titulo: '[3rd visualization]',
+      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      periodo: '[Data period]',
+      fonte: 'NASA Earth Information Center',
+      cores: ['#0F172A', '#475569', '#CBD5E1'],
+      legendaMin: '[min]',
+      legendaMax: '[max]',
+      totalQuadros: 100,
     },
   ];
 
-  currentRecord: RecordItem = this.records[0];
-  playInSequence = false;
+  discoAtual: Disco = this.discos[0];
+  tocarEmSequencia = false;
 
   /* ==========================================================================
-   * 2. SOUND
+   * 2. SOM
    * ======================================================================== */
 
-  readonly scales: Option[] = [
-    { id: 'pentatonic', label: 'Pentatonic' },
-    { id: 'major', label: 'Major' },
-    { id: 'minor', label: 'Minor' },
+  readonly escalas: Opcao[] = [
+    { id: 'pentatonica', rotulo: 'Pentatonic' },
+    { id: 'maior', rotulo: 'Major' },
+    { id: 'menor', rotulo: 'Minor' },
   ];
 
-  readonly instruments: Option[] = [
-    { id: 'piano', label: 'Piano' },
-    { id: 'strings', label: 'Strings' },
-    { id: 'synth', label: 'Synthesizer' },
+  readonly instrumentos: Opcao[] = [
+    { id: 'piano', rotulo: 'Piano' },
+    { id: 'cordas', rotulo: 'Strings' },
+    { id: 'sintetizador', rotulo: 'Synthesizer' },
   ];
 
-  readonly presets: Preset[] = [
-    { id: 'calm', label: 'Calm', description: 'Slow, strings, pentatonic', scale: 'pentatonic', instrument: 'strings', speed: 60 },
-    { id: 'dramatic', label: 'Dramatic', description: 'Fast, synthesizer, minor', scale: 'minor', instrument: 'synth', speed: 130 },
-    { id: 'scientific', label: 'Scientific', description: 'Moderate, piano, major', scale: 'major', instrument: 'piano', speed: 90 },
+  readonly predefinicoes: Predefinicao[] = [
+    { id: 'calmo', rotulo: 'Calm', descricao: 'Slow, strings, pentatonic', escala: 'pentatonica', instrumento: 'cordas', velocidade: 60 },
+    { id: 'dramatico', rotulo: 'Dramatic', descricao: 'Fast, synthesizer, minor', escala: 'menor', instrumento: 'sintetizador', velocidade: 130 },
+    { id: 'cientifico', rotulo: 'Scientific', descricao: 'Moderate, piano, major', escala: 'maior', instrumento: 'piano', velocidade: 90 },
   ];
 
-  readonly speedMin = 40;
-  readonly speedMax = 160;
+  readonly velocidadeMin = 40;
+  readonly velocidadeMax = 160;
 
-  playing = false;
-  activePreset: string | null = null;
+  tocando = false;
+  predefinicaoAtiva: string | null = null;
 
-  sound: SoundSettings = {
-    mode: 'sweep',
-    scale: 'pentatonic',
-    instrument: 'piano',
-    speed: 90,
+  som: AjustesDeSom = {
+    modo: 'varredura',
+    escala: 'pentatonica',
+    instrumento: 'piano',
+    velocidade: 90,
     volume: 80,
-    muted: false,
+    mudo: false,
   };
 
   /* ==========================================================================
-   * 3. LISTENING
+   * 3. OUVINDO
    * ======================================================================== */
 
-  /** Updated by receiveReading(), which the audio engine should call. */
-  reading: Reading = { region: '?', value: '?', note: '?' };
+  /** Atualizada por receberLeitura(), que o motor de áudio deve chamar. */
+  leitura: Leitura = { regiao: '?', valor: '?', nota: '?' };
 
-  /** Cursor position in Explore mode. */
+  /** Posição do cursor no modo Explorar. */
   cursor = { lat: 0, lon: 0 };
 
-  /** Audio visualizer bars (decorative animation until the real audio is connected). */
-  readonly bars: number[] = Array.from({ length: 28 }, (_, i) => i);
+  /** Barras do visualizador de áudio (animação decorativa até ligar o áudio real). */
+  readonly barras: number[] = Array.from({ length: 28 }, (_, i) => i);
 
-  readonly mapping: { visual: string; sound: string; detail: string }[] = [
-    { visual: 'Color', sound: 'Note pitch', detail: 'Low values sound low; high values sound high.' },
-    { visual: 'Brightness', sound: 'Volume', detail: 'The brighter the region, the louder the sound.' },
-    { visual: 'Variation', sound: 'Rhythm', detail: 'Areas with a lot of change play more notes per second.' },
-    { visual: 'Position', sound: 'Left and right', detail: 'The sound moves from one headphone to the other.' },
+  readonly mapeamento: { visual: string; sonoro: string; detalhe: string }[] = [
+    { visual: 'Color', sonoro: 'Pitch', detalhe: 'Low values sound low; high values sound high.' },
+    { visual: 'Brightness', sonoro: 'Volume', detalhe: 'The brighter the region, the louder the sound.' },
+    { visual: 'Variation', sonoro: 'Rhythm', detalhe: 'Areas with a lot of change play more notes per second.' },
+    { visual: 'Position', sonoro: 'Left and right', detalhe: 'The sound travels from one ear to the other.' },
   ];
 
   /* ==========================================================================
-   * 4. GLOBE AND TIME
+   * 4. GLOBO E TEMPO
    * ======================================================================== */
 
-  readonly regions: Region[] = [
-    { id: 'amazon', label: 'Amazon', lat: -3, lon: -60 },
-    { id: 'arctic', label: 'Arctic', lat: 90, lon: 0 },
-    { id: 'antarctica', label: 'Antarctica', lat: -90, lon: 0 },
-    { id: 'north-atlantic', label: 'North Atlantic', lat: 35, lon: -40 },
-    { id: 'sahara', label: 'Sahara', lat: 23, lon: 13 },
-    { id: 'pacific', label: 'Pacific', lat: 0, lon: -160 },
+  readonly regioes: Regiao[] = [
+    { id: 'amazonia', rotulo: 'Amazon', lat: -3, lon: -60 },
+    { id: 'artico', rotulo: 'Arctic', lat: 90, lon: 0 },
+    { id: 'antartida', rotulo: 'Antarctica', lat: -90, lon: 0 },
+    { id: 'atlantico-norte', rotulo: 'North Atlantic', lat: 35, lon: -40 },
+    { id: 'saara', rotulo: 'Sahara', lat: 23, lon: 13 },
+    { id: 'pacifico', rotulo: 'Pacific', lat: 0, lon: -160 },
   ];
 
-  currentFrame = 0;
-  /** Date text of the current frame; should come from loadFrame(). */
-  frameDate = '[frame date]';
-  autoRotate = true;
-  activeRegion: string | null = null;
+  quadroAtual = 0;
+  /** Texto da data do quadro atual; deve vir de carregarQuadro(). */
+  dataDoQuadro = '[frame date]';
+  rotacaoAutomatica = true;
+  regiaoAtiva: string | null = null;
 
   /* ==========================================================================
-   * 5. ACCESSIBILITY
+   * 5. ACESSIBILIDADE
    * ======================================================================== */
 
-  a11y: Accessibility = {
-    highContrast: false,
-    largeText: false,
-    reducedMotion: false,
-    vibration: false,
-    announcements: true,
+  acess: Acessibilidade = {
+    altoContraste: false,
+    textoGrande: false,
+    menosMovimento: false,
+    vibracao: false,
+    anuncios: true,
   };
 
-  readonly accessibilityOptions: AccessibilityOption[] = [
-    { key: 'highContrast', label: 'High contrast', description: 'Black background, white text and borders.' },
-    { key: 'largeText', label: 'Larger text', description: 'Increases all the letters in the panel.' },
-    { key: 'reducedMotion', label: 'Reduce animations', description: 'Turns off transitions and the visualizer.' },
-    { key: 'vibration', label: 'Vibrate on peaks', description: 'Only on compatible phones.' },
-    { key: 'announcements', label: 'Screen reader announcements', description: 'Announces what is playing and where.' },
+  readonly opcoesDeAcessibilidade: OpcaoDeAcessibilidade[] = [
+    { chave: 'altoContraste', rotulo: 'High contrast', descricao: 'Black background, white text and borders.' },
+    { chave: 'textoGrande', rotulo: 'Larger text', descricao: 'Makes all the text bigger.' },
+    { chave: 'menosMovimento', rotulo: 'Reduce motion', descricao: 'Turns off transitions and the visualizer.' },
+    { chave: 'vibracao', rotulo: 'Vibrate on peaks', descricao: 'Only on supported phones.' },
+    { chave: 'anuncios', rotulo: 'Screen reader announcements', descricao: 'Says what is playing and where.' },
   ];
 
-  readonly shortcuts: { key: string; action: string }[] = [
-    { key: 'Space', action: 'Play or pause' },
-    { key: 'M', action: 'Mute' },
-    { key: '1 to 6', action: 'Open a panel page' },
-    { key: 'Arrows', action: 'Move the cursor in Explore mode' },
-    { key: 'Esc', action: 'Close the panel' },
+  readonly atalhos: { tecla: string; acao: string }[] = [
+    { tecla: 'Space', acao: 'Play or pause' },
+    { tecla: 'M', acao: 'Mute' },
+    { tecla: '1 to 6', acao: 'Open a panel page' },
+    { tecla: 'Arrows', acao: 'Move the cursor in Explore mode' },
+    { tecla: 'Esc', acao: 'Close the panel' },
   ];
 
-  /** Text read by the screen reader (aria-live region in the HTML). */
-  announcement = '';
+  /** Texto lido pelo leitor de tela (região aria-live no HTML). */
+  anuncio = '';
 
   /* ==========================================================================
-   * 6. ABOUT
+   * 6. SOBRE
    * ======================================================================== */
 
-  readonly steps: string[] = [
-    'Pick a record on the Records page.',
-    'Press Play to hear the globe sweep.',
+  readonly passos: string[] = [
+    'Pick a disc on the Discs page.',
+    'Press Play to hear the sweep across the globe.',
     'Switch to Explore and move the cursor to hear each point.',
   ];
 
-  shareLink = '';
-  linkCopied = false;
+  linkCompartilhavel = '';
+  linkCopiado = false;
 
   /* ==========================================================================
-   * LIFECYCLE
+   * CICLO DE VIDA
    * ======================================================================== */
 
   ngOnInit(): void {
-    this.loadPreferences();
-    this.readSettingsFromUrl();
-    this.loadRecords();
+    this.carregarPreferencias();
+    this.lerAjustesDaUrl();
+    this.carregarDiscos();
   }
 
   ngAfterViewInit(): void {
-    this.startButton?.nativeElement.focus();
+    this.botaoComecar?.nativeElement.focus();
   }
 
   /* ==========================================================================
-   * ACTIONS: NAVIGATION
+   * AÇÕES: NAVEGAÇÃO
    * ======================================================================== */
 
-  get sectionTitle(): string {
-    return this.sections.find((s) => s.id === this.activeSection)?.label ?? '';
+  get tituloDaSecao(): string {
+    return this.secoes.find((s) => s.id === this.secaoAtiva)?.rotulo ?? '';
   }
 
-  openSection(id: SectionId): void {
-    if (this.activeSection === id && this.panelOpen) {
-      this.panelOpen = false;
+  abrirSecao(id: SecaoId): void {
+    if (this.secaoAtiva === id && this.painelAberto) {
+      this.painelAberto = false;
       return;
     }
-    this.activeSection = id;
-    this.panelOpen = true;
+    this.secaoAtiva = id;
+    this.painelAberto = true;
   }
 
-  closePanel(): void {
-    this.panelOpen = false;
+  fecharPainel(): void {
+    this.painelAberto = false;
   }
 
-  /** "Share" button in the top bar: opens the About page and copies the link. */
-  openShare(): void {
-    this.activeSection = 'about';
-    this.panelOpen = true;
-    void this.share();
+  /** Botão "Compartilhar" do topo: abre a página Sobre e já copia o link. */
+  abrirCompartilhar(): void {
+    this.secaoAtiva = 'sobre';
+    this.painelAberto = true;
+    void this.compartilhar();
   }
 
-  /** Closes the welcome screen. The click also unlocks audio in the browser. */
-  start(): void {
-    this.showWelcome = false;
-    if (!this.playing) {
-      this.togglePlayback();
+  /** Fecha a tela de abertura. O clique também libera o áudio no navegador. */
+  comecar(): void {
+    this.mostrarBoasVindas = false;
+    if (!this.tocando) {
+      this.alternarReproducao();
     }
   }
 
   /* ==========================================================================
-   * ACTIONS: RECORDS
+   * AÇÕES: DISCOS
    * ======================================================================== */
 
-  get legendGradient(): string {
-    return 'linear-gradient(90deg, ' + this.currentRecord.colors.join(', ') + ')';
+  get gradienteDaLegenda(): string {
+    return 'linear-gradient(90deg, ' + this.discoAtual.cores.join(', ') + ')';
   }
 
-  selectRecord(record: RecordItem): void {
-    this.currentRecord = record;
-    this.currentFrame = 0;
-    this.reading = { region: '?', value: '?', note: '?' };
-    this.loadFrame(record.id, 0);
-    this.announce('Record selected: ' + record.title);
+  selecionarDisco(disco: Disco): void {
+    this.discoAtual = disco;
+    this.quadroAtual = 0;
+    this.leitura = { regiao: '?', valor: '?', nota: '?' };
+    this.carregarQuadro(disco.id, 0);
+    this.anunciar('Disc selected: ' + disco.titulo);
   }
 
-  nextRecord(): void {
-    const i = this.records.indexOf(this.currentRecord);
-    this.selectRecord(this.records[(i + 1) % this.records.length]);
+  proximoDisco(): void {
+    const i = this.discos.indexOf(this.discoAtual);
+    this.selecionarDisco(this.discos[(i + 1) % this.discos.length]);
   }
 
-  previousRecord(): void {
-    const i = this.records.indexOf(this.currentRecord);
-    this.selectRecord(this.records[(i - 1 + this.records.length) % this.records.length]);
+  discoAnterior(): void {
+    const i = this.discos.indexOf(this.discoAtual);
+    this.selecionarDisco(this.discos[(i - 1 + this.discos.length) % this.discos.length]);
   }
 
-  toggleSequence(): void {
-    this.playInSequence = !this.playInSequence;
+  alternarSequencia(): void {
+    this.tocarEmSequencia = !this.tocarEmSequencia;
   }
 
   /* ==========================================================================
-   * ACTIONS: SOUND
+   * AÇÕES: SOM
    * ======================================================================== */
 
-  togglePlayback(): void {
-    this.playing = !this.playing;
-    if (this.playing) {
-      this.startAudio();
-      this.announce('Playing ' + this.currentRecord.title);
+  alternarReproducao(): void {
+    this.tocando = !this.tocando;
+    if (this.tocando) {
+      this.iniciarAudio();
+      this.anunciar('Playing ' + this.discoAtual.titulo);
     } else {
-      this.pauseAudio();
-      this.announce('Paused');
+      this.pausarAudio();
+      this.anunciar('Paused');
     }
   }
 
-  setMode(mode: Mode): void {
-    this.sound.mode = mode;
-    this.onSettingsChange();
-    this.announce(mode === 'sweep' ? 'Sweep mode' : 'Explore mode: use the arrow keys to move the cursor');
+  definirModo(modo: Modo): void {
+    this.som.modo = modo;
+    this.aoMudarAjustes();
+    this.anunciar(modo === 'varredura' ? 'Sweep mode' : 'Explore mode: use the arrow keys to move the cursor');
   }
 
-  setScale(id: string): void {
-    this.sound.scale = id;
-    this.onSettingsChange();
+  definirEscala(id: string): void {
+    this.som.escala = id;
+    this.aoMudarAjustes();
   }
 
-  setInstrument(id: string): void {
-    this.sound.instrument = id;
-    this.onSettingsChange();
+  definirInstrumento(id: string): void {
+    this.som.instrumento = id;
+    this.aoMudarAjustes();
   }
 
-  setSpeed(value: string | number): void {
-    this.sound.speed = Number(value);
-    this.onSettingsChange();
+  definirVelocidade(valor: string | number): void {
+    this.som.velocidade = Number(valor);
+    this.aoMudarAjustes();
   }
 
-  setVolume(value: string | number): void {
-    this.sound.volume = Number(value);
-    this.sound.muted = this.sound.volume === 0;
-    this.applySoundSettings(this.sound);
+  definirVolume(valor: string | number): void {
+    this.som.volume = Number(valor);
+    this.som.mudo = this.som.volume === 0;
+    this.aplicarAjustesDeSom(this.som);
   }
 
-  toggleMute(): void {
-    this.sound.muted = !this.sound.muted;
-    this.applySoundSettings(this.sound);
-    this.announce(this.sound.muted ? 'Sound muted' : 'Sound on');
+  alternarMudo(): void {
+    this.som.mudo = !this.som.mudo;
+    this.aplicarAjustesDeSom(this.som);
+    this.anunciar(this.som.mudo ? 'Sound muted' : 'Sound on');
   }
 
-  applyPreset(p: Preset): void {
-    this.sound.scale = p.scale;
-    this.sound.instrument = p.instrument;
-    this.sound.speed = p.speed;
-    this.activePreset = p.id;
-    this.applySoundSettings(this.sound);
-    this.announce('Preset ' + p.label + ' applied');
+  aplicarPredefinicao(p: Predefinicao): void {
+    this.som.escala = p.escala;
+    this.som.instrumento = p.instrumento;
+    this.som.velocidade = p.velocidade;
+    this.predefinicaoAtiva = p.id;
+    this.aplicarAjustesDeSom(this.som);
+    this.anunciar(p.rotulo + ' preset applied');
   }
 
-  /** Any manual adjustment clears the preset and notifies the audio engine. */
-  private onSettingsChange(): void {
-    this.activePreset = null;
-    this.applySoundSettings(this.sound);
+  /** Qualquer ajuste manual desmarca a predefinição e avisa o motor de áudio. */
+  private aoMudarAjustes(): void {
+    this.predefinicaoAtiva = null;
+    this.aplicarAjustesDeSom(this.som);
   }
 
   /* ==========================================================================
-   * ACTIONS: GLOBE AND TIME
+   * AÇÕES: GLOBO E TEMPO
    * ======================================================================== */
 
-  setFrame(value: string | number): void {
-    this.currentFrame = Number(value);
-    this.loadFrame(this.currentRecord.id, this.currentFrame);
+  definirQuadro(valor: string | number): void {
+    this.quadroAtual = Number(valor);
+    this.carregarQuadro(this.discoAtual.id, this.quadroAtual);
   }
 
-  rotate(direction: 'left' | 'right'): void {
-    this.activeRegion = null;
-    this.rotateGlobe(direction);
+  girar(direcao: 'esquerda' | 'direita'): void {
+    this.regiaoAtiva = null;
+    this.girarGlobo(direcao);
   }
 
-  zoom(direction: 'in' | 'out'): void {
-    this.zoomGlobe(direction === 'in' ? 1 : -1);
+  zoom(direcao: 'mais' | 'menos'): void {
+    this.zoomGlobo(direcao === 'mais' ? 1 : -1);
   }
 
-  toggleAutoRotate(): void {
-    this.autoRotate = !this.autoRotate;
-    this.setGlobeAutoRotate(this.autoRotate);
+  alternarRotacaoAutomatica(): void {
+    this.rotacaoAutomatica = !this.rotacaoAutomatica;
+    this.definirRotacaoAutomaticaDoGlobo(this.rotacaoAutomatica);
   }
 
-  goToRegion(region: Region): void {
-    this.activeRegion = region.id;
-    this.cursor = { lat: region.lat, lon: region.lon };
-    this.focusRegionOnGlobe(region);
-    this.announce('Globe at ' + region.label);
+  irParaRegiao(regiao: Regiao): void {
+    this.regiaoAtiva = regiao.id;
+    this.cursor = { lat: regiao.lat, lon: regiao.lon };
+    this.focarRegiaoNoGlobo(regiao);
+    this.anunciar('Globe at ' + regiao.rotulo);
   }
 
-  /** Moves the Explore-mode cursor in 5-degree steps. */
-  moveCursor(dLat: number, dLon: number): void {
+  /** Move o cursor do modo Explorar em passos de 5 graus. */
+  moverCursor(dLat: number, dLon: number): void {
     const lat = Math.max(-90, Math.min(90, this.cursor.lat + dLat));
     let lon = this.cursor.lon + dLon;
     if (lon > 180) lon -= 360;
     if (lon < -180) lon += 360;
     this.cursor = { lat, lon };
-    this.activeRegion = null;
-    this.explorePoint(lat, lon);
+    this.regiaoAtiva = null;
+    this.explorarPonto(lat, lon);
   }
 
   /* ==========================================================================
-   * ACTIONS: ACCESSIBILITY
+   * AÇÕES: ACESSIBILIDADE
    * ======================================================================== */
 
-  toggleAccessibility(key: keyof Accessibility): void {
-    this.a11y[key] = !this.a11y[key];
-    this.savePreferences();
+  alternarAcessibilidade(chave: keyof Acessibilidade): void {
+    this.acess[chave] = !this.acess[chave];
+    this.salvarPreferencias();
   }
 
-  /** Sends text to the screen reader, if announcements are on. */
-  announce(text: string): void {
-    if (this.a11y.announcements) {
-      this.announcement = text;
+  /** Envia um texto ao leitor de tela, se os anúncios estiverem ligados. */
+  anunciar(texto: string): void {
+    if (this.acess.anuncios) {
+      this.anuncio = texto;
     }
   }
 
-  private vibrate(ms = 40): void {
-    if (this.a11y.vibration && typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+  private vibrar(ms = 40): void {
+    if (this.acess.vibracao && typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       navigator.vibrate(ms);
     }
   }
 
   @HostListener('document:keydown', ['$event'])
-  onKeydown(event: KeyboardEvent): void {
-    if (this.showWelcome || event.ctrlKey || event.metaKey || event.altKey) {
+  aoPressionarTecla(evento: KeyboardEvent): void {
+
+    if (evento.key === 'Tab') {
+    this.manterFocoEmCiclo(evento);
+    return;
+    }
+    
+    if (this.mostrarBoasVindas || evento.ctrlKey || evento.metaKey || evento.altKey) {
       return;
     }
 
-    if (event.key === 'Escape') {
-      this.closePanel();
+    if (evento.key === 'Escape') {
+      this.fecharPainel();
       return;
     }
 
-    // Inside buttons, fields and lists, keys keep their normal behavior.
-    const target = event.target as HTMLElement | null;
-    if (target && ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'A'].includes(target.tagName)) {
+    // Dentro de botões, campos e listas, as teclas mantêm o comportamento normal.
+    const alvo = evento.target as HTMLElement | null;
+    if (alvo && ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'A'].includes(alvo.tagName)) {
       return;
     }
 
-    const key = event.key.toLowerCase();
+    const tecla = evento.key.toLowerCase();
 
-    if (key === ' ') {
-      event.preventDefault();
-      this.togglePlayback();
-    } else if (key === 'm') {
-      this.toggleMute();
-    } else if (key.length === 1 && key >= '1' && key <= '6') {
-      this.openSection(this.sections[Number(key) - 1].id);
-    } else if (this.sound.mode === 'explore' && key.startsWith('arrow')) {
-      event.preventDefault();
-      if (key === 'arrowup') this.moveCursor(5, 0);
-      if (key === 'arrowdown') this.moveCursor(-5, 0);
-      if (key === 'arrowleft') this.moveCursor(0, -5);
-      if (key === 'arrowright') this.moveCursor(0, 5);
+    if (tecla === ' ') {
+      evento.preventDefault();
+      this.alternarReproducao();
+    } else if (tecla === 'm') {
+      this.alternarMudo();
+    } else if (tecla.length === 1 && tecla >= '1' && tecla <= '6') {
+      this.abrirSecao(this.secoes[Number(tecla) - 1].id);
+    } else if (this.som.modo === 'explorar' && tecla.startsWith('arrow')) {
+      evento.preventDefault();
+      if (tecla === 'arrowup') this.moverCursor(5, 0);
+      if (tecla === 'arrowdown') this.moverCursor(-5, 0);
+      if (tecla === 'arrowleft') this.moverCursor(0, -5);
+      if (tecla === 'arrowright') this.moverCursor(0, 5);
     }
   }
 
-  private savePreferences(): void {
+  private salvarPreferencias(): void {
     try {
-      localStorage.setItem(PREFERENCES_KEY, JSON.stringify(this.a11y));
+      localStorage.setItem(CHAVE_PREFERENCIAS, JSON.stringify(this.acess));
     } catch {
-      // No storage available: preferences only last for this visit.
+      // Sem armazenamento disponível: as preferências valem só para esta visita.
     }
   }
 
-  private loadPreferences(): void {
+  private carregarPreferencias(): void {
     try {
-      const saved = localStorage.getItem(PREFERENCES_KEY);
-      if (saved) {
-        this.a11y = { ...this.a11y, ...JSON.parse(saved) };
+      const salvo = localStorage.getItem(CHAVE_PREFERENCIAS);
+      if (salvo) {
+        this.acess = { ...this.acess, ...JSON.parse(salvo) };
       }
     } catch {
-      // Ignore unreadable preferences.
+      // Ignora preferências ilegíveis.
     }
   }
 
   /* ==========================================================================
-   * ACTIONS: SHARE
+   * AÇÕES: COMPARTILHAR
    * ======================================================================== */
 
-  async share(): Promise<void> {
-    const params = new URLSearchParams({
-      record: this.currentRecord.id,
-      mode: this.sound.mode,
-      scale: this.sound.scale,
-      instrument: this.sound.instrument,
-      speed: String(this.sound.speed),
+  async compartilhar(): Promise<void> {
+    const parametros = new URLSearchParams({
+      disco: this.discoAtual.id,
+      modo: this.som.modo,
+      escala: this.som.escala,
+      instrumento: this.som.instrumento,
+      velocidade: String(this.som.velocidade),
     });
-    this.shareLink = window.location.origin + window.location.pathname + '?' + params.toString();
+    this.linkCompartilhavel = window.location.origin + window.location.pathname + '?' + parametros.toString();
 
     try {
-      await navigator.clipboard.writeText(this.shareLink);
-      this.linkCopied = true;
-      this.announce('Link copied');
+      await navigator.clipboard.writeText(this.linkCompartilhavel);
+      this.linkCopiado = true;
+      this.anunciar('Link copied');
     } catch {
-      // No permission to copy: the link stays visible in the field for manual copy.
-      this.linkCopied = false;
+      // Sem permissão para copiar: o link fica visível no campo para cópia manual.
+      this.linkCopiado = false;
     }
   }
 
-  /** Opens the site with the record and settings that came in the shared link. */
-  private readSettingsFromUrl(): void {
+  /** Abre o site já com o disco e os ajustes que vieram no link compartilhado. */
+  private lerAjustesDaUrl(): void {
+    // No servidor (SSR) não existe "window"; só lê a URL no navegador.
+    if (typeof window === 'undefined') return;
+
     const p = new URLSearchParams(window.location.search);
 
-    const record = this.records.find((r) => r.id === p.get('record'));
-    if (record) this.currentRecord = record;
+    const disco = this.discos.find((d) => d.id === p.get('disco'));
+    if (disco) this.discoAtual = disco;
 
-    const mode = p.get('mode');
-    if (mode === 'sweep' || mode === 'explore') this.sound.mode = mode;
+    const modo = p.get('modo');
+    if (modo === 'varredura' || modo === 'explorar') this.som.modo = modo;
 
-    const scale = p.get('scale');
-    if (this.scales.some((s) => s.id === scale)) this.sound.scale = scale as string;
+    const escala = p.get('escala');
+    if (this.escalas.some((e) => e.id === escala)) this.som.escala = escala as string;
 
-    const instrument = p.get('instrument');
-    if (this.instruments.some((i) => i.id === instrument)) this.sound.instrument = instrument as string;
+    const instrumento = p.get('instrumento');
+    if (this.instrumentos.some((i) => i.id === instrumento)) this.som.instrumento = instrumento as string;
 
-    const speed = Number(p.get('speed'));
-    if (speed >= this.speedMin && speed <= this.speedMax) this.sound.speed = speed;
+    const velocidade = Number(p.get('velocidade'));
+    if (velocidade >= this.velocidadeMin && velocidade <= this.velocidadeMax) this.som.velocidade = velocidade;
   }
 
   /* ==========================================================================
-   * INTEGRATION: BACKEND, AUDIO ENGINE AND 3D GLOBE
+   * INTEGRAÇÃO: BACKEND, MOTOR DE ÁUDIO E GLOBO 3D
    *
-   * Nothing below is implemented. Each function describes what the dashboard
-   * expects from the other part of the project. Ideally, move these functions
-   * into services (e.g. RecordsService, AudioService, GlobeService) and inject
-   * them.
+   * Nada abaixo está implementado. Cada função descreve o que o dashboard
+   * espera da outra parte do projeto. O ideal é mover estas funções para
+   * serviços (ex.: DiscosService, AudioService, GloboService) e injetá-los.
    * ======================================================================== */
 
   // ---- Backend --------------------------------------------------------------
 
   /**
-   * BACKEND: fetch the catalog of EIC visualizations.
-   * Expected: a list of RecordItem (id, title, description, period, source, legend
-   * colors, minimum and maximum values, total frames).
-   * On receive: this.records = response; this.currentRecord = this.records[0].
+   * BACKEND: buscar o catálogo de visualizações do EIC.
+   * Esperado: lista de Disco (id, título, descrição, período, fonte, cores da
+   * legenda, valores mínimo e máximo, total de quadros).
+   * Ao receber: this.discos = resposta; this.discoAtual = this.discos[0].
    */
-  private loadRecords(): void {
-    // TODO(backend): e.g. GET /api/records
+
+  private http = inject(HttpClient, { optional: true });
+
+  private carregarDiscos(): void {
+    if (!this.http) return;
+    this.http.get<Disco[]>('/api/discos').subscribe({
+    next: (discos) => {
+      if (discos.length) {
+        this.discos = discos;
+        this.discoAtual = discos[0];
+      }
+    },
+    error: () => this.anunciar('Could not load the visualizations'),
+  });
   }
 
   /**
-   * BACKEND: fetch one frame (image) of a visualization.
-   * Expected: the frame image and its date.
-   * On receive: update this.frameDate and hand the image to the 3D globe
-   * (texture) and to the audio engine (pixels to sonify).
+   * BACKEND: buscar um quadro (imagem) de uma visualização.
+   * Esperado: a imagem do quadro e a data correspondente.
+   * Ao receber: atualizar this.dataDoQuadro e entregar a imagem ao globo 3D
+   * (textura) e ao motor de áudio (pixels a sonificar).
    */
-  private loadFrame(recordId: string, index: number): void {
-    // TODO(backend): e.g. GET /api/records/{recordId}/frames/{index}
+  private carregarQuadro(discoId: string, indice: number): void {
+    if (!this.http) return;
+     this.http.get<{ data: string }>("/api/discos/${discoId}/quadros/${indice}")
+     .subscribe((quadro) => (this.dataDoQuadro = quadro.data));
   }
 
-  // ---- Audio engine (sonification) ------------------------------------------
+  // ---- Motor de áudio (sonificação) -----------------------------------------
 
   /**
-   * AUDIO: start sonifying the current frame with the settings in this.sound.
-   * In "sweep" mode, scan across the image; in "explore" mode, play only the
-   * point at this.cursor. If this.playInSequence is true, call nextRecord()
-   * when the sweep of the last frame finishes.
+   * ÁUDIO: iniciar a sonificação do quadro atual com os ajustes de this.som.
+   * No modo "varredura", percorrer a imagem; no modo "explorar", tocar só o
+   * ponto de this.cursor. Se this.tocarEmSequencia for true, chamar
+   * proximoDisco() quando a varredura do último quadro terminar.
    */
-  private startAudio(): void {
-    // TODO(audio): create or resume the AudioContext and start playing.
+  private iniciarAudio(): void {
+    // TODO(áudio): criar ou retomar o AudioContext e começar a tocar.
   }
 
-  /** AUDIO: pause the sonification without losing the sweep position. */
-  private pauseAudio(): void {
-    // TODO(audio)
-  }
-
-  /**
-   * AUDIO: apply mode, scale, instrument, speed (40 to 160), volume (0 to 100)
-   * and mute. Called on every change in the controls.
-   */
-  private applySoundSettings(settings: SoundSettings): void {
-    // TODO(audio)
+  /** ÁUDIO: pausar a sonificação sem perder a posição da varredura. */
+  private pausarAudio(): void {
+    // TODO(áudio)
   }
 
   /**
-   * AUDIO -> DASHBOARD: the audio engine should call this on every note,
-   * reporting the region, the data value and the note played. "peak" flags an
-   * extreme value, used for phone vibration.
-   * For the real audio visualizer, connect an AnalyserNode to the HTML bars.
+   * ÁUDIO: aplicar modo, escala, instrumento, velocidade (40 a 160),
+   * volume (0 a 100) e mudo. Chamada a cada mudança nos controles.
    */
-  receiveReading(reading: Reading, peak = false): void {
-    this.reading = reading;
-    this.announce(reading.region + ': ' + reading.value + ', note ' + reading.note);
-    if (peak) {
-      this.vibrate();
+  private aplicarAjustesDeSom(ajustes: AjustesDeSom): void {
+    // TODO(áudio)
+  }
+
+  /**
+   * ÁUDIO -> DASHBOARD: o motor de áudio deve chamar esta função a cada nota,
+   * informando região, valor do dado e nota tocada. "pico" indica um valor
+   * extremo, usado para a vibração no celular.
+   * Para o visualizador de áudio real, ligar um AnalyserNode às barras do HTML.
+   */
+  receberLeitura(leitura: Leitura, pico = false): void {
+    this.leitura = leitura;
+    this.anunciar(leitura.regiao + ': ' + leitura.valor + ', note ' + leitura.nota);
+    if (pico) {
+      this.vibrar();
     }
   }
 
-  // ---- 3D globe -------------------------------------------------------------
+  // ---- Globo 3D -------------------------------------------------------------
 
-  /** GLOBE: rotate one step to the left or to the right. */
-  private rotateGlobe(direction: 'left' | 'right'): void {
-    // TODO(globe)
+  /** GLOBO: girar um passo para a esquerda ou para a direita. */
+  private girarGlobo(direcao: 'esquerda' | 'direita'): void {
+    // TODO(globo)
   }
 
-  /** GLOBE: move the camera closer (+1) or farther (-1). */
-  private zoomGlobe(step: number): void {
-    // TODO(globe)
+  /** GLOBO: aproximar (+1) ou afastar (-1) a câmera. */
+  private zoomGlobo(passo: number): void {
+    // TODO(globo)
   }
 
-  /** GLOBE: turn continuous rotation on or off. */
-  private setGlobeAutoRotate(enabled: boolean): void {
-    // TODO(globe)
+  /** GLOBO: ligar ou desligar a rotação contínua. */
+  private definirRotacaoAutomaticaDoGlobo(ligada: boolean): void {
+    // TODO(globo)
   }
 
-  /** GLOBE: rotate until the region's latitude and longitude are centered. */
-  private focusRegionOnGlobe(region: Region): void {
-    // TODO(globe)
+  /** GLOBO: girar até centralizar a latitude e a longitude da região. */
+  private focarRegiaoNoGlobo(regiao: Regiao): void {
+    // TODO(globo)
   }
 
   /**
-   * GLOBE + AUDIO: show the cursor at (lat, lon) on the globe and play the note
-   * for that point. The globe should also call moveCursor() or update
-   * this.cursor when the person hovers or touches it.
+   * GLOBO + ÁUDIO: mostrar o cursor em (lat, lon) no globo e tocar a nota
+   * daquele ponto. O globo também deve chamar moverCursor() ou atualizar
+   * this.cursor quando a pessoa passar o mouse ou o dedo sobre ele.
    */
-  private explorePoint(lat: number, lon: number): void {
-    // TODO(globe + audio)
+  private explorarPonto(lat: number, lon: number): void {
+    // TODO(globo + áudio)
   }
+
+  rotacao = 0;
+
+definirRotacao(valor: string | number): void {
+  this.rotacao = Number(valor);
+  this.regiaoAtiva = null;
+  this.definirRotacaoDoGlobo(this.rotacao);
+}
+
+/** GLOBO: posicionar o globo na longitude indicada (-180 a 180). */
+private definirRotacaoDoGlobo(graus: number): void {
+  // TODO(globo)
+}
+
+constructor(private host: ElementRef<HTMLElement>) {}
+
+private manterFocoEmCiclo(evento: KeyboardEvent): void {
+  const raiz = this.mostrarBoasVindas
+    ? this.host.nativeElement.querySelector<HTMLElement>('.abertura')
+    : this.host.nativeElement;
+  if (!raiz) return;
+
+  const focaveis = Array.from(
+    raiz.querySelectorAll<HTMLElement>('button, a[href], input, select')
+  ).filter((el) => el.offsetParent !== null);
+  if (!focaveis.length) return;
+
+  const primeiro = focaveis[0];
+  const ultimo = focaveis[focaveis.length - 1];
+
+  if (!evento.shiftKey && document.activeElement === ultimo) {
+    evento.preventDefault();
+    primeiro.focus();
+  } else if (evento.shiftKey && document.activeElement === primeiro) {
+    evento.preventDefault();
+    ultimo.focus();
+  }
+}
 }
