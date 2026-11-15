@@ -1,0 +1,76 @@
+.amber-app {
+  --amber-bg: #0b0d10;
+  --amber-panel: #14171c;
+  --amber-gold: #ffb547;
+  --amber-text: #f3f0e8;
+  --amber-muted: #b8b4ab;
+  box-sizing: border-box;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: var(--amber-text);
+  background: radial-gradient(ellipse at 53% 45%, #26201744, transparent 58%), var(--amber-bg);
+  font: 14px/1.6 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  isolation: isolate;
+}
+.amber-app *, .amber-app *::before, .amber-app *::after {box-sizing: border-box;}
+.amber-app p, .amber-app h1, .amber-app h2 {margin: 0;}
+.amber-app button, .amber-app input {font: inherit;}
+.amber-app button:focus-visible, .amber-app canvas:focus-visible, .amber-app input:focus-visible {outline: 2px solid #fff0c2; outline-offset: 5px;}
+.amber-header {height: 100px; margin: 0 40px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #ffffff18; gap:20px;}
+.amber-brand {display:flex; gap:13px; align-items:center;}
+.amber-brand-symbol {color:var(--amber-gold); font-size:40px; line-height:1;}
+.amber-brand-name {display:block; font-size:15px; letter-spacing:.2em; font-weight:650;}
+.amber-brand-sub {display:block; color:var(--amber-muted); font:10px/2 ui-monospace,monospace; letter-spacing:.17em;}
+.amber-mode {display:flex; align-items:center; gap:10px; color:#d8c8ad; font:10px ui-monospace,monospace; letter-spacing:.14em;}
+.amber-status-dot {height:5px; width:5px; background:var(--amber-gold); border-radius:50%; box-shadow:0 0 12px #ffb54766;}
+.amber-layout {flex:1; display:grid; grid-template-columns:220px minmax(0,1fr) 200px; padding:0 40px; min-height:570px;}
+.amber-intro {padding-top:60px; position:relative; z-index:1;}
+.amber-eyebrow {font:10px/1.5 ui-monospace,monospace; color:var(--amber-gold); letter-spacing:.15em;}
+.amber-title {font-size:clamp(30px,3.1vw,48px); font-weight:450; line-height:1.12; letter-spacing:-.055em; margin-top:24px !important; max-width:250px;}
+.amber-description {margin-top:20px !important; color:var(--amber-muted); max-width:195px; font-size:13px; line-height:1.8;}
+.amber-regions {margin-top:38px; display:flex; flex-wrap:wrap; gap:8px; max-width:200px;}
+.amber-label {font:9px/1.8 ui-monospace,monospace; font-weight:400; letter-spacing:.14em; color:var(--amber-muted);}
+.amber-regions h2 {width:100%; margin-bottom:7px !important;}
+.amber-button {border:1px solid #ffffff28; background:#ffffff03; color:var(--amber-text); padding:10px 14px; cursor:pointer; border-radius:3px; font-size:11px !important; transition:background .15s,border-color .15s; white-space:nowrap; min-height:44px;}
+.amber-button:hover {border-color:#ffb54788; background:#ffb54710;}
+.amber-button[aria-pressed=true] {border-color:var(--amber-gold); color:var(--amber-gold); background:#ffb5470c;}
+.amber-button:disabled {opacity:.4; cursor:default;}
+.amber-destination {padding:6px 10px; min-height:38px; color:#d4cfc4;}
+.amber-aside-note {font-size:10px; color:var(--amber-muted); line-height:1.8; max-width:160px; margin-top:32px !important; border-left:1px solid #ad8348; padding-left:12px;}
+.amber-viewport {position:relative; min-width:0; min-height:570px;}
+.amber-canvas {display:block; width:100%; height:100%; min-height:570px; touch-action:none; cursor:grab; border-radius:8px;}
+.amber-canvas.is-dragging {cursor:grabbing;}
+.amber-viewport-caption {position:absolute; top:30px; left:24px; right:24px; display:flex; justify-content:space-between; gap:16px; font:8px ui-monospace,monospace; letter-spacing:.1em; color:#b8b4ab; pointer-events:none;}
+.amber-hint {position:absolute; bottom:30px; left:0; width:100%; text-align:center; font:8px/1.8 ui-monospace,monospace; letter-spacing:.1em; color:var(--amber-muted); pointer-events:none;}
+.amber-fallback {position:absolute; top:35%; left:10%; right:10%; background:#14171c; padding:24px; border:1px solid var(--amber-gold);}
+.amber-inspector {padding-top:65px; padding-left:24px; border-left:1px solid #ffffff0b; margin:30px 0;}
+.amber-inspector-title {font-size:18px; line-height:1.4; font-weight:450; margin-top:12px !important; letter-spacing:-.025em;}
+.amber-readout {margin-top:32px;}
+.amber-coordinate {display:flex; flex-direction:column; border-bottom:1px solid #ffffff18; padding:15px 0 18px; gap:6px;}
+.amber-coordinate-value {font:24px/1.3 ui-monospace,monospace; color:#f3d5a2; letter-spacing:-.045em; min-height:32px;}
+.amber-selection-state {font-size:11px; color:var(--amber-muted); line-height:1.8; margin-top:18px !important; min-height:60px;}
+.amber-direction-pad {display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:20px;}
+.amber-direction-pad .amber-button {padding:0; font-size:18px !important; min-width:0;}
+.amber-motion {display:flex; align-items:center; gap:8px; font-size:11px; color:#d0cbc0; margin-top:28px; cursor:pointer; min-height:44px;}
+.amber-motion input {accent-color:var(--amber-gold); width:16px; height:16px;}
+.amber-inspector-note {font-size:10px; line-height:1.8; color:var(--amber-muted); margin-top:18px !important;}
+.amber-footer {margin:0 40px; min-height:106px; display:flex; align-items:center; justify-content:space-between; gap:20px; border-top:1px solid #ffffff18;}
+.amber-footer-caption, .amber-credit {display:flex; flex-direction:column; gap:4px;}
+.amber-small {font-size:10px; color:var(--amber-muted);}
+.amber-controls {display:flex; align-items:center; gap:8px;}
+.amber-square {width:44px; padding:0; font-size:22px !important;}
+.amber-zoom {font:11px ui-monospace,monospace; min-width:45px; text-align:center; color:#e2d7c4;}
+.amber-control-separator {width:1px; height:24px; background:#ffffff20; margin:0 7px;}
+.amber-rotate {border-color:#9a7039; color:#ffcf87;}
+.amber-credit {font:8px/1.8 ui-monospace,monospace; text-align:right; color:var(--amber-muted); letter-spacing:.08em;}
+@media (min-width:1600px) {.amber-layout{grid-template-columns:270px minmax(0,1fr) 240px}.amber-title{max-width:270px}.amber-viewport,.amber-canvas{min-height:680px}}
+@media (max-width:1100px) {.amber-layout{grid-template-columns:190px minmax(0,1fr) 170px;padding:0 24px}.amber-header,.amber-footer{margin:0 24px}.amber-title{font-size:34px}.amber-inspector{padding-left:18px}.amber-viewport-caption span:last-child{display:none}.amber-footer-caption .amber-small,.amber-credit{display:none}.amber-footer{justify-content:space-between}}
+@media (max-width:800px) {
+  .amber-header{height:82px;margin:0 20px}.amber-brand-name{font-size:12px}.amber-brand-sub{font-size:8px}.amber-mode{font-size:8px;max-width:100px;line-height:1.8}.amber-layout{display:flex;flex-direction:column;padding:0 20px;min-height:0}
+  .amber-intro{padding-top:28px}.amber-title{font-size:36px;max-width:340px;margin-top:12px !important}.amber-description{max-width:320px;font-size:12px;margin-top:12px !important}.amber-regions{max-width:none;margin-top:22px;gap:6px}.amber-regions h2{width:100%;font-size:8px}.amber-aside-note{display:none}
+  .amber-viewport{min-height:390px;height:390px;margin:0 -10px}.amber-canvas{min-height:390px;height:390px}.amber-viewport-caption{top:20px;font-size:7px;left:10px;right:10px}.amber-hint{bottom:15px;font-size:7px}
+  .amber-inspector{border-left:0;border-top:1px solid #ffffff18;margin:0;padding:22px 0}.amber-inspector-title{display:none}.amber-readout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:4px}.amber-coordinate-value{font-size:25px}.amber-coordinate{padding:12px 0}.amber-selection-state{min-height:0;margin-top:12px !important}.amber-direction-pad{max-width:230px;margin-top:16px}.amber-motion{margin-top:12px}.amber-inspector-note{max-width:320px;margin-top:8px !important}
+  .amber-footer{margin:0 20px;flex-direction:column;align-items:flex-start;padding:20px 0 24px;gap:10px}.amber-footer-caption{display:none}.amber-controls{flex-wrap:wrap;gap:7px;width:100%}.amber-control-separator{display:none}.amber-controls .amber-button:last-child{margin-left:auto}.amber-rotate{padding:10px}.amber-controls .amber-button{font-size:10px !important}
+}
+@media (prefers-reduced-motion:reduce) {.amber-app *{transition:none !important;scroll-behavior:auto !important}}
