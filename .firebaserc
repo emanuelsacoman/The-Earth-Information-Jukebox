@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "earth-jukebox": "the-earth-information-jukebox",
+    "default": "the-earth-information-jukebox"
+  },
+  "targets": {},
+  "etags": {}
+}
