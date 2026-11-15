@@ -4,6 +4,8 @@ Gate só é aprovado com **comando/roteiro, resultado, data, commit, ambiente e 
 
 ## Gates e baseline F0
 
+Os resultados da tabela pertencem à auditoria histórica `aab5471`, preservada em [estado atual](current-state.md). A revisão documental não executou novamente build/testes nem validou o produto. As evidências do mundo em outra branch estão separadas em [entrega do mundo](world-delivery.md); não são aprovação dos gates da `brain`.
+
 | Gate | Critério de aprovação verificável | Evidência esperada | Baseline F0 |
 |---|---|---|---|
 | G-DOC | Todos os documentos/links locais existem, IDs/dependências coerentes; estado e handoff correspondem ao Git; apenas documentação alterada | Inventário, validação de links/IDs, `git diff --check`, lista de alterações e diff de código vazio | Ver resultado final no [handoff](handoff.md) |

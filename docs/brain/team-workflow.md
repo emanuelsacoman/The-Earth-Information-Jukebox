@@ -2,7 +2,13 @@
 
 [Índice do cérebro](README.md) · [Roadmap](roadmap.md) · [Handoff](handoff.md)
 
-## Snapshot verificado
+## Continuidade documental — 15/11/2026
+
+A documentação inicial está publicada em `brain`/`6fbc52fe7a577d779315ba6e972d66350efc91df`. A atualização presente ocorre somente na `brain`, por instrução explícita do usuário para finalizar a documentação. A branch `luiz` permanece em `53b577ef51789a0f7532610623af07ededee7dc1`, consultada como fonte da [entrega do mundo](world-delivery.md). Não houve integração de código entre as branches nem alteração de `main`.
+
+As restrições descritas abaixo para a execução original de F0 são históricas. Não substituem a autorização atual do usuário, nem estendem seu escopo para implementação, merge, deploy ou submissão. Os demais snapshots de branches não foram atualizados nesta revisão.
+
+## Snapshot verificado na F0 — histórico
 
 Inspeção local em **15/11/2026**, na branch `brain`, commit `aab547114375c7232807d31dbaa726c6fec0b1a2`. A árvore rastreada estava limpa antes da F0. Foram consultados `git status`, `git branch -avv`, `git log`, `git remote -v` e `git rev-list --left-right --count`. Não houve fetch; referências `origin/*` são cópias locais e não comprovam o estado atual do servidor.
 

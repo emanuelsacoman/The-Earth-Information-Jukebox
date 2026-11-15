@@ -20,4 +20,6 @@ Snapshot: **15/11/2026**, evidências completas em [estado atual](current-state.
 
 ## Como atualizar
 
+Na revisão documental de 15/11/2026, nenhum risco de produto foi encerrado. A entrega externa do [mundo](world-delivery.md) não corrige o código desta branch. R11 preserva a lacuna e a referência temporal da F0; confirmar prazo e regras atuais em F7-01, sem tratar a palavra “hoje” da auditoria como informação vigente. As validações do mundo também não eliminam alertas de dependências preexistentes.
+
 Acrescente resultado/data/commit ao risco, tarefa mitigadora e evidência verificável. Use `MITIGADO` somente quando a condição estiver tratada e validada; `ACEITO` requer decisão humana explícita e justificativa, sem encobrir gates obrigatórios. Diferencie teste que falhou de teste que não pôde executar. Novos riscos recebem IDs estáveis; não renumerar os existentes.

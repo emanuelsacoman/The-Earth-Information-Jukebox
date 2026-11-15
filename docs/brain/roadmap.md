@@ -1,6 +1,8 @@
 # Roadmap operacional F0–F7
 
-Snapshot de **15/11/2026**. **Somente F0 autorizada nesta execução.** F1–F7 são planejamento, não autorização de implementação, push, PR, merge, deploy ou submissão. Responsáveis humanos não foram atribuídos: **UNASSIGNED** em todas as tarefas.
+Snapshot de **15/11/2026**, revisado no fechamento documental sobre `brain`/`6fbc52f`. F0 é a única fase executada nesta branch. A instrução atual autoriza finalizar a documentação na `brain`; F1–F7 continuam planejamento. Responsáveis humanos pelas tarefas futuras permanecem **UNASSIGNED**, sem atribuição presumida pelo nome da branch.
+
+Existe uma entrega independente de exploração do mundo em `luiz`/`53b577e`, descrita em [entrega do mundo](world-delivery.md). Ela oferece código e evidências para avaliação futura, mas não foi integrada à `brain` e não encerra automaticamente F1, F4-04 ou F6-02. Os estados abaixo são relativos à execução nesta branch.
 
 Estados de tarefa: `NOT_STARTED` (sem execução), `IN_PROGRESS` (execução em curso), `BLOCKED` (dependência/impedimento identificado), `VALIDATED` (aceite verificado, fechamento pendente), `DONE` (aceite e registros concluídos). A matriz IMPLEMENTED/PARTIAL/MOCK/TODO/BLOCKED/UNKNOWN pertence ao [estado funcional](current-state.md), não ao andamento deste roadmap.
 
@@ -8,7 +10,7 @@ Cada item abaixo define prioridade, **estado inicial → atual**, dependências,
 
 ## Caminho crítico e ordem de execução
 
-**Primeira tarefa de desenvolvimento recomendada: F1-01**, somente após nova autorização. Em paralelo, **F7-01 é urgente**: o prazo consultado é hoje e o fuso da equipe ainda precisa de confirmação; checar formalidades não depende do motor de áudio.
+**Primeira tarefa de desenvolvimento recomendada: F1-01**, quando houver autorização de implementação. Em paralelo, **F7-01** exige confirmar os requisitos e o prazo vigentes com a equipe. A referência temporal da auditoria F0 é histórica e não comprova elegibilidade ou prazo atual.
 
 ```text
 F0-01 → F0-02 → F0-03
@@ -169,6 +171,7 @@ Entrega/área: layout funcional de imagem/controles/texto em Dashboard/Index. In
 ### F6-02 — Avaliar/integrar globo somente com justificativa
 
 **P2 · NOT_STARTED → NOT_STARTED · Dependências: F7-02 · Responsável: UNASSIGNED.**
+Atualização documental: há um candidato implementado fora desta branch, [Observatório Âmbar](world-delivery.md). A prioridade 2D/Sweep da ADR 0001 permanece. Avaliar o candidato não implica copiar sua substituição da tela inicial nem aprovar os critérios científicos, de fallback e desempenho desta tarefa.
 Entrega/área: decisão custo/benefício e, se autorizada, evolução de PlanetEarth. Inicial: componente vazio e handlers TODO. Aceite: rotação/zoom reais e teclado alternativo; dado geográfico corresponde à textura/posição, nenhum lat/lon inventado; fallback 2D preservado; medições CPU/GPU. Pós-MVP por padrão. Riscos: R04/R09/R13.
 
 ### F6-03 — Refinar animação e desempenho medido

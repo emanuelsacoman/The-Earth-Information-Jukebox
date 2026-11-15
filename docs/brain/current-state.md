@@ -1,5 +1,11 @@
 # Estado atual — auditoria F0
 
+## Leitura atual do registro — 15/11/2026
+
+A auditoria abaixo é histórica, referente ao código `aab5471`. A documentação inicial foi publicada em `brain` no commit `6fbc52fe7a577d779315ba6e972d66350efc91df`. A revisão documental parte desse commit: o diff de aplicação, configuração e dependências contra `aab5471` continua vazio. Portanto, os hooks TODO e o placeholder de PlanetEarth ainda descrevem o código da `brain`.
+
+O mundo recebeu implementação em outra branch: veja [entrega do mundo](world-delivery.md), com referência fixa a `53b577e`. Seus resultados de build, testes e navegador pertencem àquela entrega; não aprovam os gates desta branch. Nenhum build ou teste Angular foi repetido para a presente alteração exclusivamente documental. Estado de continuidade em [handoff](handoff.md).
+
 ## Referência e método
 
 - Inspeção em **15/11/2026**, contexto de datas `America/Sao_Paulo`.
