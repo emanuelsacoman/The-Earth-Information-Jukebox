@@ -1,15 +1,23 @@
-# TheEarthInformationJukebox
+# Earth Information Jukebox
 
-Na `brain`, a experiência reúne o Observatório Âmbar e a sonificação de imagens NASA de luzes noturnas. A página abre no planeta; o painel de som está abaixo, acessível pelo link **Ouvir dados NASA**. Escolha 2012 ou 2023 e pressione **Reproduzir**: o som descreve o brilho das regiões da imagem 2D. A seleção no globo continua independente, sem associação geográfica inventada. Veja [o que falta para fechar a entrega frente ao desafio NASA](docs/brain/nasa-readiness.md).
+Explore a globe and listen to NASA night-lights imagery. The application opens on Earth, then offers a separate image-sonification panel. Choose 2012 or 2023 and press **Play**. Relative image brightness controls notes and voice gain. Horizontal image position controls stereo panorama. A highlighted region and text reading follow playback.
 
-## MVP — Observatório Âmbar
+[Demo presentation](docs/demo/earth-jukebox-demo.pptx) · [Submission text](docs/brain/submission-draft-en.md) · [AI assistance](AI_USAGE.md)
 
-A branch `luiz` contém o MVP de exploração livre do planeta: rotação, zoom, seleção geográfica, destinos e teclado, sem camadas científicas ou áudio. O dashboard anterior foi preservado no código; a tela inicial desta entrega monta o mundo. Veja [implementação, validação e limites](docs/observatorio-ambar-mvp.md).
+## Run locally
 
-Validação executada com Node **22.23.5** e npm **10.9.9**, sem alteração do runtime global. Instalação do lockfile com scripts de instalação desativados:
+Use Node.js 22 and a compatible npm version. Chrome is required for the Angular tests.
 
 ```powershell
-npm ci --ignore-scripts
+npm ci --ignore-scripts --no-audit --no-fund
+npm start -- --host 127.0.0.1
+```
+
+Open `http://127.0.0.1:4200`. No audio starts automatically. Installation lifecycle scripts stay disabled. Dependencies retain their existing lockfile and known advisories; no security certification is implied.
+
+## Build and verify
+
+```powershell
 $env:NG_CLI_ANALYTICS = 'false'
 $env:NG_BUILD_MAX_WORKERS = '1'
 npm run build
@@ -18,36 +26,18 @@ node --test tests/amber-earth.test.mjs
 node tests/production-smoke.mjs
 ```
 
-O teste Karma precisa de Chrome instalado. Para executar o resultado compilado:
+Run the compiled server with `node dist/the-earth-information-jukebox/server/server.mjs` and open `http://127.0.0.1:4000`. The server binds to loopback by default. `PORT` and `HOST` allow explicit configuration. Public deployment requires a separate hosting/security review.
 
-```powershell
-npm run serve:ssr:The-Earth-Information-Jukebox
-```
+## Controls and access
 
-O endereço padrão é `http://127.0.0.1:4000`. `PORT` define a porta e `HOST` permite configurar a interface explicitamente. As dependências preexistentes têm alertas conhecidos e avisos de engines/depreciação; este MVP não inicializa Firebase/Auth, e validação local não significa aprovação de deploy público. Não use `npm audit fix --force` automaticamente.
+The first keyboard link skips to the sound panel. Globe destinations, direction buttons and canvas arrow keys select a point; plus/minus change zoom and Home resets the view. Reduced motion disables automatic rotation. The sound panel provides Play/Pause, Restart, Mute, Volume, Speed and Spatial position. The text reading can be used without sound. Source, formulas and limitations appear under **Method, credits and limitations**.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
+## Data and interpretation
 
-## Development server
+The two annual images derive from [NASA SVS 5276](https://svs.gsfc.nasa.gov/5276/), the original visualization linked by its [EIC version, SVS 5313](https://svs.gsfc.nasa.gov/5313/). The [manifest](public/data/night-lights/manifest.json) records exact resources, hashes, transformation and credits. The globe uses [Natural Earth geography](src/app/view/screen-components/planet-earth/CREDITS.md).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+The sound represents RGB image brightness without calibrated radiance. Black pixels may have several meanings. Progress is a spatial scan through one annual image. Globe coordinates do not control the audio because a geographic transform has not been validated. NASA's Scientific Visualization Studio and its contributors retain the credits listed in the manifest. No NASA endorsement is implied.
 
-## Code scaffolding
+## Delivery status
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The release interface and public metadata are in English. The demo is an editable draft because the user requested that team name, members and event remain pending. Human listening, screen-reader testing and mobile-device acceptance still require confirmation. No official submission has been performed. [Project metadata](public/project-metadata.json) records AI assistance and the remaining limitations.

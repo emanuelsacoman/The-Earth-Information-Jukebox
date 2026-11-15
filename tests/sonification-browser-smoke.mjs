@@ -149,7 +149,7 @@ function instrumentAudioAndReading() {
     if (key === previousReading) return;
     previousReading = key;
     if (document.querySelector('.state[data-status]')?.dataset.status !== 'playing') return;
-    const cellMatch = text.match(/^Célula (\d+):/);
+    const cellMatch = text.match(/^Cell (\d+):/);
     const frequencyMatch = text.match(/([\d.]+) Hz/);
     const marker = document.querySelector('.image-stage .cell');
     const info = stats.contexts.at(-1);
@@ -279,7 +279,7 @@ try {
   await input('#audio-speed', 2, 'change');
   await waitFor(statusIs('paused'), 'speed change pauses');
   await input('#sweep-position', 4.8);
-  assert.match(await cdp.evaluate('document.querySelector(".reading p").textContent'), /Célula 21:/);
+  assert.match(await cdp.evaluate('document.querySelector(".reading p").textContent'), /Cell 21:/);
   await play();
   await delay(550);
   const speedStarts = await cdp.evaluate('window.__sonificationSmoke.voices.slice(-4).map(voice => voice.start)');
@@ -321,13 +321,13 @@ try {
   assert.equal(sample.contexts, 1);
 
   const beforeGlobe = sample.voiceCount;
-  await click('.amber-destination[aria-label="Explorar Amazônia"]');
-  await waitFor('document.querySelector(".audio-panel footer").textContent.includes("Ponto recebido do globo: -3°")', 'Angular receives globe point');
+  await click('.amber-destination[aria-label="Explore Amazon"]');
+  await waitFor('document.querySelector(".audio-panel details").textContent.includes("Last globe point: -3°")', 'Angular receives globe point');
   await cdp.evaluate('document.querySelector(".amber-canvas").focus()', true);
   await cdp.send('Input.dispatchKeyEvent', {type: 'keyDown', key: 'ArrowRight', code: 'ArrowRight'});
   await cdp.send('Input.dispatchKeyEvent', {type: 'keyUp', key: 'ArrowRight', code: 'ArrowRight'});
-  await waitFor('document.querySelector(".audio-panel footer").textContent.includes("-55°")', 'globe keyboard movement');
-  await click('.amber-button[aria-label="Aproximar"]');
+  await waitFor('document.querySelector(".audio-panel details").textContent.includes("-55°")', 'globe keyboard movement');
+  await click('.amber-button[aria-label="Zoom in"]');
   assert.equal((await snapshot()).voiceCount, beforeGlobe, 'Geographic selection must not synthesize unverified scientific audio');
   await cdp.send('Emulation.setDeviceMetricsOverride', {width: 320, height: 900, deviceScaleFactor: 1, mobile: true});
   await delay(150);
@@ -347,7 +347,7 @@ try {
     cpuTaskDurationSeconds: after.TaskDuration - before.TaskDuration,
     jsHeapUsedBytes: after.JSHeapUsedSize,
     ...sample,
-    limitations: ['Escuta humana PENDENTE: mede-se sinal real no grafo, sem comprovar audição física.', 'Leitor de tela e dispositivo móvel físico não foram auditados.', 'Navegação fecha a página; teardown explícito do Coordinator é coberto pelos testes unitários.'],
+    limitations: ['Human listening PENDING: a signal measurement does not prove physical audibility.', 'Screen-reader and physical mobile-device validation remain pending.', 'Navigation closes the page; Coordinator teardown is covered by unit tests.'],
   };
   await writeFile(join(artifacts, 'report.json'), JSON.stringify(report, null, 2) + '\n');
   await cdp.send('Page.navigate', {url: 'about:blank'});

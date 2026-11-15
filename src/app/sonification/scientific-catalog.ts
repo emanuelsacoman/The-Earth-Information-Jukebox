@@ -6,12 +6,12 @@ const sourceDirectory = 'https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/f
 export const SCIENTIFIC_RECORDS: readonly ScientificRecord[] = [{
   id: 'nasa-svs-5276-night-lights',
   schemaVersion: 1,
-  title: 'Luzes noturnas — NASA Black Marble',
-  description: 'Duas médias anuais, 2012 e 2023, da visualização SVS 5276 relacionada à versão EIC 5313. A varredura percorre a imagem; não representa passagem do tempo.',
+  title: 'Night lights — NASA Black Marble',
+  description: 'Annual night-lights imagery for 2012 and 2023 from NASA SVS 5276, the original visualization linked by EIC version 5313. Playback scans a single image spatially.',
   originUrl: 'https://svs.gsfc.nasa.gov/5276/',
-  credits: 'NASA\'s Scientific Visualization Studio. Visualização: Kel Elkins (USRA). Black Marble: NASA Earth Observatory/Joshua Stevens, dados Suomi NPP VIIRS de Miguel Román, NASA GSFC. Cientistas: Zhuosen Wang, Miguel Román, Ranjay Shrestha, Srija Chakraborty e Virginia Kalb.',
+  credits: 'NASA\'s Scientific Visualization Studio. Visualizer: Kel Elkins (USRA). Black Marble: NASA Earth Observatory/Joshua Stevens, Suomi NPP VIIRS data from Miguel Román, NASA GSFC. Scientists: Zhuosen Wang, Miguel Román, Ranjay Shrestha, Srija Chakraborty and Virginia Kalb.',
   usageUrl: 'https://www.nasa.gov/nasa-brand-center/images-and-media/',
-  limitations: 'O som descreve brilho relativo dos pixels RGB, sem unidade física ou calibração de radiância. Preto pode ser fundo, pouca luz ou ausência de informação; não é uma medição de zero. O ano impresso é mascarado na extração. Redução de resolução e de profundidade de cor altera o brilho da representação. A projeção e a transformação geográfica não foram verificadas: a seleção no globo não controla este som.',
+  limitations: 'Sound describes relative RGB pixel brightness without physical units or radiance calibration. Black may represent background, low brightness or unavailable information. The printed year is masked. Resizing and color-depth conversion affect the image. A geographic transform has not been validated, so globe selection does not control this sound.',
   frames: [{
     id: 'night-lights-2012',
     recordId: 'nasa-svs-5276-night-lights',

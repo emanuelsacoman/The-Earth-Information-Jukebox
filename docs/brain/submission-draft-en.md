@@ -12,11 +12,11 @@ Our web application pairs NASA night-lights imagery with sound synthesized from 
 
 ## Final project and demo links
 
-- Final project: **PENDING — team must choose and verify a public URL or accessible repository/package.**
-- Demo: **PENDING — record a video of 30 seconds or less, or prepare an English deck of no more than seven slides.**
+- Final project: [public brain repository](https://github.com/emanuelsacoman/The-Earth-Information-Jukebox/tree/brain), with local run instructions in the English README. No hosted app deployment is claimed.
+- Demo: [six-slide English presentation](../demo/earth-jukebox-demo.pptx), prepared as an editable draft. Team identification remains intentionally pending; confirm it before official use.
 - Team name and members: **PENDING — use only confirmed team information.**
 
-All submission fields and linked materials require English according to the guide. The current app interface is Portuguese; prepare/review an English version before declaring language compliance. A Portuguese spoken demo requires English subtitles.
+All submission fields and linked materials require English according to the guide. The release interface, README, metadata, source manifest and demo are in English. Historical engineering notes also include Portuguese. The team must review the materials it actually links. A Portuguese spoken video demo requires English subtitles.
 
 ## Detailed project description
 

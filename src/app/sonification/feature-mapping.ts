@@ -32,7 +32,7 @@ function validateRegion(region: PixelRegion, width: number, height: number): voi
     || region.x < 0 || region.y < 0
     || !isPositiveInteger(region.width) || !isPositiveInteger(region.height)
     || region.x + region.width > width || region.y + region.height > height) {
-    throw new Error('A região de extração deve estar dentro da imagem e usar pixels inteiros.');
+    throw new Error('The extraction region must use integer pixels within the image.');
   }
 }
 
@@ -59,7 +59,7 @@ export function extractFeatures(pixels: DecodedPixels, options: ExtractionOption
   if (!isPositiveInteger(width) || !isPositiveInteger(height)
     || !Number.isSafeInteger(width * height * 4)
     || !(data instanceof Uint8ClampedArray) || data.length !== width * height * 4) {
-    throw new Error('Pixels decodificados inválidos.');
+    throw new Error('Invalid decoded pixels.');
   }
   const { roi, mask } = options;
   validateRegion(roi, width, height);
@@ -68,16 +68,16 @@ export function extractFeatures(pixels: DecodedPixels, options: ExtractionOption
   const stride = options.sampleStride ?? 2;
   if (!isPositiveInteger(columns) || !isPositiveInteger(rows) || !isPositiveInteger(stride)
     || columns > roi.width || rows > roi.height) {
-    throw new Error('Grade e passo de amostragem inválidos para esta região.');
+    throw new Error('Invalid grid or sample stride for this region.');
   }
   if (mask && (!(mask instanceof Uint8Array) || mask.length !== width * height)) {
-    throw new Error('A máscara deve ter uma entrada por pixel da imagem.');
+    throw new Error('The mask must have one entry per image pixel.');
   }
   const excluded = options.excludedRegions ?? [];
   for (const region of excluded) validateRegion(region, width, height);
   for (const id of [options.recordId, options.frameId, options.resourceVersion]) {
     if (typeof id !== 'string' || id.trim().length === 0) {
-      throw new Error('A extração precisa de identificadores de origem e versão.');
+      throw new Error('Extraction requires source and version identifiers.');
     }
   }
   const parameters = JSON.stringify({
@@ -174,7 +174,7 @@ export function mapFeatures(features: readonly ExtractedFeature[]): Sonification
       durationSeconds: 0.18,
       timelineOffsetSeconds: feature.index * STEP_SECONDS,
       pan: 2 * feature.position.x - 1,
-      textDescription: `Célula ${feature.index + 1}: brilho relativo da imagem ${(normalized * 100).toFixed(1)}%; nota ${note}, ${frequencyHz.toFixed(1)} Hz. Brilho de pixel, sem unidade física calibrada.`,
+      textDescription: `Cell ${feature.index + 1}: relative image brightness ${(normalized * 100).toFixed(1)}%. ${note}, ${frequencyHz.toFixed(1)} Hz.`,
     };
   });
 }

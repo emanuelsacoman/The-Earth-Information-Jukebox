@@ -57,10 +57,10 @@ Arquivos: `docs/brain/submission-draft-en.md`, `AI_USAGE.md`, `public/project-me
 
 Estas etapas não são substituídas pelo build nem pela documentação:
 
-- [ ] Preparar/revisar uma versão em inglês da interface e de todos os materiais que serão vinculados; a interface atual está em português. Evitar declarar conformidade integral antes dessa revisão.
+- [x] Preparar a versão em inglês da interface ativa, manifesto, metadados, README e demo. A execução posterior está no [release-plan](release-plan.md). A equipe ainda precisa conferir os materiais que efetivamente vinculará na submissão.
 - [ ] Ouvir com saída de som real e registrar dez ciclos/trocas, conforto e relação entre regiões e notas. Confirmar teclado, leitor de tela, zoom e celular real.
 - [ ] Confirmar equipe, autores, origem da ideia e declaração de IA à luz do guia; não inventar nomes ou afirmar que a concepção foi inteiramente humana.
-- [ ] Produzir a demo final: vídeo ≤30 s (com legendas em inglês se falado em português) ou apresentação em inglês de até 7 slides, incluindo capa.
+- [x] Produzir uma apresentação editável em inglês com 6 slides totais, validada e inspecionada. A identificação da equipe permanece pendente por instrução do usuário; revisar antes de usar como demo oficial.
 - [ ] Confirmar links públicos sem login, prazo/fuso do evento e campos da conta. Obter autorização para publicação/submissão e registrar o resultado real.
 
 O guia informa fechamento em 15/11/2026 às 23h59 no fuso do evento local; para Universal Event, usa o fuso da residência do Team Owner. O evento/fuso desta equipe ainda não foi confirmado, portanto não converter esse prazo automaticamente pelo relógio desta máquina.

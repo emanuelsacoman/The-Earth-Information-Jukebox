@@ -10,7 +10,7 @@ export class PlaybackCoordinator implements OnDestroy {
     status: 'idle', sessionRevision: 0, selectedRecordId: null, currentFrameId: null,
     position: 0, duration: 0, volume: 0.3, muted: false, speed: 1,
     audioStatus: 'uninitialized', currentEvent: null, currentFeature: null, execution: null, error: null,
-    announcement: 'Selecione uma imagem para preparar a sonificação.',
+    announcement: 'Choose an image to prepare the sound.',
   });
   readonly state = this.mutableState.asReadonly();
   private readonly mutableFrame = signal<ScientificFrame | null>(null);
@@ -38,23 +38,23 @@ export class PlaybackCoordinator implements OnDestroy {
     this.mutableFrame.set(null);
     this.update({ status: 'loading', sessionRevision: revision, selectedRecordId: record.id,
       currentFrameId: frameId, currentEvent: null, currentFeature: null, execution: null, position: 0, duration: 0, error: null,
-      audioStatus: this.engine.audioStatus, announcement: 'Carregando e verificando a imagem NASA.' });
+      audioStatus: this.engine.audioStatus, announcement: 'Loading and verifying the NASA image.' });
     try {
       const frame = record.frames.find(item => item.id === frameId && item.recordId === record.id);
-      if (!frame) throw new Error('A imagem selecionada não existe neste registro.');
+      if (!frame) throw new Error('The selected image is not part of this record.');
       const pixels = await this.loader.load(frame, controller.signal);
       if (!this.accepts(revision)) return;
       const features = extractFeatures(pixels, { recordId: record.id, frameId: frame.id,
         resourceVersion: frame.sha256, roi: frame.roi, excludedRegions: frame.excludedRegions });
       const events = mapFeatures(features);
-      if (!events.length) throw new Error('A região selecionada não contém pixels válidos para sonificar.');
+      if (!events.length) throw new Error('This region has no valid pixels to sonify.');
       this.events = events;
       this.features = features;
       this.mutableFrame.set(frame);
       this.update({ status: 'ready', currentFrameId: frame.id, duration: features.length * STEP_SECONDS,
-        announcement: `Imagem de ${frame.observationYear} pronta. Pressione Reproduzir para ouvir o brilho relativo.` });
+        announcement: `${frame.observationYear} image ready. Press Play to hear its relative brightness.` });
     } catch (error) {
-      if (this.accepts(revision)) this.fail(error instanceof Error ? error.message : 'Não foi possível preparar a imagem.');
+      if (this.accepts(revision)) this.fail(error instanceof Error ? error.message : 'Could not prepare the image.');
     }
   }
 
@@ -64,7 +64,7 @@ export class PlaybackCoordinator implements OnDestroy {
     this.starting = true;
     const revision = ++this.revision;
     const position = state.status === 'ended' || state.position >= state.duration ? 0 : state.position;
-    this.update({ sessionRevision: revision, status: 'paused', execution: null, error: null, announcement: 'Preparando a saída de áudio.' });
+    this.update({ sessionRevision: revision, status: 'paused', execution: null, error: null, announcement: 'Preparing audio output.' });
     this.engine.setVolume(state.volume, state.muted);
     try {
       await this.engine.play(this.events, {
@@ -77,16 +77,16 @@ export class PlaybackCoordinator implements OnDestroy {
         onPosition: current => { if (this.accepts(revision)) this.updatePosition(current); },
         onEnded: () => {
           if (this.accepts(revision)) this.update({ status: 'ended', position: state.duration,
-            announcement: 'Varredura concluída. Reproduzir inicia novamente.' });
+            announcement: 'Scan complete. Press Play to start again.' });
         },
         onError: message => { if (this.accepts(revision)) this.fail(message); },
       });
       if (this.accepts(revision) && this.state().status !== 'error') {
         this.update({ status: 'playing', position, audioStatus: this.engine.audioStatus,
-          announcement: `Reproduzindo a imagem de ${this.frame()?.observationYear}. Varredura espacial, sem passagem do tempo científico.` });
+          announcement: `Playing the ${this.frame()?.observationYear} image. This is a spatial scan, not observation time.` });
       }
     } catch (error) {
-      if (this.accepts(revision)) this.fail(error instanceof Error ? error.message : 'O navegador bloqueou o áudio. Tente Reproduzir novamente.');
+      if (this.accepts(revision)) this.fail(error instanceof Error ? error.message : 'The browser blocked audio. Press Play to try again.');
     } finally {
       if (this.accepts(revision)) this.starting = false;
     }
@@ -97,7 +97,7 @@ export class PlaybackCoordinator implements OnDestroy {
     const position = this.engine.pause();
     this.starting = false;
     this.update({ sessionRevision: ++this.revision, status: 'paused', position,
-      audioStatus: this.engine.audioStatus, announcement: 'Áudio pausado. A posição foi preservada.' });
+      audioStatus: this.engine.audioStatus, announcement: 'Audio paused. Position preserved.' });
   }
 
   stop(): void {
@@ -105,7 +105,7 @@ export class PlaybackCoordinator implements OnDestroy {
     this.engine.pause();
     this.starting = false;
     this.update({ sessionRevision: ++this.revision, status: 'ready', position: 0, currentEvent: null, currentFeature: null, execution: null,
-      audioStatus: this.engine.audioStatus, announcement: 'Varredura reiniciada. Pressione Reproduzir.' });
+      audioStatus: this.engine.audioStatus, announcement: 'Scan reset. Press Play.' });
   }
 
   seek(value: number): void {
@@ -116,7 +116,7 @@ export class PlaybackCoordinator implements OnDestroy {
     const currentFeature = this.featureAt(position);
     const currentEvent = this.events.find(event => event.origin.featureId === currentFeature?.id) ?? null;
     this.update({ sessionRevision: ++this.revision, status: 'paused', position, currentEvent, currentFeature, execution: null,
-      audioStatus: this.engine.audioStatus, announcement: 'Posição alterada; áudio pausado. Pressione Reproduzir para continuar.' });
+      audioStatus: this.engine.audioStatus, announcement: 'Position changed; audio paused. Press Play to continue.' });
   }
 
   setVolume(volume: number): void {
@@ -129,7 +129,7 @@ export class PlaybackCoordinator implements OnDestroy {
   toggleMute(): void {
     const muted = !this.state().muted;
     this.engine.setVolume(this.state().volume, muted);
-    this.update({ muted, announcement: muted ? 'Saída de áudio silenciada. A leitura continua.' : 'Saída de áudio habilitada.' });
+    this.update({ muted, announcement: muted ? 'Sound muted. The reading continues.' : 'Sound unmuted.' });
   }
 
   setSpeed(speed: number): void {
@@ -137,7 +137,7 @@ export class PlaybackCoordinator implements OnDestroy {
     speed = Math.max(0.5, Math.min(2, speed));
     // Changing speed pauses first, so the new clock never shares an old queue.
     this.pause();
-    this.update({ speed, announcement: `Velocidade ${speed} vezes. Pressione Reproduzir para continuar.` });
+    this.update({ speed, announcement: `Speed ${speed} times. Press Play to continue.` });
   }
 
   receiveGlobePoint(point: { lat: number; lon: number }): void {

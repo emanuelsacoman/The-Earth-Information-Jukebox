@@ -2,7 +2,11 @@
 
 Gate só é aprovado com **comando/roteiro, resultado, data, commit, ambiente e evidência inspecionável**. Registrar também limitações e responsável que validou; revisão humana continua necessária para integrar/publicar. `exit 0`, screenshot isolado ou flag `playing=true` não comprovam uma experiência funcional.
 
-## Evidência da sonificação — 15/11/2026
+## Evidência atual de release
+
+Sobre `brain`/`6581f24`: G-INSTALL/G-BUILD/G-TEST aprovados para a aplicação ativa com instalação isolada sem lifecycle scripts, development/production, SSR, 75 Angular e 8 Node. G-DATA/G-MAP preservados e novamente exercitados pela suíte. G-A11Y é parcial: teclado e reflow emulados verificados, nove amostras de contraste com mínimo 9,41:1; faltam leitor de tela, zoom nativo e aparelho físico. G-AUDIO continua parcial sem escuta humana. A demo de seis slides está preparada e validada, mas o aceite G-DEMO e a identificação da equipe permanecem pendentes. Não houve deploy ou submissão. A medição de sincronização de 60 s abaixo é histórica, não foi repetida nesta revisão. Ver [handoff](handoff.md).
+
+## Evidência da sonificação em 64659fba — histórico de 15/11/2026
 
 Árvore local `feat/f3-sonification` sobre `64659fba`, execução Codex, revisão humana UNASSIGNED. Ambiente, comandos e limites em [entrega de sonificação](sonification-delivery.md); o quadro F0 abaixo permanece histórico.
 

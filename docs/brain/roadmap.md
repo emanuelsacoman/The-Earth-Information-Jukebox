@@ -8,7 +8,13 @@ Estados de tarefa: `NOT_STARTED` (sem execução), `IN_PROGRESS` (execução em 
 
 Cada item abaixo define prioridade, **estado inicial → atual**, dependências, responsável, entrega/área, aceite e risco. Não marcar `DONE` com gate obrigatório pendente. Definições dos gates: [quality-gates](quality-gates.md); riscos: [risks](risks.md).
 
-## Execução atual e limites de aceite
+## Fechamento técnico atual — Observatório em inglês
+
+Revisão sobre `brain`/`6581f24`, autorizada pelo usuário para concluir o trabalho possível e simplificar a interface. F1-01/02/03/04 estão concluídas para a aplicação ativa: instalação limpa isolada do lockfile com scripts desativados, Node 22.23.5/npm 10.9.9, configurações development e production compiladas sem ambientes privados, SSR direto/HTTP e 75 testes Angular mais 8 Node aprovados. O boot sem Firebase e o Dashboard desmontado são decisões herdadas da entrega do mundo, preservadas e verificadas; dependências legadas não foram removidas e seus alertas continuam pendentes.
+
+F2-03 fecha carregamento dos dois recursos locais com integridade, decode, cancelamento e erro compreensível. F3-01 fecha extração/mapeamento determinístico após F1-04; nenhuma unidade física foi acrescentada. Evidência em [handoff](handoff.md) e [plano de release](release-plan.md). O código de áudio permanece sujeito à escuta humana em F3-03. A demo de 6 slides está preparada, com identidade da equipe pendente por instrução do usuário. Publicação em hosting, aceites humanos e envio oficial não foram executados.
+
+## Execução da sonificação — histórico de 64659fba
 
 F2-01/02 foram concluídas para os dois frames curados, com origem/uso/transformação/manifesto/bytes/hash/dimensões conferidos. F1-01 tem somente runtime e dependências locais verificados; instalação limpa não foi repetida. As correções de boot/SSR vieram do mundo; F1-03/04 tiveram checks atuais, sem fechar suas dependências formais. F2-03, F3-01/02/03 e F4-01/02 possuem código/testes na fatia, permanecendo IN_PROGRESS pelos gates/dependências ainda pendentes. G-MAP não encerra sozinho F3-01 enquanto F1-04 não fecha. F4-03 tem volume/velocidade fundamentais cobertos em F3-03, mas seu aceite amplo não foi executado. Nenhuma fase adicional foi autorizada automaticamente.
 
@@ -56,22 +62,26 @@ Gate de saída: projeto executável e validável de forma reproduzível — G-IN
 
 ### F1-01 — Estabelecer runtime e instalação limpa isolada
 
-**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F0-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F0-03 · Responsável: Codex (validação técnica).**
+Aceite atual: instalação isolada `npm ci --ignore-scripts --no-audit --no-fund`, 1.158 pacotes, runtime e lockfile preservados; builds/testes aprovados. Registro no handoff.
 Entrega/área: baseline Node/npm/SO e procedimento de instalação do lockfile; README técnico e configuração de versão se autorizada. Inicial: NVM sem versão ativa no PATH; Node 20.20.0 existente usado pontualmente; node_modules prévio. Aceite: `node --version`/`npm --version` e `npm ci` em checkout isolado registrados; package/lock sem mudança involuntária; confirmar faltas de configuração para F1-02, sem expor segredos ou sobrescrever arquivos humanos. Risco: R01.
 
 ### F1-02 — Tornar configuração de ambiente reproduzível e revisar Firebase
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-01 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F1-01 · Responsável: Codex (validação técnica).**
+Aceite atual: nenhum environment privado é importado no boot ativo. Providers Firebase removidos do boot pela entrega anterior do mundo, com dependências legadas mantidas e limites documentados. Development e production aprovados na cópia isolada sem credenciais.
 Entrega/área: estratégia de ambientes/documentação segura, decisão sobre necessidade de Firebase/Auth e duplicação; `app.config.ts`, `angular.json`, `.gitignore`, environments e manifests somente se autorizados. Inicial: arquivos locais ignorados, import development fixo, providers sem uso de produto, duas versões Firebase. Aceite: clone isolado obtém configuração sem credenciais privadas; development/production usam configuração pretendida; decisão justificada antes de remover integrações/alterar dependências; G-INSTALL completo. Riscos: R01/R08.
 
 ### F1-03 — Corrigir fronteira browser/SSR
 
-**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F1-02 · Responsável: Codex (validação técnica).**
+Aceite atual: prerender e renderer SSR direto com BootstrapContext aprovados, navegador inicializa globo e painel. Canvas/áudio iniciam apenas no browser; Dashboard legado com APIs browser permanece desmontado. Não se afirma que o módulo legado pode ser remontado no SSR sem revisão.
 Entrega/área: bootstrap/URL/storage/clipboard/foco seguros no servidor; Dashboard, configs server e bootstrap. Inicial: ReferenceError `window` comprovado no prerender. Aceite: `ng build` sem esse erro; SSR/prerender contém conteúdo correto e app inicia no browser; APIs de áudio/canvas futuras ficam restritas ao browser; decisão de manter ou simplificar SSR documentada antes de mudar configuração. Risco: R02.
 
 ### F1-04 — Recuperar testes e consolidar baseline
 
-**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F1-03 · Responsável: Codex (validação técnica).**
+Aceite atual: 75/75 Angular e 8/8 Node; regressão do nome acessível observada falhando e depois passando. Build, SSR/HTTP e conferência real de interface aprovados; aceites humanos continuam explícitos.
 Entrega/área: specs relevantes e registro reproduzível de start/build/test, revisão de integrações/dependências não usadas; `src/**/*.spec.ts`, docs. Inicial: 14/15 passam, teste raiz espera título scaffold. Aceite: corrigir expectativa conforme comportamento real sem só desabilitar teste; G-TEST e G-BUILD aprovados; smoke do app; lacunas do pipeline continuam explícitas. Riscos: R02/R08/R10.
 
 ### F1-05 — Propor automação de checks
@@ -95,7 +105,8 @@ Entrega/área: pequeno conjunto curado de assets reais e ScientificRecord/Scient
 
 ### F2-03 — Implementar carregamento e fallback legítimo
 
-**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-03, F2-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F1-03, F2-02 · Responsável: Codex (validação técnica).**
+Aceite atual: PNGs locais creditados carregados e verificados por SHA-256, dimensões e Canvas; testes de erro/abort/decode e descarte de revisão obsoleta aprovados. Falha mostra erro; não é usado fallback sintético nem alegado CORS remoto validado.
 Entrega/área: Records Repository/Frame Loader e estados loading/error; futuros serviços e assets, Dashboard. Inicial: loadRecords/loadFrame vazios. Aceite: seleção carrega imagem/metadados reais; testar decode, CORS e leitura de pixels; falha remota usa cópia local creditada equivalente ou erro compreensível; cancelar resultado antigo ao trocar registro; G-DATA aprovado. Riscos: R01/R04/R09.
 
 ### F2-04 — Avaliar segunda visualização
@@ -109,7 +120,8 @@ Gate de saída: variação da característica produz mudança sonora previsível
 
 ### F3-01 — Definir e verificar extração e mapeamento
 
-**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-04, F2-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F1-04, F2-02 · Responsável: Codex (validação técnica).**
+Aceite atual: F1-04 e F2-02 atendidas; 11 testes de extração/mapa e comparação sintática conferem o mapeamento existente. Máscara, origem, domínio RGB e limites preservados. G-MAP não implica escuta humana.
 Entrega/área: extrator/mapper puros versionados, legenda e casos de referência; futuros módulos de domínio e testes. Inicial: somente legenda textual genérica. Aceite: ROI/máscara exclui anotações/sem dados, normalização e escala documentadas; mesma entrada/config gera mesmos eventos; mínimo/médio/máximo/missing testados; pixel não vira unidade física sem calibração; G-MAP. Riscos: R04/R05/R10.
 
 ### F3-02 — Sintetizar áudio real a partir dos eventos

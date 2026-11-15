@@ -1,6 +1,10 @@
 # Estado atual
 
-## Sonificação — 15/11/2026
+## Release atual — 15/11/2026
+
+`brain` sobre `6581f24`: interface ativa e manifesto em inglês, composição Observatório enxuta, skip link, controles legíveis e detalhes científicos recolhidos. Instalação isolada, development/production, SSR, 75/75 Angular e 8/8 Node aprovados. Demo de seis slides validada. Algoritmos, identidades dos recursos e package/lock preservados; apenas textos mudaram no núcleo. Aceites humanos e identidade da equipe pendentes. Evidências completas em [handoff](handoff.md).
+
+## Sonificação em 64659fba — histórico de 15/11/2026
 
 Referência atual: `feat/f3-sonification`, alterações locais sobre `brain`/`64659fba8e45fd6f635df909e69923588db92d44`. Árvore inicialmente limpa; sem commit/push/merge/deploy nesta sessão. O PR #6 já havia integrado o Observatório Âmbar e correções de boot/SSR. O Dashboard legado permanece desmontado. O relato anterior abaixo é histórico e não descreve o código presente.
 

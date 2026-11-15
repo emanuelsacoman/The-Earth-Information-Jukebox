@@ -12,15 +12,15 @@ const click = name => [...host.querySelectorAll('button')].find(b => b.textConte
 try {
   app = mountObservatory(host);
   assert(host.querySelector('canvas'), 'O mundo precisa montar um canvas real');
-  click('Amazônia');
+  click('Amazon');
   assert(host.querySelector('[data-coordinate="lat"]').textContent.includes('3.00'), 'Destino precisa selecionar latitude real');
   assert(host.querySelector('[data-coordinate="lon"]').textContent.includes('60.00'), 'Destino precisa selecionar longitude real');
   const canvas = host.querySelector('canvas');
   canvas.dispatchEvent(new KeyboardEvent('keydown', {key:'ArrowRight', bubbles:true, cancelable:true}));
   assert(host.querySelector('[data-coordinate="lon"]').textContent.includes('55.00'), 'Seta deve mover cinco graus');
-  click('Aproximar');
+  click('Zoom in');
   assert(host.querySelector('[data-zoom]').textContent !== '100%', 'Zoom deve mudar');
-  click('Restaurar vista');
+  click('Reset view');
   assert(host.querySelector('[data-zoom]').textContent === '100%', 'Reset deve restaurar zoom');
   assert(host.querySelector('[data-coordinate="lat"]').textContent === '—', 'Reset deve limpar seleção');
   const motion = host.querySelector('input[type="checkbox"]');

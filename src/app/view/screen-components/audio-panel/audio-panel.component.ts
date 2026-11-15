@@ -17,8 +17,8 @@ export class AudioPanelComponent implements OnInit {
   private readonly platformId = inject(PLATFORM_ID);
   readonly records = SCIENTIFIC_RECORDS;
   readonly statusLabels: Record<PlaybackStatus, string> = {
-    idle: 'Aguardando preparação', loading: 'Verificando imagem', ready: 'Pronto para ouvir',
-    playing: 'Reproduzindo', paused: 'Pausado', ended: 'Varredura concluída', error: 'Não foi possível continuar',
+    idle: 'Not ready', loading: 'Checking image', ready: 'Ready',
+    playing: 'Playing', paused: 'Paused', ended: 'Scan complete', error: 'Unable to continue',
   };
 
   ngOnInit(): void {

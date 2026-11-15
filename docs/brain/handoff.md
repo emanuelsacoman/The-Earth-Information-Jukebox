@@ -1,5 +1,21 @@
 # Handoff operacional
 
+## Continuidade atual — Observatório em inglês e demo
+
+Revisão sobre `brain`/`6581f2470bbf9549e4ac02b462030e8313a94623`, em 15/11/2026. O usuário escolheu a direção **Observatório, planeta em destaque** e pediu concluir o trabalho restante possível. Equipe, autores e evento ficam pendentes por instrução explícita.
+
+- Interface ativa, mensagens de erro/leitura, manifesto, metadados e README de entrada em inglês. Planeta primeiro; título curto, controles maiores, sem slogans/badges de MVP; detalhes científicos e créditos recolhidos no painel sonoro.
+- Skip link é o primeiro foco por Tab; Enter leva e dá foco à seção de som. Seleção por destino/setas/zoom e movimento reduzido conferidos. Dez ciclos Play/Pause e troca de ano conferidos no navegador, sem substituir escuta humana.
+- Build de produção aprovado, uma rota prerenderizada; **75/75 Angular**, **8/8 Node**, smoke SSR/HTTP/assets aprovado. A rodada RED observou 3 falhas esperadas das novas expectativas de idioma; a rodada final GREEN passou. O teste adicional de nome acessível da rotação também foi observado falhando nos dois estados e passou após alinhar o rótulo; nenhum teste foi desabilitado. O smoke foi adaptado ao novo título em inglês e passou sem mudar o produto para satisfazer texto antigo.
+- Desktop e larguras 320/390/640 CSS px conferidos sem overflow horizontal observado. Nenhum erro/warning de console observado. Nove amostras reais de cores de texto: contraste mínimo **9,41:1**. Isso não é auditoria completa de WCAG, leitor de tela ou zoom nativo de 200%.
+- Comparação da árvore sintática confirmou que extrator, loader, coordenador, motor e renderer receberam somente mudanças de texto. IDs/URLs/hashes/bytes/geometria dos frames foram preservados. Package/lock inalterados; alertas de dependências preexistentes continuam pendentes.
+- Demo editável em inglês: [seis slides](../demo/earth-jukebox-demo.pptx), com capturas reais, fontes e limites. Arquivo validado estruturalmente e visualmente; identificação da equipe explicitamente pendente. Sem envio oficial ou publicação em hosting.
+- Development também compilou em saída separada, sem environments privados, preservando a compilação de produção. Revisão independente identificou textos imprecisos sobre panorama e formato do arquivo e uma divergência de nome acessível; corrigidos. O último ponto recebido do globo agora é rotulado como histórico para não aparentar seleção atual após Reset.
+- O pacote de produção também passou no smoke de prerender/SSR/HTTP/assets em uma pasta separada sem `node_modules`, com NODE_PATH vazio. O ZIP compilado inclui instruções para executar diretamente com Node 22, sem instalação npm.
+- Próximos aceites humanos: ouvir a saída real, validar leitor de tela/zoom/dispositivo físico, revisar a origem da ideia e preencher a identificação quando houver. Publicação/submissão requerem destino e autorização específicos. Planos/evidências: [release-plan](release-plan.md) e [README em inglês](../../README.md).
+
+## Revisão de layout anterior — histórico
+
 ## Continuidade atual — layout e fechamento NASA, 15/11/2026
 
 - **Branch:** `brain`, revisão sobre `3b5793a6939505664f32f489b6f8eadb92525645`. O usuário autorizou corrigir o painel, conferir os requisitos NASA, fazer o plano e começar a execução. Nenhuma alteração ou push na `luiz` nesta revisão.

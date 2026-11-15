@@ -8,7 +8,7 @@ function createLandMask() {
   map.width = 1440;
   map.height = 720;
   const ctx = map.getContext('2d', {willReadFrequently: true});
-  if (!ctx) throw new Error('Canvas indisponível');
+  if (!ctx) throw new Error('Canvas unavailable');
   ctx.fillStyle = '#fff';
   for (const polygon of landPolygons) {
     ctx.beginPath();
@@ -31,7 +31,7 @@ export class GlobeRenderer {
     this.model = model;
     this.onChange = onChange;
     this.ctx = canvas.getContext('2d');
-    if (!this.ctx) throw new Error('Seu navegador não disponibilizou o desenho do globo. Use os destinos e o teclado.');
+    if (!this.ctx) throw new Error('This browser cannot draw the globe. Use the places and direction controls.');
     this.mask = createLandMask();
     this.surface = document.createElement('canvas');
     this.surface.width = 440;

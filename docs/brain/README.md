@@ -4,13 +4,17 @@ Documentação operacional do **The Earth Information Jukebox**. Atualização d
 
 O mundo já está integrado à brain pelo PR #6. A [entrega de sonificação](sonification-delivery.md) acrescenta uma fatia funcional local de dados reais, mapa e Web Audio, com testes; escuta humana, validação assistiva e outros gates ainda impedem declarar o MVP completo. Não houve publicação nesta sessão.
 
+## Continuidade atual
+
+A versão em inglês e a direção Observatório estão implementadas na `brain`, sobre `6581f24`. Build development/production, SSR, 75 testes Angular e 8 Node aprovados; demo editável de seis slides preparada. Veja [handoff](handoff.md), [release-plan](release-plan.md) e [demo](../demo/README.md). As referências à instalação pendente acima/abaixo pertencem ao relato anterior. Equipe, autores e evento continuam pendentes por instrução do usuário; escuta humana e validação assistiva não foram simuladas.
+
 ## Start here
 
 Para fechar a entrega atual, consulte o [comparativo com o pedido NASA e as pendências mínimas](nasa-readiness.md).
 
 1. Leia [AGENTS.md](../../AGENTS.md), [roadmap](roadmap.md), [riscos](risks.md), [contratos](contracts.md) e [handoff](handoff.md) antes de alterar qualquer arquivo.
 2. Confira `git status --short --branch`, `git rev-parse HEAD` e os arquivos da tarefa. Este snapshot não substitui a inspeção atual.
-3. Confira o [handoff atual](handoff.md) e escolha uma tarefa autorizada com dependências atendidas. A próxima validação é **F3-03**, escuta humana e ciclos; F1-01 continua pendente para instalação limpa. Reaproveitar evidência de outra árvore exige conferir commit e escopo.
+3. Confira o [handoff atual](handoff.md) e escolha uma tarefa autorizada com dependências atendidas. A próxima validação é **F3-03**, escuta humana e ciclos; F1-01 foi encerrada na revisão atual com instalação isolada. Reaproveitar evidência de outra árvore exige conferir commit e escopo.
 4. Registre responsável e estado, execute os critérios de aceite e atualize a evidência e o handoff.
 
 ## Índice e fontes de verdade

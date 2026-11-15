@@ -116,7 +116,7 @@ describe('Feature extraction and pentatonic mapping', () => {
     });
     expect(events[1].mappingVersion).toBe(MAPPING_VERSION);
     expect(features[1].extractionMethod).toContain(EXTRACTION_VERSION);
-    expect(events[1].textDescription).toContain('brilho relativo da imagem');
+    expect(events[1].textDescription).toContain('relative image brightness');
     expect(events[1].textDescription).toContain(events[1].note);
     const originalX = events[1].featureSnapshot.position.x;
     features[1].position.x = 0;

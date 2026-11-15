@@ -3,8 +3,8 @@ import {GlobeRenderer} from './globe-renderer.mjs';
 
 let instanceId = 0;
 const destinations = [
-  ['Amazônia', -3, -60], ['Atlântico', 5, -30],
-  ['Saara', 23, 13], ['Japão', 36, 138], ['Antártida', -80, 0],
+  ['Amazon', -3, -60], ['Atlantic', 5, -30],
+  ['Sahara', 23, 13], ['Japan', 36, 138], ['Antarctica', -80, 0],
 ];
 
 // All UI strings are static; coordinates are written with textContent, never HTML.
@@ -21,7 +21,7 @@ export function mountObservatory(host, options = {}) {
   const signal = abort.signal;
   const media = window.matchMedia('(prefers-reduced-motion: reduce)');
   const root = element('section', 'amber-app');
-  root.setAttribute('aria-label', 'Observatório Âmbar — exploração livre da Terra');
+  root.setAttribute('aria-label', 'Earth observatory — free exploration');
   const helpId = `amber-help-${++instanceId}`;
   let renderer = null, disposed = false, lastSelection = '';
   const button = (text, title, handler, className = '') => {
@@ -38,20 +38,20 @@ export function mountObservatory(host, options = {}) {
   const symbol = element('span', 'amber-brand-symbol', '◉');
   symbol.setAttribute('aria-hidden', 'true');
   const brandText = element('div');
-  brandText.append(element('span', 'amber-brand-name', 'EARTH JUKEBOX'), element('span', 'amber-brand-sub', 'OBSERVATÓRIO ÂMBAR'));
+  brandText.append(element('span', 'amber-brand-name', 'EARTH JUKEBOX'));
   brand.append(symbol, brandText);
   const mode = element('div', 'amber-mode');
-  mode.append(element('span', 'amber-status-dot'), element('span', '', 'EXPLORAÇÃO LIVRE'));
+  mode.append(element('span', '', 'Explore Earth'));
   header.append(brand, mode);
 
   const layout = element('div', 'amber-layout');
   const intro = element('aside', 'amber-intro');
-  intro.append(element('p', 'amber-eyebrow', '01 / NOSSO PLANETA'), element('h1', 'amber-title', 'Uma nova perspectiva da Terra.'), element('p', 'amber-description', 'Gire o mundo. Aproxime o olhar. Escolha onde explorar.'));
+  intro.append(element('h1', 'amber-title', 'Earth'), element('p', 'amber-description', 'Drag to rotate. Choose a place.'));
   const regionBlock = element('div', 'amber-regions');
-  regionBlock.append(element('h2', 'amber-label', 'PONTOS DE PARTIDA'));
+  regionBlock.append(element('h2', 'amber-label', 'PLACES'));
   const regionButtons = [];
   for (const [name, lat, lon] of destinations) {
-    const node = button(name, `Explorar ${name}`, () => {
+    const node = button(name, `Explore ${name}`, () => {
       model.select({lat, lon}, true);
       update();
     }, 'amber-destination');
@@ -59,17 +59,17 @@ export function mountObservatory(host, options = {}) {
     regionButtons.push({node, lat, lon});
     regionBlock.append(node);
   }
-  intro.append(regionBlock, element('p', 'amber-aside-note', 'Um mundo para descobrir, um ponto de cada vez.'));
+  intro.append(regionBlock);
 
   const viewport = element('div', 'amber-viewport');
   const canvas = element('canvas', 'amber-canvas');
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'application');
-  canvas.setAttribute('aria-label', 'Globo interativo. Use setas para selecionar, mais e menos para zoom e Home para restaurar.');
+  canvas.setAttribute('aria-label', 'Interactive globe. Use arrow keys to select, plus and minus to zoom, and Home to reset.');
   canvas.setAttribute('aria-describedby', helpId);
   const viewportTop = element('div', 'amber-viewport-caption');
-  viewportTop.append(element('span', '', 'TERRA / VISTA ORBITAL'), element('span', '', 'MAPA-BASE GEOGRÁFICO'));
-  const hint = element('p', 'amber-hint', 'ARRASTE PARA GIRAR  ·  CLIQUE PARA SELECIONAR');
+  viewportTop.append(element('span', '', 'Geographic base map'));
+  const hint = element('p', 'amber-hint', 'DRAG TO ROTATE · CLICK TO SELECT');
   hint.id = helpId;
   const unavailable = element('p', 'amber-fallback');
   unavailable.hidden = true;
@@ -77,8 +77,8 @@ export function mountObservatory(host, options = {}) {
   viewport.append(canvas, viewportTop, hint, unavailable);
 
   const inspector = element('aside', 'amber-inspector');
-  inspector.setAttribute('aria-label', 'Ponto selecionado');
-  inspector.append(element('p', 'amber-eyebrow', 'LOCALIZADOR'), element('h2', 'amber-inspector-title', 'Seu próximo ponto.'));
+  inspector.setAttribute('aria-label', 'Selected point');
+  inspector.append(element('h2', 'amber-inspector-title', 'Coordinates'));
   const readout = element('div', 'amber-readout');
   const coordinate = (label, key) => {
     const wrap = element('div', 'amber-coordinate');
@@ -91,13 +91,13 @@ export function mountObservatory(host, options = {}) {
   };
   const latOutput = coordinate('LATITUDE', 'lat');
   const lonOutput = coordinate('LONGITUDE', 'lon');
-  const announcement = element('p', 'amber-selection-state', 'Selecione um ponto no globo ou escolha um destino.');
+  const announcement = element('p', 'amber-selection-state', 'Select on the globe or choose a place.');
   announcement.setAttribute('aria-live', 'polite');
   announcement.setAttribute('aria-atomic', 'true');
   const navigation = element('div', 'amber-direction-pad');
   navigation.setAttribute('role', 'group');
-  navigation.setAttribute('aria-label', 'Mover o ponto selecionado');
-  for (const [glyph, label, dLat, dLon] of [['↑','Mover ponto para norte',5,0], ['←','Mover ponto para oeste',0,-5], ['↓','Mover ponto para sul',-5,0], ['→','Mover ponto para leste',0,5]]) {
+  navigation.setAttribute('aria-label', 'Move the selected point');
+  for (const [glyph, label, dLat, dLon] of [['↑','Move north',5,0], ['←','Move west',0,-5], ['↓','Move south',-5,0], ['→','Move east',0,5]]) {
     navigation.append(button(glyph, label, () => {model.moveSelection(dLat, dLon); update();}));
   }
   const motionLabel = element('label', 'amber-motion');
@@ -105,27 +105,27 @@ export function mountObservatory(host, options = {}) {
   motionInput.type = 'checkbox';
   motionInput.checked = media.matches;
   model.setReducedMotion(media.matches);
-  motionLabel.append(motionInput, element('span', '', 'Reduzir movimento'));
+  motionLabel.append(motionInput, element('span', '', 'Reduce motion'));
   motionInput.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
   media.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
-  inspector.append(readout, announcement, navigation, motionLabel, element('p', 'amber-inspector-note', 'Coordenadas geográficas. Sem camada científica ou áudio associado ao ponto selecionado.'));
+  inspector.append(readout, announcement, navigation, motionLabel, element('p', 'amber-inspector-note', 'Geographic selection only. This point does not control the sound.'));
   layout.append(intro, viewport, inspector);
 
   const footer = element('footer', 'amber-footer');
   const footerText = element('div', 'amber-footer-caption');
-  footerText.append(element('span', 'amber-label', 'CONTROLE DE VISTA'), element('span', 'amber-small', 'O planeta é seu ponto de partida.'));
+  footerText.append(element('span', 'amber-label', 'View'));
   const controls = element('div', 'amber-controls');
-  const zoomOut = button('−', 'Afastar', () => {model.zoomBy(1 / 1.15); update();}, 'amber-square');
+  const zoomOut = button('−', 'Zoom out', () => {model.zoomBy(1 / 1.15); update();}, 'amber-square');
   const zoomValue = element('output', 'amber-zoom', '100%');
   zoomValue.dataset.zoom = '';
-  zoomValue.setAttribute('aria-label', 'Nível de zoom');
-  const zoomIn = button('+', 'Aproximar', () => {model.zoomBy(1.15); update();}, 'amber-square');
-  const rotateButton = button('Ativar rotação', 'Ativar rotação automática', () => {model.setAutoRotate(!model.autoRotate); update();}, 'amber-rotate');
+  zoomValue.setAttribute('aria-label', 'Zoom level');
+  const zoomIn = button('+', 'Zoom in', () => {model.zoomBy(1.15); update();}, 'amber-square');
+  const rotateButton = button('Rotate', 'Start automatic rotation', () => {model.setAutoRotate(!model.autoRotate); update();}, 'amber-rotate');
   rotateButton.dataset.rotation = '';
-  const reset = button('Restaurar vista', 'Restaurar vista', () => {model.reset(); update();});
+  const reset = button('Reset view', 'Reset view', () => {model.reset(); update();});
   controls.append(zoomOut, zoomValue, zoomIn, element('span', 'amber-control-separator'), rotateButton, reset);
   const credit = element('div', 'amber-credit');
-  credit.append(element('span', '', 'GEOGRAFIA / NATURAL EARTH'), element('span', 'amber-small', 'MVP · 01'));
+  credit.append(element('span', '', 'Natural Earth'));
   footer.append(footerText, controls, credit);
   root.append(header, layout, footer);
   host.append(root);
@@ -135,10 +135,10 @@ export function mountObservatory(host, options = {}) {
     const format = (value, positive, negative) => `${Math.abs(value).toFixed(2)}° ${value >= 0 ? positive : negative}`;
     const selection = model.selection;
     latOutput.textContent = selection ? format(selection.lat, 'N', 'S') : '—';
-    lonOutput.textContent = selection ? format(selection.lon, 'L', 'O') : '—';
+    lonOutput.textContent = selection ? format(selection.lon, 'E', 'W') : '—';
     const key = selection ? `${selection.lat.toFixed(5)},${selection.lon.toFixed(5)}` : '';
     if (key !== lastSelection) {
-      announcement.textContent = selection ? `Ponto selecionado: ${latOutput.textContent}, ${lonOutput.textContent}.` : 'Selecione um ponto no globo ou escolha um destino.';
+      announcement.textContent = selection ? `Selected point: ${latOutput.textContent}, ${lonOutput.textContent}.` : 'Select on the globe or choose a place.';
       lastSelection = key;
       if (selection) options.onSelect?.({...selection});
     }
@@ -146,8 +146,9 @@ export function mountObservatory(host, options = {}) {
     zoomValue.textContent = `${Math.round(model.zoom * 100)}%`;
     zoomOut.disabled = model.zoom <= 0.72;
     zoomIn.disabled = model.zoom >= 2.1;
-    rotateButton.textContent = model.autoRotate ? 'Pausar rotação' : 'Ativar rotação';
-    rotateButton.setAttribute('aria-label', model.autoRotate ? 'Pausar rotação automática' : 'Ativar rotação automática');
+    const rotationLabel = model.autoRotate ? 'Pause rotation' : 'Rotate';
+    rotateButton.textContent = rotationLabel;
+    rotateButton.setAttribute('aria-label', rotationLabel);
     rotateButton.setAttribute('aria-pressed', String(model.autoRotate));
     rotateButton.disabled = model.reducedMotion || !renderer;
     renderer?.invalidate();
@@ -169,7 +170,7 @@ export function mountObservatory(host, options = {}) {
   catch (error) {
     unavailable.textContent = error.message;
     unavailable.hidden = false;
-    canvas.setAttribute('aria-label', 'Exploração por coordenadas. Use setas ou os botões de direção.');
+    canvas.setAttribute('aria-label', 'Coordinate exploration. Use arrow keys or the direction buttons.');
   }
   update();
   return {

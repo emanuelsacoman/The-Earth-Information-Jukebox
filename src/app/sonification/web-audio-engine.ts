@@ -46,7 +46,7 @@ interface Session {
 
 function browserContext(): AudioContext {
   if (typeof window === 'undefined' || typeof window.AudioContext !== 'function') {
-    throw new Error('Este navegador não oferece Web Audio. Use um navegador compatível.');
+    throw new Error('This browser does not support Web Audio. Use a compatible browser.');
   }
   return new window.AudioContext();
 }
@@ -89,7 +89,7 @@ export class WebAudioEngine {
   }
 
   async play(events: readonly SonificationEvent[], options: AudioPlaybackOptions): Promise<void> {
-    if (this.disposed) throw new Error('A experiência de áudio já foi encerrada.');
+    if (this.disposed) throw new Error('The audio experience has been closed.');
     this.pause();
     this.validate(events, options);
     // Accept the new logical position before resume can yield. A pause while
@@ -103,7 +103,7 @@ export class WebAudioEngine {
       if (context.state === 'suspended') await context.resume();
       if (generation !== this.generation || this.disposed) return;
       if (context.state !== 'running') {
-        throw new Error('O navegador bloqueou ou suspendeu o áudio. Pressione Reproduzir para tentar novamente.');
+        throw new Error('The browser blocked or suspended audio. Press Play to try again.');
       }
       this.session = {
         events,
@@ -118,7 +118,7 @@ export class WebAudioEngine {
         this.timer = setInterval(() => {
           if (generation !== this.generation) return;
           try { this.tick(generation); }
-          catch { this.fail('Não foi possível continuar a síntese. Pressione Reproduzir para tentar novamente.'); }
+          catch { this.fail('Could not continue synthesis. Press Play to try again.'); }
         }, AUDIO_POLICY.tickMilliseconds);
       }
     } catch (error) {
@@ -162,7 +162,7 @@ export class WebAudioEngine {
 
   private ensureContext(): AudioContext {
     if (this.context) {
-      if (this.context.state === 'closed') throw new Error('O contexto de áudio foi encerrado. Recarregue a página.');
+      if (this.context.state === 'closed') throw new Error('The audio context was closed. Reload the page.');
       return this.context;
     }
     let context: AudioContext | undefined;
@@ -176,7 +176,7 @@ export class WebAudioEngine {
       this.unavailable = false;
       context.onstatechange = () => {
         if (this.session && context?.state !== 'running') {
-          this.fail('O navegador suspendeu o áudio. Pressione Reproduzir para retomar.');
+          this.fail('The browser suspended audio. Press Play to resume.');
         }
       };
       return context;
@@ -192,7 +192,7 @@ export class WebAudioEngine {
     const context = this.context;
     if (!session || !context || generation !== this.generation) return;
     if (context.state !== 'running') {
-      this.fail('O navegador suspendeu o áudio. Pressione Reproduzir para retomar.');
+      this.fail('The browser suspended audio. Press Play to resume.');
       return;
     }
     const now = context.currentTime;
@@ -225,7 +225,7 @@ export class WebAudioEngine {
     const context = this.context!;
     // Ended callbacks can arrive after a busy main thread catches up.
     for (const voice of this.voices) if (voice.end <= context.currentTime) this.release(voice);
-    if (this.voices.size >= AUDIO_POLICY.maxVoices) throw new Error('Limite de vozes simultâneas atingido.');
+    if (this.voices.size >= AUDIO_POLICY.maxVoices) throw new Error('Simultaneous voice limit reached.');
     const oscillator = context.createOscillator();
     const gain = context.createGain();
     const panner = context.createStereoPanner();
@@ -301,7 +301,7 @@ export class WebAudioEngine {
     if (!Number.isFinite(options.duration) || options.duration <= 0 || !Number.isFinite(options.position) ||
       options.position < 0 || options.position > options.duration || !Number.isFinite(options.speed) ||
       options.speed < 0.5 || options.speed > 2 || !Number.isSafeInteger(options.revision) || options.revision < 0 || !events.length) {
-      throw new Error('A varredura não possui parâmetros de reprodução válidos.');
+      throw new Error('The scan has invalid playback parameters.');
     }
     let previous = -1;
     for (const event of events) {
@@ -312,7 +312,7 @@ export class WebAudioEngine {
         event.timelineOffsetSeconds < previous || event.timelineOffsetSeconds < 0 ||
         event.timelineOffsetSeconds + event.durationSeconds > options.duration + 0.000001 || Math.abs(event.pan) > 1 ||
         event.featureSnapshot.validity !== 'valid') {
-        throw new Error('Há um evento sonoro inválido. Selecione novamente a visualização.');
+        throw new Error('An audio event is invalid. Select the image again.');
       }
       previous = event.timelineOffsetSeconds;
     }

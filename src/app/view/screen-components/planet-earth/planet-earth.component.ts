@@ -26,7 +26,7 @@ export class PlanetEarthComponent implements AfterViewInit, OnDestroy {
           onSelect: (point) => this.zone.run(() => this.pointSelected.emit(point)),
         });
       }).catch(() => {
-        if (!this.disposed) this.host.nativeElement.textContent = 'Não foi possível abrir o observatório. Atualize a página para tentar novamente.';
+        if (!this.disposed) this.host.nativeElement.textContent = 'Could not open the observatory. Reload the page to try again.';
       });
     });
   }

@@ -53,7 +53,7 @@ describe('FrameLoader', () => {
     const decode = spyOn(window, 'createImageBitmap').and.callThrough();
     await expectAsync(loader.load({ ...frame,
       resourceUrl: '/data/night-lights/missing-frame-for-test.png'
-    }, controller.signal)).toBeRejectedWithError('A imagem NASA não pôde ser carregada. Tente novamente.');
+    }, controller.signal)).toBeRejectedWithError('Could not load the NASA image. Try again.');
     expect(decode).not.toHaveBeenCalled();
   });
 
@@ -68,7 +68,7 @@ describe('FrameLoader', () => {
     serveVerifiedBytes();
     const decode = spyOn(window, 'createImageBitmap').and.callThrough();
     await expectAsync(loader.load({ ...frame, sha256: '0'.repeat(64) }, controller.signal))
-      .toBeRejectedWithError('A imagem diverge do recurso NASA verificado.');
+      .toBeRejectedWithError('The image does not match the verified NASA resource.');
     expect(decode).not.toHaveBeenCalled();
   });
 
@@ -76,7 +76,7 @@ describe('FrameLoader', () => {
     serveVerifiedBytes();
     const close = spyOn(ImageBitmap.prototype, 'close').and.callThrough();
     await expectAsync(loader.load({ ...frame, width: frame.width + 1 }, controller.signal))
-      .toBeRejectedWithError('As dimensões da imagem divergem do manifesto.');
+      .toBeRejectedWithError('Image dimensions do not match the manifest.');
     expect(close).toHaveBeenCalledTimes(1);
   });
 
@@ -95,7 +95,7 @@ describe('FrameLoader', () => {
     const loading = loader.load(frame, controller.signal);
     controller.abort();
     releaseBytes(sourceBytes.slice(0));
-    await expectAsync(loading).toBeRejectedWithError('Carregamento cancelado.');
+    await expectAsync(loading).toBeRejectedWithError('Loading cancelled.');
     expect(decode).not.toHaveBeenCalled();
   });
 
@@ -107,7 +107,7 @@ describe('FrameLoader', () => {
       controller.abort();
       return bitmap;
     });
-    await expectAsync(loader.load(frame, controller.signal)).toBeRejectedWithError('Carregamento cancelado.');
+    await expectAsync(loader.load(frame, controller.signal)).toBeRejectedWithError('Loading cancelled.');
     expect(close).toHaveBeenCalledTimes(1);
   });
 
@@ -123,7 +123,7 @@ describe('FrameLoader', () => {
     const close = spyOn(ImageBitmap.prototype, 'close').and.callThrough();
     spyOn(HTMLCanvasElement.prototype, 'getContext').and.returnValue(null);
     await expectAsync(loader.load(frame, controller.signal))
-      .toBeRejectedWithError('O navegador não disponibilizou a leitura de pixels.');
+      .toBeRejectedWithError('The browser could not read image pixels.');
     expect(close).toHaveBeenCalledTimes(1);
   });
 

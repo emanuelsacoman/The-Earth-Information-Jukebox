@@ -7,9 +7,9 @@ import {fileURLToPath} from 'node:url';
 const dist = new URL('../dist/the-earth-information-jukebox/', import.meta.url);
 const prerendered = await readFile(new URL('browser/index.html', dist), 'utf8');
 assert.match(prerendered, /<app-planet-earth[\s>]/, 'Prerender must include the Angular Earth component');
-assert.match(prerendered, /Preparando o Observatório Âmbar/, 'Prerender must provide server-rendered content');
+assert.match(prerendered, /Preparing the Earth observatory/, 'Prerender must provide server-rendered content');
 assert.match(prerendered, /<app-audio-panel[\s>]/, 'Prerender must include the sonification panel');
-assert.match(prerendered, /Luzes noturnas, nota por nota/);
+assert.match(prerendered, /Night lights/);
 assert.doesNotMatch(prerendered, /ReferenceError|window is not defined|document is not defined/);
 await access(new URL('server/server.mjs', dist));
 
@@ -26,9 +26,9 @@ const rendered = await renderApplication(context => {
 assert.equal(bootstrapCalled, true, 'Runtime SSR must invoke the compiled bootstrap');
 assert.doesNotMatch(rendered, /ng-server-context="ssg"/, 'This check must not use cached prerendered HTML');
 assert.match(rendered, /<app-planet-earth[\s>]/);
-assert.match(rendered, /Preparando o Observatório Âmbar/);
+assert.match(rendered, /Preparing the Earth observatory/);
 assert.match(rendered, /<app-audio-panel[\s>]/);
-assert.match(rendered, /Luzes noturnas, nota por nota/);
+assert.match(rendered, /Night lights/);
 
 const port = 47831;
 const origin = `http://127.0.0.1:${port}`;

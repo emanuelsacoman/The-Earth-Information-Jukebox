@@ -142,7 +142,7 @@ describe('PlaybackCoordinator', () => {
     callbacks.onPosition(0.48);
     callbacks.onEvent(events[2], 10.48);
     expect(coordinator.state().currentEvent?.origin.frameId).toBe(coordinator.frame()?.id);
-    expect(coordinator.state().currentEvent?.textDescription).toContain('brilho relativo');
+    expect(coordinator.state().currentEvent?.textDescription).toContain('relative image brightness');
     expect(coordinator.state().position).toBe(0.48);
     expect(coordinator.state().execution?.scheduledAudioTimeSeconds).toBe(10.48);
     expect(coordinator.state().execution?.sessionRevision).toBe(callbacks.revision);
@@ -175,7 +175,7 @@ describe('PlaybackCoordinator', () => {
   });
 
   it('blocks play on missing assets or a completely masked image and permits reselecting', async () => {
-    load.and.rejectWith(new Error('Imagem indisponível'));
+    load.and.rejectWith(new Error('Image unavailable'));
     await coordinator.select(record, 'a');
     await coordinator.play();
     expect(play).not.toHaveBeenCalled();
@@ -190,10 +190,10 @@ describe('PlaybackCoordinator', () => {
 
   it('does not keep a false playing state after rejected or suspended audio', async () => {
     await coordinator.select(record, 'a');
-    play.and.rejectWith(new Error('Áudio bloqueado'));
+    play.and.rejectWith(new Error('Audio blocked'));
     await coordinator.play();
     expect(coordinator.state().status).toBe('error');
-    expect(coordinator.state().error).toContain('bloqueado');
+    expect(coordinator.state().error).toContain('blocked');
     play.and.callFake(async (sequence, options) => { events = sequence; callbacks = options; });
     await coordinator.select(record, 'a');
     await coordinator.play();

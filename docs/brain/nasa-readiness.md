@@ -1,5 +1,7 @@
 # Fechamento mínimo frente ao desafio NASA
 
+**Atualização posterior:** a interface ativa, manifesto, metadados, README de entrada e demo agora estão em inglês. O [handoff atual](handoff.md) registra os novos testes e a apresentação de seis slides. Os registros abaixo descrevem a comparação inicial; aceites humanos e identificação da equipe continuam pendentes.
+
 Conferência em **15/11/2026**, contexto `America/Sao_Paulo`. Código analisado: `brain` / `3b5793a6939505664f32f489b6f8eadb92525645`, mais a correção de ordem das seções descrita abaixo. Este documento compara o produto com o desafio; não registra submissão ou aceite da NASA.
 
 ## O que o desafio pede
@@ -25,7 +27,7 @@ As evidências anteriores de 74 testes Angular, 8 Node e sinal digital real est�
 
 ## Ordem para terminar sem ampliar o escopo
 
-O [guia oficial de submissão](https://www.spaceappschallenge.org/resources/project-submission-guide/), publicado em 13/11/2026 e lido no navegador em 15/11/2026, especifica materiais em inglês, demo em vídeo de até 30 s ou apresentação de até 7 slides, links públicos sem login e declaração do uso de IA/SI no texto e metadados. Vídeo falado em outro idioma precisa de legendas em inglês. A interface atual está em português; sua versão em inglês ainda precisa ser preparada/revisada. Ver [plano de fechamento](finalization-plan.md), [rascunho em inglês](submission-draft-en.md) e [declaração de IA](../../AI_USAGE.md).
+O [guia oficial de submissão](https://www.spaceappschallenge.org/resources/project-submission-guide/), publicado em 13/11/2026 e lido no navegador em 15/11/2026, especifica materiais em inglês, demo em vídeo de até 30 s ou apresentação de até 7 slides, links públicos sem login e declaração do uso de IA/SI no texto e metadados. Vídeo falado em outro idioma precisa de legendas em inglês. A versão de entrega está em inglês; a equipe deve revisar os materiais que vinculará oficialmente. Ver [plano de fechamento](finalization-plan.md), [rascunho em inglês](submission-draft-en.md) e [declaração de IA](../../AI_USAGE.md).
 
 1. **Fechar a versão local:** build de produção, SSR e testes pertinentes, conferência do layout e do percurso selecionar ano → reproduzir → pausar → explicar a leitura. Uma reinstalação limpa com o lockfile é necessária para confirmar reprodução nesta árvore.
 2. **Fechar o aceite humano:** ouvir com saída de som real e fazer dez ciclos/trocas; confirmar silêncio em pausa/mute e ausência de áudio antigo. Testar teclado e leitor de tela; uma medição de AnalyserNode não substitui esse aceite.
