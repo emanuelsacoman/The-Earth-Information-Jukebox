@@ -1,45 +1,61 @@
-/* ==========================================================================
-   Earth Jukebox: dashboard
-   Dark theme in shades of blue. Colors and font sizes live in
-   variables, so the whole theme can be changed in one place.
-   ========================================================================== */
-
 :host {
   display: block;
 }
 
 .dash {
-  --bg: #061223;
-  --bg-2: #0a1c36;
-  --panel: rgba(11, 29, 56, 0.92);
-  --surface: #10284b;
-  --border: #1f3d68;
-  --border-strong: #3a5f94;
-  --text: #eaf2ff;
-  --text-soft: #a8bedc;
-  --accent: #4da3ff;
-  --accent-strong: #8cc5ff;
-  --on-accent: #04101f;
+  --fundo: #152346;
+  --fundo-2: #1d305e;
+  --painel: rgba(32, 50, 94, 0.70);
+  --superficie: rgba(206, 225, 255, 0.12);
+  --borda: rgba(210, 233, 255, 0.23);
+  --borda-forte: rgba(221, 238, 255, 0.43);
+  --texto: #f3f1ea;
+  --texto-suave: #a9cbfa;
+  --destaque: #f2a33a;
+  --destaque-forte: #d47b1c;
+  --sobre-destaque:#150d02;
+  --desfoque: blur(12px);
 
-  --font-s: 0.8125rem;
-  --font-m: 0.9375rem;
-  --font-l: 1.125rem;
-  --font-xl: 1.75rem;
 
-  --radius: 12px;
-  --transition: 160ms ease;
+  --fonte-texto: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fonte-titulo: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+  --fonte-dados: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --letra-p: 0.8125rem;
+  --letra-m: 0.9375rem;
+  --letra-g: 1.125rem;
+  --letra-gg: 1.75rem;
+
+  --raio: 12px;
+  --transicao: 160ms ease;
 
   position: relative;
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   min-height: 640px;
-  color: var(--text);
-  background: radial-gradient(ellipse at 50% 40%, var(--bg-2), var(--bg) 70%);
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  font-size: var(--font-m);
+  color: var(--texto);
+  /* Imagem de fundo: o arquivo espaco.avif fica na pasta "public" do projeto.
+     A camada escura por cima mantém os textos legíveis. */
+  background:
+    linear-gradient(rgba(9, 10, 15, 0.15), rgba(9, 10, 15, 0.45)),
+    url("/espaco.avif") center / cover no-repeat,
+    var(--fundo);
+  font-family: var(--fonte-texto);
+  font-size: var(--letra-m);
   line-height: 1.5;
   overflow: hidden;
+}
+
+
+/* Granulado bem leve por cima do fundo. */
+.dash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
 .dash *,
@@ -48,32 +64,39 @@
   box-sizing: border-box;
 }
 
-/* ---------- Accessibility modes ---------- */
+/* ---------- Modos de acessibilidade ---------- */
 
-.dash.large-text {
-  --font-s: 1rem;
-  --font-m: 1.125rem;
-  --font-l: 1.3125rem;
-  --font-xl: 2rem;
+.dash.texto-grande {
+  --letra-p: 1rem;
+  --letra-m: 1.125rem;
+  --letra-g: 1.3125rem;
+  --letra-gg: 2rem;
 }
 
-.dash.high-contrast {
-  --bg: #000;
-  --bg-2: #000;
-  --panel: #000;
-  --surface: #000;
-  --border: #fff;
-  --border-strong: #fff;
-  --text: #fff;
-  --text-soft: #fff;
-  --accent: #8cc5ff;
-  --accent-strong: #fff;
-  --on-accent: #000;
+.dash.alto-contraste {
+  --fundo: #000;
+  --fundo-2: #000;
+  --painel: #000;
+  --superficie: #000;
+  --borda: #fff;
+  --borda-forte: #fff;
+  --texto: #fff;
+  --texto-suave: #fff;
+  --destaque: #ffc56b;
+  --destaque-forte: #fff;
+  --sobre-destaque: #000;
+  --desfoque: none;
+  background: #000;
+  
 }
 
-.dash.reduced-motion *,
-.dash.reduced-motion *::before,
-.dash.reduced-motion *::after {
+.dash.alto-contraste::before {
+  display: none;
+}
+
+.dash.menos-movimento *,
+.dash.menos-movimento *::before,
+.dash.menos-movimento *::after {
   animation: none !important;
   transition: none !important;
 }
@@ -89,7 +112,7 @@
 
 /* ---------- Base ---------- */
 
-.sr-only {
+.so-leitor {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -140,114 +163,140 @@ svg {
   stroke-linejoin: round;
 }
 
-svg .filled {
+svg .preenchido {
   fill: currentColor;
 }
 
 small {
-  font-size: var(--font-s);
-  color: var(--text-soft);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent-strong);
+  outline: 3px solid var(--destaque-forte);
   outline-offset: 2px;
 }
 
-/* ---------- Buttons ---------- */
+.dado,
+.valor,
+kbd {
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-p);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
 
-.button-outline,
-.button-primary {
+/* ---------- Botões ---------- */
+
+.botao-contorno,
+.botao-principal {
   min-height: 44px;
-  padding: 0 16px;
-  border-radius: 10px;
+  padding: 0 18px;
+  border-radius: 22px;
   font-weight: 600;
-  transition: background var(--transition), border-color var(--transition);
+  transition: background var(--transicao), border-color var(--transicao), color var(--transicao);
 }
 
-.button-outline {
+.botao-contorno {
   background: transparent;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--borda-forte);
 }
 
-.button-outline:hover {
-  background: var(--surface);
-  border-color: var(--accent);
+.botao-contorno:hover {
+  background: var(--superficie);
+  border-color: var(--destaque);
 }
 
-.button-primary {
-  background: var(--accent);
-  color: var(--on-accent);
+.botao-principal {
+  background: var(--destaque);
+  color: var(--sobre-destaque);
   border: 0;
 }
 
-.button-primary:hover {
-  background: var(--accent-strong);
+.botao-principal:hover {
+  background: var(--destaque-forte);
 }
 
-.button-large {
+.botao-grande {
   min-height: 56px;
   padding: 0 32px;
-  font-size: var(--font-l);
+  font-size: var(--letra-g);
   border-radius: 28px;
 }
 
-.button-icon {
+.botao-icone {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
   background: transparent;
-  border: 1px solid var(--border-strong);
-  border-radius: 10px;
-  transition: background var(--transition);
+  border: 1px solid var(--borda-forte);
+  border-radius: 50px;
+  color: var(--texto-suave);
+  transition: background var(--transicao), color var(--transicao);
 }
 
-.button-icon:hover {
-  background: var(--surface);
+.botao-icone:hover {
+  background: var(--superficie);
+  color: var(--destaque-forte);
+}
+
+.botao-icone-discreto {
+  border-color: transparent;
 }
 
 /* ==========================================================================
-   TOP BAR
+   BARRA SUPERIOR
    ========================================================================== */
 
-.topbar {
+.topo {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px 24px;
-  padding: 12px 24px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
+  gap: 8px 32px;
+  padding: 14px 28px;
+  background: var(--painel);
+  border-bottom: 1px solid var(--borda);
+  backdrop-filter: var(--desfoque);
+  -webkit-backdrop-filter: var(--desfoque);
   z-index: 3;
 }
 
-.brand {
+.marca {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.brand-icon {
-  width: 28px;
-  height: 28px;
-  color: var(--accent);
+.marca-icone {
+  width: 26px;
+  height: 26px;
+  color: var(--destaque);
 }
 
-.brand-name {
-  font-size: var(--font-l);
+.marca-nome {
+  font-family: var(--fonte-titulo); 
+  font-size: var(--letra-g);
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+}
+
+.marca-nome {
+  font-family: var(--fonte-titulo);
+  font-size: var(--letra-g);
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: 4px 28px;
 }
 
-.nav-button {
+.nav-botao {
+  
   display: flex;
   align-items: center;
   gap: 8px;
@@ -256,75 +305,111 @@ small {
   background: transparent;
   border: 1px solid transparent;
   border-radius: 10px;
-  color: var(--text-soft);
+  color: var(--texto-suave);
   font-weight: 500;
-  transition: background var(--transition), color var(--transition);
+  transition: background var(--transicao), color var(--transicao);
 }
 
-.nav-button:hover {
-  color: var(--text);
-  background: var(--surface);
+.nav-botao:hover {
+  color: var(--texto);
+  background: var(--superficie);
 }
 
-.nav-button.active {
-  color: var(--on-accent);
-  background: var(--accent);
+.nav-botao.ativo {
+  color: var(--texto);
+  font-weight: 700;
+  background: transparent;
+  box-shadow: none;
 }
 
 /* ==========================================================================
-   STAGE
+   PALCO
    ========================================================================== */
 
-.stage {
+.palco {
   position: relative;
   min-height: 0;
   overflow: hidden;
 }
 
-/* 3D globe area: fills the whole stage, behind the panel. */
-.globe-area {
+/* Espaço do globo 3D: ocupa o palco inteiro, atrás do painel. */
+.globo-espaco {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
+  padding-top: 104px;
 }
 
-/* Temporary placeholder. Delete once the real globe is in. */
-.globe-placeholder {
+/* Marcador temporário. Apagar quando o globo real entrar. */
+.globo-reserva {
   display: grid;
   place-items: center;
-  width: min(62vh, 56vw);
+  width: min(52vh, 54vw);
   aspect-ratio: 1 / 1;
-  border: 2px dashed var(--border-strong);
+  border: 1px dashed var(--borda-forte);
   border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #17406f, #0a1f3d 70%);
-  color: var(--text-soft);
-  font-size: var(--font-l);
+  color: var(--texto-suave);
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-g);
   text-align: center;
 }
 
-.stage-title {
+.palco-titulo {
   position: absolute;
   top: 20px;
   left: 0;
   right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
   text-align: center;
   pointer-events: none;
 }
 
-.stage-title h1 {
-  font-size: var(--font-l);
+.palco-titulo h1 {
+  
+  font-size: var(--letra-g);
+  font-weight: 600;
   font-weight: 600;
 }
 
-.stage-title p {
-  font-size: var(--font-s);
-  color: var(--text-soft);
+.palco-titulo p {
+  font-family: var(--fonte-titulo);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
-/* ---------- Side panel ---------- */
+.legenda {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  color: var(--texto-suave);
+}
 
-.panel {
+.legenda .legenda-barra {
+  width: 180px;
+}
+
+.legenda-barra {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.legenda-pontas {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
+}
+
+/* ---------- Painel lateral ---------- */
+
+.painel {
   position: absolute;
   top: 20px;
   left: 24px;
@@ -333,89 +418,102 @@ small {
   max-width: calc(100% - 48px);
   display: flex;
   flex-direction: column;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: 18px;
+  backdrop-filter: var(--desfoque);
+  -webkit-backdrop-filter: var(--desfoque);
   z-index: 2;
 }
 
-.panel-header {
+.painel-cabecalho {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 14px 14px 14px 20px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--borda);
 }
 
-.panel-header h2 {
-  font-size: var(--font-l);
+.painel-cabecalho h2 {
+  font-family: var(--fonte-titulo);
+  font-size: var(--letra-g);
   font-weight: 600;
 }
 
-.page {
+.pagina {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 24px;
+  padding: 22px;
   overflow-y: auto;
 }
 
-.block {
+.bloco {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
-.block h3 {
-  font-size: var(--font-s);
-  font-weight: 600;
-  letter-spacing: 0.1em;
+.bloco h3 {
+  font-family: var(--fonte-dados);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-soft);
+  color: var(--texto-suave);
 }
 
-.highlight {
-  font-size: var(--font-l);
+.dash.texto-grande .bloco h3 {
+  font-size: var(--letra-p);
+}
+
+.destaque {
+  font-family: var(--fonte-titulo);
+  font-size: var(--letra-g);
   font-weight: 600;
 }
 
-.help {
-  font-size: var(--font-s);
-  color: var(--text-soft);
+.ajuda {
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
-.row {
+.linha {
   display: flex;
   gap: 10px;
 }
 
-.row > * {
+.linha > * {
   flex: 1;
 }
 
-.grid-2 {
+.grade-2 {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-.grid-3 {
+.grade-3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
 }
 
-/* ---------- Page 1: records ---------- */
-
-.record-list {
+.controles-compactos {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.record {
+/* ---------- Página 1: discos ---------- */
+
+.lista-discos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.disco {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -423,75 +521,81 @@ small {
   padding: 10px;
   text-align: left;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: background var(--transition), border-color var(--transition);
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  transition: background var(--transicao), border-color var(--transicao);
 }
 
-.record:hover {
-  background: var(--surface);
+.disco:hover {
+  background: var(--superficie);
 }
 
-.record.active {
-  background: var(--surface);
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+.disco.ativo {
+  background: var(--superficie);
+  border-color: var(--destaque);
+  box-shadow: inset 0 0 0 1px var(--destaque);
 }
 
-.record-cover {
+.disco-capa {
   flex: none;
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 2px solid var(--bg);
-  box-shadow: 0 0 0 1px var(--border-strong);
+  border: 2px solid var(--fundo);
+  box-shadow: 0 0 0 1px var(--borda-forte), inset 0 0 0 16px transparent;
 }
 
-.record-text {
+.disco-texto {
   display: flex;
   flex-direction: column;
 }
 
-.record-title {
+.disco-titulo {
   font-weight: 600;
 }
 
-.record-subtitle {
-  font-size: var(--font-s);
-  color: var(--text-soft);
+.disco-sub {
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
-.data-list {
+.dados {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
-.data-list > div {
+.dados > div {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 16px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--borda);
 }
 
-.data-list dt {
-  color: var(--text-soft);
-  font-size: var(--font-s);
+.dados dt {
+  color: var(--texto-suave);
+  font-size: var(--letra-p);
 }
 
-.data-list dd {
+.dados dd {
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-p);
   text-align: right;
+  color: var(--destaque-forte);
 }
 
-.data-list-large dd {
-  font-size: var(--font-l);
+.dados-grandes dd {
+  font-size: var(--letra-g);
+  color: var(--destaque-forte);
   font-weight: 600;
 }
 
-/* ---------- On/off switch ---------- */
+/* ---------- Chave liga/desliga ---------- */
 
-.switch {
+.chave {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -503,118 +607,121 @@ small {
   border: 0;
 }
 
-.switch-track {
+.chave-trilho {
   position: relative;
   flex: none;
   width: 44px;
   height: 24px;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  background: var(--superficie);
+  border: 1px solid var(--borda-forte);
   border-radius: 12px;
-  transition: background var(--transition);
+  transition: background var(--transicao), border-color var(--transicao);
 }
 
-.switch-track::after {
+.chave-trilho::after {
   content: "";
   position: absolute;
   top: 2px;
   left: 2px;
   width: 18px;
   height: 18px;
-  background: var(--text);
+  background: var(--texto suave);
   border-radius: 50%;
-  transition: transform var(--transition);
+  transition: transform var(--transicao), background var(--transicao);
 }
 
-.switch[aria-checked="true"] .switch-track {
-  background: var(--accent);
-  border-color: var(--accent);
+.chave[aria-checked="true"] .chave-trilho {
+  background: var(--destaque);
+  border-color: var(--destaque);
 }
 
-.switch[aria-checked="true"] .switch-track::after {
+.chave[aria-checked="true"] .chave-trilho::after {
   transform: translateX(20px);
-  background: var(--on-accent);
+  background: var(--sobre-destaque);
 }
 
-.switch-text {
+.chave-texto {
   display: flex;
   flex-direction: column;
 }
 
-/* ---------- Page 2: sound ---------- */
+/* ---------- Página 2: som ---------- */
 
-.option-card {
+.cartao-opcao {
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 10px;
   text-align: left;
   background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  transition: background var(--transition), border-color var(--transition);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  transition: background var(--transicao), border-color var(--transicao);
 }
 
-.option-card:hover {
-  background: var(--surface);
+.cartao-opcao:hover {
+  background: var(--superficie);
 }
 
-.option-card.active {
-  background: var(--surface);
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+.cartao-opcao.ativo {
+  background: var(--superficie);
+  border-color: var(--destaque);
+  box-shadow: inset 0 0 0 1px var(--destaque);
 }
 
-.option-card-title {
+.cartao-titulo {
   font-weight: 600;
 }
 
-.segments {
+.segmentos {
   display: flex;
-  gap: 4px;
+  gap: 2px;
   padding: 4px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  background: var(--fundo);
+  border: 1px solid var(--borda);
+  border-radius: 22px;
 }
 
-.segments button {
+.segmentos button {
   flex: 1;
   min-height: 36px;
   padding: 0 14px;
   background: transparent;
   border: 0;
-  border-radius: 7px;
+  border-radius: 18px;
+  font-size: var(--letra-p);
   font-weight: 600;
-  color: var(--text-soft);
-  transition: background var(--transition), color var(--transition);
+  color: var(--texto-suave);
+  transition: background var(--transicao), color var(--transicao);
 }
 
-.segments button:hover {
-  color: var(--text);
+.segmentos button:hover {
+  color: var(--texto);
 }
 
-.segments button.active {
-  background: var(--accent);
-  color: var(--on-accent);
+.segmentos button.ativo {
+  background: var(--destaque);
+  color: var(--sobre-destaque);
+  box-shadow: inset 0 0 0 1px var(--destaque);
 }
 
-.field {
+.campo {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.field label {
+.campo label {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 12px;
-  font-size: var(--font-s);
-  color: var(--text-soft);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
-.value {
-  color: var(--text);
+.valor {
+  color: var(--texto);
   font-variant-numeric: tabular-nums;
 }
 
@@ -622,44 +729,106 @@ select,
 input[type="text"] {
   min-height: 44px;
   padding: 0 12px;
-  background: var(--bg);
-  border: 1px solid var(--border-strong);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
   border-radius: 10px;
 }
 
-input[type="range"] {
-  width: 100%;
-  height: 28px;
-  accent-color: var(--accent);
+select option {
+  background: #1d305e;
+  color: #f3f1ea;
 }
 
-/* ---------- Page 3: listening ---------- */
+input[type="text"] {
+  font-family: var(--fonte-dados);
+  font-size: var(--letra-p);
+}
 
-.visualizer {
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.campo input[type="range"] {
+  background: repeating-linear-gradient(
+      to right,
+      var(--borda-forte) 0,
+      var(--borda-forte) 1px,
+      transparent 1px,
+      transparent 10%
+    )
+    left bottom / 100% 5px no-repeat;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--borda-forte);
+  border-radius: 1px;
+}
+
+input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: var(--borda-forte);
+  border-radius: 1px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 20px;
+  margin-top: -9px;
+  background: var(--destaque);
+  border: 1px solid var(--sobre-destaque);
+  border-radius: 2px;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 20px;
+  background: var(--destaque);
+  border: 1px solid var(--sobre-destaque);
+  border-radius: 2px;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  background: var(--destaque-forte);
+}
+
+input[type="range"]:hover::-moz-range-thumb {
+  background: var(--destaque-forte);
+}
+
+/* ---------- Página 3: ouvindo ---------- */
+
+.visualizador {
   display: flex;
   align-items: flex-end;
   gap: 3px;
   height: 72px;
   padding: 8px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
 }
 
-.visualizer span {
+.visualizador span {
   flex: 1;
   height: 12%;
-  background: var(--accent);
+  background: var(--destaque);
   border-radius: 2px;
   transform-origin: bottom;
 }
 
-.visualizer.playing span {
+.visualizador.tocando span {
   height: 100%;
-  animation: pulse 900ms ease-in-out infinite alternate;
+  animation: pulsar 900ms ease-in-out infinite alternate;
 }
 
-@keyframes pulse {
+@keyframes pulsar {
   from {
     transform: scaleY(0.12);
   }
@@ -668,77 +837,94 @@ input[type="range"] {
   }
 }
 
-.legend-bar {
+.legenda-barra {
   height: 12px;
   border-radius: 6px;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--borda-forte);
 }
 
-.legend-ends {
+.legenda-pontas {
   display: flex;
   justify-content: space-between;
-  font-size: var(--font-s);
-  color: var(--text-soft);
+  font-size: var(--letra-p);
+  color: var(--texto-suave);
 }
 
-.mapping {
+.mapeamento {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.mapping li {
+.mapeamento li {
   display: flex;
   flex-direction: column;
 }
 
-.mapping strong {
-  color: var(--accent-strong);
+.mapeamento strong {
+  color: var(--destaque-forte);
 }
 
-/* ---------- Page 4: globe and time ---------- */
+/* ---------- Página 4: globo e tempo ---------- */
 
-.tags {
+.etiquetas {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.tag {
+.etiqueta {
   min-height: 40px;
   padding: 0 14px;
   background: transparent;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--borda-forte);
   border-radius: 20px;
-  transition: background var(--transition);
+  font-size: var(--letra-p);
+  transition: background var(--transicao), color var(--transicao);
 }
 
-.tag:hover {
-  background: var(--surface);
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.tag.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--on-accent);
+.etiqueta {
+  min-height: 40px;
+  padding: 0 14px;
+  background: transparent;
+  border: 1px solid var(--borda);
+  border-radius: 20px;
+  font-size: var(--letra-p);
+  transition: border-color var(--transicao), color var(--transicao);
+}
+
+.etiqueta:hover {
+  background: var(--superficie);
+}
+
+.etiqueta.ativo {
+  background: var(--destaque);
+  border-color: var(--destaque);
+  color: var(--sobre-destaque);
   font-weight: 600;
 }
 
-/* ---------- Page 5: accessibility ---------- */
+/* ---------- Página 5: acessibilidade ---------- */
 
-.shortcuts {
+.atalhos {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.shortcuts > div {
+.atalhos > div {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.shortcuts dt {
+.atalhos dt {
   flex: none;
   width: 84px;
 }
@@ -746,43 +932,43 @@ input[type="range"] {
 kbd {
   display: inline-block;
   padding: 2px 8px;
-  background: var(--bg);
-  border: 1px solid var(--border-strong);
+  background: var(--fundo);
+  border: 1px solid var(--borda-forte);
   border-radius: 6px;
   font-family: inherit;
-  font-size: var(--font-s);
+  font-size: var(--letra-p);
 }
 
-/* ---------- Page 6: about ---------- */
+/* ---------- Página 6: sobre ---------- */
 
-.steps {
+.passos {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  counter-reset: step;
-}
-
-.steps li {
-  display: flex;
   gap: 10px;
-  counter-increment: step;
+  counter-reset: passo;
 }
 
-.steps li::before {
-  content: counter(step);
+.passos li {
+  display: flex;
+  gap: 12px;
+  counter-increment: passo;
+}
+
+.passos li::before {
+  content: counter(passo);
   flex: none;
   display: grid;
   place-items: center;
   width: 24px;
   height: 24px;
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  background: var(--superficie);
+  border: 1px solid var(--borda-forte);
   border-radius: 50%;
-  font-size: var(--font-s);
+  font-size: var(--letra-p);
   font-weight: 600;
 }
 
-/* ---------- Zoom and legend over the stage ---------- */
+/* ---------- Zoom e legenda sobre o palco ---------- */
 
 .zoom {
   position: absolute;
@@ -795,11 +981,11 @@ kbd {
   z-index: 1;
 }
 
-.zoom .button-icon {
-  background: var(--panel);
+.zoom .botao-icone {
+  background: var(--painel);
 }
 
-.legend {
+.legenda {
   position: absolute;
   right: 24px;
   bottom: 20px;
@@ -808,117 +994,191 @@ kbd {
   gap: 6px;
   width: 220px;
   padding: 12px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--painel);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
   z-index: 1;
 }
 
-.legend-title {
-  font-size: var(--font-s);
+.legenda-titulo {
+  font-size: var(--letra-p);
   font-weight: 600;
 }
 
 /* ==========================================================================
-   BOTTOM BAR
+   BARRA INFERIOR
    ========================================================================== */
 
-.transport {
+.transporte {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 24px;
   padding: 12px 24px;
-  background: var(--panel);
-  border-top: 1px solid var(--border);
+  background: var(--painel);
+  border-top: 1px solid var(--borda);
+  border-radius: 18px;
+  backdrop-filter: var(--desfoque);
+  -webkit-backdrop-filter: var(--desfoque);
   z-index: 3;
 }
 
-.date {
+.progresso {
+  position: absolute;
+  top: -11px;
+  left: 18px;
+  right: 18px;
+}
+
+input[type="range"].progresso-barra {
+  height: 22px;
+}
+
+input[type="range"].progresso-barra::-webkit-slider-runnable-track {
+  height: 3px;
+  background: linear-gradient(to right, var(--destaque) var(--prog, 0%), var(--borda-forte) var(--prog, 0%));
+}
+
+input[type="range"].progresso-barra::-moz-range-track {
+  height: 3px;
+  background: var(--borda-forte);
+}
+
+input[type="range"].progresso-barra::-moz-range-progress {
+  height: 3px;
+  background: var(--destaque);
+}
+
+input[type="range"].progresso-barra::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border-radius: 50%;
+}
+
+input[type="range"].progresso-barra::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.data {
   padding: 8px 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--superficie);
+  border: 1px solid var(--borda);
   border-radius: 8px;
-  font-size: var(--font-s);
+  font-size: var(--letra-p);
   font-variant-numeric: tabular-nums;
 }
 
-.button-play {
+.botao-tocar {
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 132px;
   min-height: 52px;
   padding: 0 24px;
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--destaque);
+  color: var(--sobre-destaque);
   border: 0;
   border-radius: 26px;
-  font-size: var(--font-l);
+  font-size: var(--letra-g);
   font-weight: 700;
-  transition: background var(--transition);
+  transition: background var(--transicao);
 }
 
-.button-play:hover {
-  background: var(--accent-strong);
+.botao-tocar:hover {
+  background: var(--destaque-forte);
+  transform: scale (1.05);
 }
 
-.transport .segments button {
+.botao-tocar svg {
+  width: 22px;
+  height: 22px;
+}
+
+.transporte-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.transporte-titulo {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+
+.transporte-info .dado {
+  color: var(--texto-suave);
+}
+
+/* Ajustes secundários: mais discretos, agrupados à direita. */
+.transporte-ajustes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 24px;
+}
+
+.transporte .segmentos button {
   flex: none;
 }
 
-.transport-field {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1 1 220px;
-  font-size: var(--font-s);
-  color: var(--text-soft);
+.transporte-campo .valor {
+  flex: none;
+  width: 62px;
+  text-align: right;
 }
 
-.transport-volume {
+.transporte-volume {
   flex: 0 1 200px;
 }
 
 /* ==========================================================================
-   WELCOME SCREEN
+   TELA DE ABERTURA
    ========================================================================== */
 
-.welcome {
+.abertura {
   position: absolute;
   inset: 0;
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgba(3, 10, 22, 0.86);
+  background: rgba(5, 6, 9, 0.82);
   z-index: 10;
 }
 
-.welcome-box {
+.dash.alto-contraste .abertura {
+  background: #000;
+}
+
+.abertura-caixa {
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
   max-width: 460px;
   padding: 32px;
-  background: var(--bg-2);
-  border: 1px solid var(--border-strong);
+  background: var(--fundo-2);
+  border: 1px solid var(--borda);
   border-radius: 20px;
 }
 
-.welcome-box h2 {
-  font-size: var(--font-xl);
+.abertura-caixa h2 {
+  font-family: var(--fonte-titulo);
+  font-size: var(--letra-gg);
   font-weight: 700;
   line-height: 1.15;
 }
 
-.welcome-box .button-large {
+.abertura-caixa .botao-grande {
   align-self: flex-start;
   margin-top: 8px;
 }
 
 /* ==========================================================================
-   SMALL SCREENS: the panel moves below the globe and the page scrolls
+   TELAS PEQUENAS: o painel vai para baixo do globo e a página rola
    ========================================================================== */
 
 @media (max-width: 900px) {
@@ -928,11 +1188,11 @@ kbd {
     overflow: visible;
   }
 
-  .nav-button span {
+  .nav-botao span {
     display: none;
   }
 
-  .stage {
+  .palco {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -940,17 +1200,21 @@ kbd {
     overflow: visible;
   }
 
-  .globe-area {
+   .palco-titulo {
+    position: static;
+  }
+
+  .globo-espaco {
     position: relative;
     inset: auto;
     padding: 56px 0 8px;
   }
 
-  .globe-placeholder {
+  .globo-reserva {
     width: min(80vw, 420px);
   }
 
-  .panel {
+  .painel {
     position: static;
     width: 100%;
     max-width: none;
@@ -962,13 +1226,18 @@ kbd {
     transform: none;
   }
 
-  .legend {
+  .legenda {
     position: static;
     width: 100%;
   }
 
-  .transport {
+  .transporte {
     position: sticky;
     bottom: 0;
+  }
+
+  .transporte-campo {
+    flex: 1 1 200px;
+    width: auto;
   }
 }
