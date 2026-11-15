@@ -1,6 +1,25 @@
-# Estado atual — auditoria F0
+# Estado atual
 
-## Leitura atual do registro — 15/11/2026
+## Sonificação — 15/11/2026
+
+Referência atual: `feat/f3-sonification`, alterações locais sobre `brain`/`64659fba8e45fd6f635df909e69923588db92d44`. Árvore inicialmente limpa; sem commit/push/merge/deploy nesta sessão. O PR #6 já havia integrado o Observatório Âmbar e correções de boot/SSR. O Dashboard legado permanece desmontado. O relato anterior abaixo é histórico e não descreve o código presente.
+
+| Capacidade atual | Classificação / evidência |
+|---|---|
+| Globo Canvas2D, rotação/zoom/teclado e saída Angular | IMPLEMENTED; entrega já integrada em 64659fb, módulos preservados; 8 testes Node e specs Angular passam |
+| Fonte NASA | IMPLEMENTED para dois derivados curados de 2012/2023 da SVS 5276, relacionada à versão EIC 5313; manifesto/hash/créditos e loader real em Canvas2D |
+| Extração e mapeamento | IMPLEMENTED; grade 24×8, brilho de RGB codificado, máscara do ano, pentatônica determinística e 11 testes; sem unidade física calibrada |
+| Motor Web Audio | IMPLEMENTED com 20 testes de scheduling, ganho, suspensão, cancelamento e liberação; escuta humana PENDENTE |
+| Transporte e sincronização | IMPLEMENTED no desktop automatizado; coordenador único e revisão, pausa/retomada/seek/velocidade; 60,616 s de amostra, máximo 25,67 ms de atraso textual. Escuta humana e validação em aparelho real pendentes |
+| Interface utilizável | IMPLEMENTED no AudioPanel montado pelo Index, imagem real, controles sem autoplay, fonte/legenda/erro; acessibilidade assistiva ainda UNKNOWN |
+| Integração geográfica científica | Indisponível explicitamente; pointSelected recebido, sem converter lat/lon em pixels ou sons |
+| Build/SSR/testes | 74 testes Angular e 8 Node aprovados; build sem erros de prerender. Reprodução limpa isolada não repetida |
+
+Arquivos, fórmulas, comandos, resultados completos, limites e roteiro auditivo em [entrega de sonificação](sonification-delivery.md). G-AUDIO/G-A11Y completos não são aprovados por mocks, estado ou sinal digital. O MVP completo permanece pendente.
+
+## Auditoria F0 preservada
+
+## Leitura do registro documental anterior — histórico
 
 A auditoria abaixo é histórica, referente ao código `aab5471`. A documentação inicial foi publicada em `brain` no commit `6fbc52fe7a577d779315ba6e972d66350efc91df`. A revisão documental parte desse commit: o diff de aplicação, configuração e dependências contra `aab5471` continua vazio. Portanto, os hooks TODO e o placeholder de PlanetEarth ainda descrevem o código da `brain`.
 

@@ -8,6 +8,8 @@ const dist = new URL('../dist/the-earth-information-jukebox/', import.meta.url);
 const prerendered = await readFile(new URL('browser/index.html', dist), 'utf8');
 assert.match(prerendered, /<app-planet-earth[\s>]/, 'Prerender must include the Angular Earth component');
 assert.match(prerendered, /Preparando o Observatório Âmbar/, 'Prerender must provide server-rendered content');
+assert.match(prerendered, /<app-audio-panel[\s>]/, 'Prerender must include the sonification panel');
+assert.match(prerendered, /Luzes noturnas, nota por nota/);
 assert.doesNotMatch(prerendered, /ReferenceError|window is not defined|document is not defined/);
 await access(new URL('server/server.mjs', dist));
 
@@ -25,6 +27,8 @@ assert.equal(bootstrapCalled, true, 'Runtime SSR must invoke the compiled bootst
 assert.doesNotMatch(rendered, /ng-server-context="ssg"/, 'This check must not use cached prerendered HTML');
 assert.match(rendered, /<app-planet-earth[\s>]/);
 assert.match(rendered, /Preparando o Observatório Âmbar/);
+assert.match(rendered, /<app-audio-panel[\s>]/);
+assert.match(rendered, /Luzes noturnas, nota por nota/);
 
 const port = 47831;
 const origin = `http://127.0.0.1:${port}`;
@@ -49,6 +53,14 @@ try {
   assert.equal(response.headers.get('cache-control'), null, 'The root must exercise runtime SSR, not the one-year static asset cache');
   const html = await response.text();
   assert.match(html, /<app-planet-earth[\s>]/);
+  assert.match(html, /<app-audio-panel[\s>]/);
+  const manifest = await (await fetch(`${origin}/data/night-lights/manifest.json`)).json();
+  for (const frame of manifest.frames) {
+    const asset = await fetch(new URL(frame.resourceUrl, origin));
+    assert.equal(asset.status, 200);
+    assert.match(asset.headers.get('content-type'), /image\/png/);
+    assert.equal((await asset.arrayBuffer()).byteLength, frame.bytes);
+  }
   const scripts = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(match => match[1]);
   assert.ok(scripts.length > 0, 'Angular scripts must be present');
   for (const path of scripts) {

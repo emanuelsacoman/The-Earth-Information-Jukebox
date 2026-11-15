@@ -1,3 +1,4 @@
 <main class="index">
-  <app-planet-earth></app-planet-earth>
+  <app-audio-panel></app-audio-panel>
+  <app-planet-earth id="observatory" (pointSelected)="playback.receiveGlobePoint($event)"></app-planet-earth>
 </main>

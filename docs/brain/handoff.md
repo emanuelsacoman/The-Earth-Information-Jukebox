@@ -1,5 +1,16 @@
 # Handoff operacional
 
+## Continuidade atual — sonificação, 15/11/2026
+
+- **Branch:** `feat/f3-sonification`, criada da brain limpa em `64659fba8e45fd6f635df909e69923588db92d44`; entrega local sem commit/push/merge/deploy. Não houve alteração de main ou das branches de colaboradores.
+- **Autorização da sessão:** implementar F3-01/02/03 e integração mínima F4-01/02, com partes indispensáveis F2-01/02/03. As restrições “somente documentação” abaixo descrevem a sessão anterior.
+- **Entregue:** dois frames anuais NASA curados, loader com SHA-256/Canvas, extrator/mapper puros, síntese Web Audio, scheduler/cancelamento, coordenador por revisão e painel montado no Index. Globo já integrado na brain por PR #6, preservado nesta implementação; pointSelected recebido sem transformar coordenadas em som.
+- **Evidência atual:** build sem erros SSR, 74 testes Angular, 8 Node e smoke de produção/SSR; navegador com sinal real, dez ciclos, mute/volume, 60,616 s de amostra e sincronização máxima 25,67 ms. Fórmulas, arquivos, origem e limites em [entrega de sonificação](sonification-delivery.md).
+- **Pendências:** escuta humana, validação assistiva, instalação limpa isolada e aceite integral de performance/sincronização. Não declarar MVP completo ou G-AUDIO integral.
+- **Próxima tarefa exata:** F3-03, executar escuta e dez ciclos humanos conforme roteiro; continuar F4-02/F5-01/02 e reprodução F1-01. Responsáveis humanos: UNASSIGNED.
+
+## Fechamento documental anterior — histórico preservado
+
 - **Atualizado em:** 15/11/2026, contexto `America/Sao_Paulo`.
 - **Branch de entrega:** `brain`. **Commit-base da revisão:** `6fbc52fe7a577d779315ba6e972d66350efc91df` (“Cérebro”), no qual a documentação inicial já está publicada. O commit desta revisão é o commit que contém este arquivo; não confundir a base com o HEAD posterior.
 - **Escopo confirmado:** finalizar somente a documentação da `brain`. Preservar a `luiz`; não implementar dados, áudio ou integração nesta revisão.

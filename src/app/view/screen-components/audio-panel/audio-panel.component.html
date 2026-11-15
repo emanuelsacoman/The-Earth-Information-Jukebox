@@ -1,0 +1,78 @@
+<section class="audio-panel" aria-labelledby="audio-title" id="sonification">
+  <header>
+    <div>
+      <p class="eyebrow">02 / OUVIR UMA IMAGEM NASA</p>
+      <h2 id="audio-title">Luzes noturnas, nota por nota.</h2>
+      <p>{{ records[0].description }}</p>
+    </div>
+    <a href="#observatory">Explorar o globo ↓</a>
+  </header>
+
+  <div class="audio-layout" *ngIf="playback.state() as state">
+    <div class="visual">
+      <label for="scientific-frame">Visualização e ano de observação</label>
+      <select id="scientific-frame" [value]="state.currentFrameId ?? records[0].frames[0].id" (change)="select($any($event.target).value)">
+        <optgroup *ngFor="let record of records" [label]="record.title">
+          <option *ngFor="let frame of record.frames" [value]="frame.id">{{ frame.observationYear }} · {{ record.title }}</option>
+        </optgroup>
+      </select>
+      <figure *ngIf="playback.frame() as frame; else preparing">
+        <div class="image-stage">
+          <img [src]="frame.resourceUrl" [width]="frame.width" [height]="frame.height"
+            [alt]="'Composição anual NASA de luzes noturnas em ' + frame.observationYear + '. Pontos claros indicam maior brilho na representação; não são medidas de radiância.'" />
+          <span class="cell" *ngIf="state.currentFeature as feature" aria-hidden="true"
+            [style.left.%]="100 * feature.extent.x / frame.width"
+            [style.top.%]="100 * feature.extent.y / frame.height"
+            [style.width.%]="100 * feature.extent.width / frame.width"
+            [style.height.%]="100 * feature.extent.height / frame.height"></span>
+        </div>
+        <figcaption>Composição anual de {{ frame.observationYear }} · NASA Black Marble / VIIRS. A caixa marca a região da leitura.</figcaption>
+      </figure>
+      <ng-template #preparing><div class="image-placeholder">{{ state.status === 'error' ? 'Imagem indisponível. Consulte a mensagem ao lado.' : 'A imagem será verificada no navegador. Nenhum áudio inicia automaticamente.' }}</div></ng-template>
+      <p class="caption">Varredura espacial: cada coluna de cima para baixo, da esquerda para a direita. O cursor não representa passagem dos anos.</p>
+    </div>
+
+    <div class="controls">
+      <p class="state" [attr.data-status]="state.status">{{ statusLabels[state.status] }}</p>
+      <p class="announcement" role="status" aria-live="polite" aria-atomic="true">{{ state.announcement }}</p>
+      <p *ngIf="state.error" class="error">{{ state.error }}</p>
+      <button type="button" *ngIf="state.status === 'error'" (click)="retry()">Preparar novamente</button>
+      <div class="transport">
+        <button type="button" class="primary" (click)="togglePlayback()"
+          [disabled]="!canPlay"
+          [attr.aria-pressed]="state.status === 'playing'">{{ state.status === 'playing' ? 'Pausar' : 'Reproduzir' }}</button>
+        <button type="button" (click)="playback.stop()" [disabled]="!state.duration">Reiniciar</button>
+        <button type="button" (click)="playback.toggleMute()" [attr.aria-pressed]="state.muted">{{ state.muted ? 'Ativar som' : 'Silenciar' }}</button>
+      </div>
+      <label for="audio-volume">Volume · {{ state.volume * 100 | number:'1.0-0' }}%{{ state.muted ? ' · silenciado' : '' }}</label>
+      <input id="audio-volume" type="range" min="0" max="100" step="1" [value]="state.volume * 100" (input)="playback.setVolume(+$any($event.target).value / 100)" />
+      <label for="audio-speed">Velocidade da varredura · {{ state.speed }}×</label>
+      <select id="audio-speed" [value]="state.speed" (change)="playback.setSpeed(+$any($event.target).value)">
+        <option value="0.5">0,5× · mais lenta</option><option value="1">1× · 4,17 regiões por segundo</option><option value="1.5">1,5×</option><option value="2">2× · mais rápida</option>
+      </select>
+      <p class="caption">Mudar velocidade pausa o áudio. Pressione Reproduzir para continuar com o novo ritmo.</p>
+      <label for="sweep-position">Posição espacial · {{ state.duration ? (100 * state.position / state.duration | number:'1.0-0') : 0 }}%</label>
+      <input id="sweep-position" type="range" min="0" [max]="state.duration" step="0.24" [value]="state.position"
+        [disabled]="!state.duration" (input)="playback.seek(+$any($event.target).value)" />
+      <div class="reading" aria-live="off">
+        <h3>Leitura atual{{ state.status === 'paused' ? ' · posição em pausa' : '' }}</h3>
+        <p>{{ state.currentEvent?.textDescription ?? (state.currentFeature && state.currentFeature.validity !== 'valid' ? 'Região mascarada ou sem pixels disponíveis. Esta posição permanece em silêncio; não representa uma medição de zero.' : 'A leitura de cada região aparecerá aqui. É possível ler sem ouvir e mover a posição com o teclado.') }}</p>
+        <small *ngIf="state.currentEvent as event">Origem: {{ event.origin.frameId }} · célula {{ event.featureSnapshot.index + 1 }} · {{ event.mappingVersion }}</small>
+      </div>
+    </div>
+  </div>
+
+  <details>
+    <summary>Como a imagem se transforma em som</summary>
+    <p>Dividimos a imagem em 24 colunas e 8 linhas. Cada região usa a média de 0,2126 R + 0,7152 G + 0,0722 B dos pixels amostrados, dividida por 255. Texto do ano é mascarado. Pixels transparentes ou mascarados não são tratados como zero.</p>
+    <p>O brilho normalizado n escolhe uma entre 16 notas da escala pentatônica de Dó: índice = arredondar(15 n), de Dó3 a Dó6. Frequência = 440 × 2^((MIDI − 69)/12) Hz. Ganho = 0,06 + 0,14 n; panorama = 2 x − 1, sendo x a posição horizontal normalizada. Timbre senoidal, notas de 0,18 s a cada 0,24 s na velocidade 1×. O ritmo é fixo; a velocidade altera os tempos, preservando a altura.</p>
+    <p>Mais brilho visual produz nota mais aguda e ganho maior. São escolhas musicais, sem calibração física. Preto pode representar oceano, pouco brilho ou ausência não identificada: não significa radiância zero medida. A redução de resolução também suaviza detalhes.</p>
+  </details>
+  <footer>
+    <p><a [href]="records[0].originUrl" target="_blank" rel="noopener noreferrer">Fonte NASA SVS 5276</a> · <a href="https://svs.gsfc.nasa.gov/5313/" target="_blank" rel="noopener noreferrer">Versão relacionada do EIC</a> · <a href="data/night-lights/manifest.json" target="_blank" rel="noopener noreferrer">Manifesto e hashes</a></p>
+    <p>{{ records[0].credits }} <a [href]="records[0].usageUrl" target="_blank" rel="noopener noreferrer">Condições de uso NASA</a>.</p>
+    <p>{{ records[0].limitations }}</p>
+    <p>Explore sonoro por latitude/longitude indisponível: a transformação geográfica desta imagem ainda não foi validada. O globo abaixo permanece independente.</p>
+    <p *ngIf="playback.globePoint() as point">Ponto recebido do globo: {{ point.lat | number:'1.0-2' }}°, {{ point.lon | number:'1.0-2' }}°. Essa seleção não altera o som.</p>
+  </footer>
+</section>
