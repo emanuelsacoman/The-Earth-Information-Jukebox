@@ -1,0 +1,62 @@
+<section class="audio-panel" aria-labelledby="audio-title" id="sonification" tabindex="-1">
+  <header>
+    <div>
+      <p class="eyebrow">NASA BLACK MARBLE</p>
+      <h2 id="audio-title">Night lights</h2>
+      <p>Hear the brightness of an annual NASA image.</p>
+    </div>
+    <a href="#observatory">Back to Earth</a>
+  </header>
+  <div class="audio-layout" *ngIf="playback.state() as state">
+    <div class="visual">
+      <label for="scientific-frame">Observation year</label>
+      <select id="scientific-frame" [value]="state.currentFrameId ?? records[0].frames[0].id" (change)="select($any($event.target).value)">
+        <optgroup *ngFor="let record of records" [label]="record.title">
+          <option *ngFor="let frame of record.frames" [value]="frame.id">{{ frame.observationYear }} · {{ record.title }}</option>
+        </optgroup>
+      </select>
+      <figure *ngIf="playback.frame() as frame; else preparing">
+        <div class="image-stage">
+          <img [src]="frame.resourceUrl" [width]="frame.width" [height]="frame.height" [alt]="'NASA annual night-lights composite for ' + frame.observationYear + '. Lighter pixels indicate greater visual brightness. Radiance is not calibrated.'" />
+          <span class="cell" *ngIf="state.currentFeature as feature" aria-hidden="true" [style.left.%]="100 * feature.extent.x / frame.width" [style.top.%]="100 * feature.extent.y / frame.height" [style.width.%]="100 * feature.extent.width / frame.width" [style.height.%]="100 * feature.extent.height / frame.height"></span>
+        </div>
+        <figcaption>{{ frame.observationYear }} annual composite. NASA Black Marble / VIIRS. The box marks the current region.</figcaption>
+      </figure>
+      <ng-template #preparing><div class="image-placeholder">{{ state.status === 'error' ? 'Image unavailable. See the error message.' : 'Preparing the image. Sound starts only when you press Play.' }}</div></ng-template>
+      <p class="caption">Spatial scan through one image. Progress does not represent years.</p>
+    </div>
+    <div class="controls">
+      <p class="state" [attr.data-status]="state.status">{{ statusLabels[state.status] }}</p>
+      <p class="announcement" role="status" aria-live="polite" aria-atomic="true">{{ state.announcement }}</p>
+      <p *ngIf="state.error" class="error">{{ state.error }}</p>
+      <button type="button" *ngIf="state.status === 'error'" (click)="retry()">Try again</button>
+      <div class="transport">
+        <button type="button" class="primary" (click)="togglePlayback()" [disabled]="!canPlay" [attr.aria-pressed]="state.status === 'playing'">{{ state.status === 'playing' ? 'Pause' : 'Play' }}</button>
+        <button type="button" (click)="playback.stop()" [disabled]="!state.duration">Restart</button>
+        <button type="button" (click)="playback.toggleMute()" [attr.aria-pressed]="state.muted">{{ state.muted ? 'Unmute' : 'Mute' }}</button>
+      </div>
+      <label for="audio-volume">Volume · {{ state.volume * 100 | number:'1.0-0' }}%{{ state.muted ? ' · muted' : '' }}</label>
+      <input id="audio-volume" type="range" min="0" max="100" step="1" [value]="state.volume * 100" (input)="playback.setVolume(+$any($event.target).value / 100)" />
+      <label for="audio-speed">Scan speed</label>
+      <select id="audio-speed" [value]="state.speed" (change)="playback.setSpeed(+$any($event.target).value)"><option value="0.5">0.5×</option><option value="1">1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+      <p class="caption">Changing speed pauses playback. Press Play to continue.</p>
+      <label for="sweep-position">Spatial position · {{ state.duration ? (100 * state.position / state.duration | number:'1.0-0') : 0 }}%</label>
+      <input id="sweep-position" type="range" min="0" [max]="state.duration" step="0.24" [value]="state.position" [disabled]="!state.duration" (input)="playback.seek(+$any($event.target).value)" />
+      <div class="reading" aria-live="off">
+        <h3>Current reading{{ state.status === 'paused' ? ' · paused' : '' }}</h3>
+        <p>{{ state.currentEvent?.textDescription ?? (state.currentFeature && state.currentFeature.validity !== 'valid' ? 'Masked or unavailable pixels. This region stays silent and does not represent a measured zero.' : 'Region readings appear here. Use the position slider to read without sound.') }}</p>
+        <small *ngIf="state.currentEvent as event">{{ event.origin.frameId }} · cell {{ event.featureSnapshot.index + 1 }}</small>
+      </div>
+    </div>
+  </div>
+  <details>
+    <summary>Method, credits and limitations</summary>
+    <p>We scan 24 columns of eight regions, top to bottom, then left to right. Relative brightness is the mean of 0.2126 R + 0.7152 G + 0.0722 B over sampled pixels, divided by 255. The printed year is masked. Transparent or masked pixels are excluded.</p>
+    <p>Normalized brightness n selects one of 16 C-major pentatonic notes, C3 to C6: index = round(15 n). Frequency = 440 × 2^((MIDI − 69)/12) Hz. Voice gain = 0.06 + 0.14 n. Stereo pan = 2 x − 1, with x the horizontal position. Sine notes last 0.18 s, starting every 0.24 s at 1×. Speed changes timing and preserves pitch.</p>
+    <p>{{ records[0].limitations }}</p>
+    <p>{{ records[0].credits }} <a [href]="records[0].usageUrl" target="_blank" rel="noopener noreferrer">NASA media guidelines</a>.</p>
+    <p>Software developed with AI assistance. Runtime audio uses deterministic image-to-sound rules. <a href="project-metadata.json" target="_blank" rel="noopener noreferrer">AI use and project metadata</a>.</p>
+    <p *ngIf="playback.globePoint() as point">Last globe point: {{ point.lat | number:'1.0-2' }}°, {{ point.lon | number:'1.0-2' }}°. This point does not change the sound.</p>
+  </details>
+  <footer><a [href]="records[0].originUrl" target="_blank" rel="noopener noreferrer">NASA SVS 5276</a> · <a href="https://svs.gsfc.nasa.gov/5313/" target="_blank" rel="noopener noreferrer">EIC version</a> · <a href="data/night-lights/manifest.json" target="_blank" rel="noopener noreferrer">Source manifest</a><p>Relative image brightness. No radiance calibration. Globe selection is independent.</p></footer>
+</section>

@@ -20,4 +20,36 @@ describe('PlanetEarthComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit the selected coordinates from the rendered observatory', async () => {
+    await import('./observatory.mjs');
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    let selected: { lat: number; lon: number } | undefined;
+    const subscription = component.pointSelected.subscribe((point) => selected = point);
+    const host = fixture.nativeElement as HTMLElement;
+    const destination = host.querySelector<HTMLButtonElement>('button[aria-label="Explore Amazon"]');
+    expect(destination).not.toBeNull();
+    destination!.click();
+    expect(selected).toEqual({ lat: -3, lon: -60 });
+    subscription.unsubscribe();
+  });
+
+  it('should release the native canvas when Angular destroys the view', async () => {
+    await import('./observatory.mjs');
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    const host = fixture.nativeElement as HTMLElement;
+    expect(host.querySelector('canvas')).not.toBeNull();
+    fixture.destroy();
+    expect(host.querySelector('canvas')).toBeNull();
+  });
+
+  it('keeps the visible rotation command in its accessible name', async () => {
+    await import('./observatory.mjs');
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    const rotate = (fixture.nativeElement as HTMLElement).querySelector<HTMLButtonElement>('[data-rotation]')!;
+    for (let state = 0; state < 2; state++) {
+      expect(rotate.getAttribute('aria-label')).toContain(rotate.textContent!.trim());
+      rotate.click();
+    }
+  });
 });

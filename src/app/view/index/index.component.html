@@ -1,7 +1,6 @@
-<main>
-
-    <section class="index">
-        <app-dashboard class="dashboard"></app-dashboard>
-        <app-planet-earth class="planet-earth"></app-planet-earth>
-    </section>
+<main class="index">
+  <a class="skip-link" href="#sonification">Skip to NASA sonification</a>
+  <app-planet-earth id="observatory" (pointSelected)="playback.receiveGlobePoint($event)"></app-planet-earth>
+  <a class="audio-shortcut" href="#sonification">Listen to NASA imagery</a>
+  <app-audio-panel></app-audio-panel>
 </main>

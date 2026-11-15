@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "recordId": "nasa-svs-5276-night-lights",
+  "curationVersion": "night-lights-local-v1",
+  "verifiedOn": "2026-11-15",
+  "verificationDateContext": "America/Sao_Paulo",
+  "title": "Night lights — NASA Black Marble",
+  "originUrl": "https://svs.gsfc.nasa.gov/5276/",
+  "relatedEicVersionUrl": "https://svs.gsfc.nasa.gov/5313/",
+  "eicRelationship": "SVS 5313 explicitly identifies SVS 5276 as its original version. Local assets derive from the annual only-lights series of 5276, not the panoramic EIC video.",
+  "frameIndexUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/frames/7680x4320_16x9_3p/nightlights_flat_2012-2023_only_lights/",
+  "sourcePeriod": {
+    "firstYear": 2012,
+    "lastYear": 2023,
+    "precision": "year",
+    "interpretation": "The official page describes annual averages. Its index contains twelve TIFFs labeled 2012 through 2023. Only 2012 and 2023 are included locally, without interpolated or intermediate frames.",
+    "evidenceUrls": [
+      "https://svs.gsfc.nasa.gov/5276/",
+      "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/frames/7680x4320_16x9_3p/nightlights_flat_2012-2023_only_lights/"
+    ]
+  },
+  "sourceDataset": {
+    "name": "Black Marble: Next Generation",
+    "sensor": "VIIRS",
+    "platform": "Suomi NPP",
+    "collectedBy": "NASA/NOAA",
+    "scientificUnit": null,
+    "calibration": null,
+    "interpretation": "Visual night-lights representation only. Pixel values do not imply radiance or another physical measurement."
+  },
+  "credits": {
+    "requestedItemCredit": "NASA's Scientific Visualization Studio",
+    "visualizer": "Kel Elkins (USRA)",
+    "scientists": [
+      "Zhuosen Wang (University of Maryland)",
+      "Miguel Román (Leidos)",
+      "Ranjay Shrestha (SSAI)",
+      "Srija Chakraborty (USRA)",
+      "Virginia Kalb (NASA)"
+    ],
+    "datasetCredit": "NASA Earth Observatory images by Joshua Stevens, using Suomi NPP VIIRS data from Miguel Román, NASA GSFC.",
+    "evidenceUrl": "https://svs.gsfc.nasa.gov/5276/"
+  },
+  "usage": {
+    "guidelinesUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+    "purpose": "Educational and informational use with attribution, without implying NASA endorsement.",
+    "itemReview": "No specific third-party copyright notice for the selected TIFFs was identified on the item page or index during curation. Institutional and contributor credits are retained. No CC0 license is claimed, and NASA insignia or logos are not used.",
+    "verifiedOn": "2026-11-15"
+  },
+  "transformation": {
+    "version": "windows-gdi-bicubic-2048-v1",
+    "environment": "Windows, PowerShell 5.1 and existing System.Drawing/GDI+; no project dependency added",
+    "sourceFormat": "48-bit RGB TIFF (16 bits per channel), 7680×4320",
+    "outputFormat": "RGBA PNG (8 bits per channel), 2048×1152",
+    "resize": "System.Drawing.Bitmap(2048,1152); Graphics.InterpolationMode=HighQualityBicubic; Graphics.DrawImage(source,0,0,2048,1152); Bitmap.Save(path,ImageFormat.Png)",
+    "extent": "Entire image, without cropping or content editing. Spatial scale is 4/15 along both axes. RGB color depth reduces from 16 to 8 bits per channel.",
+    "colorLimitations": "GDI+ conversion and browser decoding apply without scientific color management or radiometric calibration. Bicubic resizing onto a transparent bitmap creates partially transparent outer borders. Canvas2D supplies the resulting representation. Extraction accepts alpha greater than zero without coverage weighting and excludes zero alpha. The hash-identified PNG is the effective extraction input.",
+    "runtimePixelBufferBytesPerFrame": 9437184
+  },
+  "spatialInterpretation": {
+    "sourceDescription": "Flat map",
+    "projection": null,
+    "georeference": null,
+    "geographicAdapterEnabled": false,
+    "reason": "A latitude/longitude-to-pixel transform has not been validated. The globe is an independent visual exploration."
+  },
+  "extractionRegion": {
+    "coordinateSystem": "Curated PNG pixels, origin at top left, exclusive end bounds",
+    "roi": {
+      "x": 0,
+      "y": 0,
+      "width": 2048,
+      "height": 1152
+    },
+    "excludedRegions": [
+      {
+        "x": 870,
+        "y": 680,
+        "width": 150,
+        "height": 80,
+        "reason": "Printed year, visually located in both derivatives; conservative margin around the digits."
+      }
+    ],
+    "maskVersion": "year-label-2048-v1",
+    "maskLimitations": "Only the year annotation is masked. There is no scientific missing-data mask. Remaining black pixels may combine background, low brightness and unavailable information and contribute to the visual statistic without implying a physical zero."
+  },
+  "frames": [
+    {
+      "id": "night-lights-2012",
+      "order": 0,
+      "observationYear": 2012,
+      "observationPrecision": "year",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/frames/7680x4320_16x9_3p/nightlights_flat_2012-2023_only_lights/nightlights_flat_series_stills_8k_only_lights.2012.tif",
+      "sourceBytes": 8982056,
+      "sourceSha256": "f03753c231cc24a0c45cc376304af4761e52a02d67c86c6e5dda6851d8111c6c",
+      "sourceDimensions": {
+        "width": 7680,
+        "height": 4320
+      },
+      "resourceUrl": "/data/night-lights/night-lights-2012.png",
+      "mimeType": "image/png",
+      "bytes": 372471,
+      "sha256": "c44f5063679801ef1be704d76258558dad8078a0b273f87118d3d923f6cd5701",
+      "dimensions": {
+        "width": 2048,
+        "height": 1152
+      },
+      "obtainedOn": "2026-11-15",
+      "verification": "Source TIFF obtained over HTTPS with Node fetch and decoded with System.Drawing. PNG dimensions, byte count and SHA-256 verified, with visual inspection. Browser Canvas2D and integrity checks are recorded in the validation report."
+    },
+    {
+      "id": "night-lights-2023",
+      "order": 1,
+      "observationYear": 2023,
+      "observationPrecision": "year",
+      "sourceUrl": "https://svs.gsfc.nasa.gov/vis/a000000/a005200/a005276/frames/7680x4320_16x9_3p/nightlights_flat_2012-2023_only_lights/nightlights_flat_series_stills_8k_only_lights.2023.tif",
+      "sourceBytes": 10896690,
+      "sourceSha256": "2ce960101d4a8c2dbbdb78d9c0624f608c9fe920652764e5c1f6ad24076b2734",
+      "sourceDimensions": {
+        "width": 7680,
+        "height": 4320
+      },
+      "resourceUrl": "/data/night-lights/night-lights-2023.png",
+      "mimeType": "image/png",
+      "bytes": 430216,
+      "sha256": "e189d5822db9515e1c4d6bc3c901fc45e2785f0243800b468342e0086aefc731",
+      "dimensions": {
+        "width": 2048,
+        "height": 1152
+      },
+      "obtainedOn": "2026-11-15",
+      "verification": "Source TIFF obtained over HTTPS with Node fetch and decoded with System.Drawing. PNG dimensions, byte count and SHA-256 verified, with visual inspection. Browser Canvas2D and integrity checks are recorded in the validation report."
+    }
+  ],
+  "knownLimitations": [
+    "Sound is an artistic representation of relative RGB image brightness, without claiming an acoustic property of Earth.",
+    "Two selectable annual images are included locally. Playback scans one image spatially.",
+    "No calibrated physical unit, quantitative change estimate, radiance classification or economic comparison is inferred.",
+    "There is no scientific missing-data mask. Only fully transparent pixels and the identified year annotation are excluded.",
+    "No validated geographic transform connects the globe to pixels. Geographic Explore audio is unavailable.",
+    "Brightness depends on resizing, color-depth conversion and processing of the source visualization."
+  ]
+}

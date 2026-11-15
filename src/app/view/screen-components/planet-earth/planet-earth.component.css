@@ -1,0 +1,4 @@
+@import './observatory.css';
+
+.amber-host { display: block; min-height: 100dvh; }
+.amber-loading { padding: 32px; color: #ffb547; background: #0b0d10; min-height: 100dvh; font-family: system-ui, sans-serif; }

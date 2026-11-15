@@ -1,0 +1,50 @@
+.amber-app { --amber-bg:#0b0d10; --amber-gold:#ffb547; --amber-text:#f3f0e8; --amber-muted:#b8b4ab; box-sizing:border-box; min-height:100dvh; display:flex; flex-direction:column; color:var(--amber-text); background:var(--amber-bg); font:15px/1.6 system-ui,-apple-system,'Segoe UI',sans-serif; isolation:isolate; }
+.amber-app *, .amber-app *::before, .amber-app *::after {box-sizing:border-box}
+.amber-app p,.amber-app h1,.amber-app h2 {margin:0}
+.amber-app button,.amber-app input {font:inherit}
+.amber-app button:focus-visible,.amber-app canvas:focus-visible,.amber-app input:focus-visible {outline:3px solid #fff0c2;outline-offset:4px}
+.amber-header {height:72px;margin:0 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff20;gap:20px}
+.amber-brand {display:flex;gap:12px;align-items:center}
+.amber-brand-symbol {color:var(--amber-gold);font-size:32px;line-height:1}
+.amber-brand-name {display:block;font-size:14px;letter-spacing:.12em;font-weight:600}
+.amber-mode {color:var(--amber-muted);font-size:13px}
+.amber-layout {flex:1;display:grid;grid-template-columns:160px minmax(0,1fr) 200px;padding:0 32px;min-height:500px}
+.amber-intro {padding-top:42px;position:relative;z-index:1}
+.amber-title {font-size:56px;font-weight:450;line-height:1.05;letter-spacing:-.045em}
+.amber-description {margin-top:18px!important;color:var(--amber-muted);font-size:14px;max-width:150px}
+.amber-regions {margin-top:32px;display:flex;flex-wrap:wrap;gap:8px;max-width:155px}
+.amber-label {font:12px/1.6 ui-monospace,monospace;color:var(--amber-muted);font-weight:400}
+.amber-regions h2 {width:100%;margin-bottom:4px!important}
+.amber-button {border:1px solid #71695c;background:transparent;color:var(--amber-text);padding:10px 14px;cursor:pointer;border-radius:2px;font-size:13px!important;white-space:nowrap;min-height:44px}
+.amber-button:hover {border-color:var(--amber-gold);background:#ffb5470d}
+.amber-button[aria-pressed=true] {border-color:var(--amber-gold);color:#ffd28a;background:#ffb5470c}
+.amber-button:disabled {opacity:.4;cursor:default}
+.amber-destination {padding:8px 10px;color:#e0dbd0}
+.amber-viewport {position:relative;min-width:0;min-height:500px}
+.amber-canvas {display:block;width:100%;height:100%;min-height:500px;touch-action:none;cursor:grab}
+.amber-canvas.is-dragging {cursor:grabbing}
+.amber-viewport-caption {position:absolute;top:28px;left:24px;right:24px;font-size:11px;color:var(--amber-muted);pointer-events:none}
+.amber-hint {position:absolute;bottom:22px;left:0;width:100%;text-align:center;font-size:11px;color:var(--amber-muted);pointer-events:none}
+.amber-fallback {position:absolute;top:35%;left:10%;right:10%;background:#14171c;padding:24px;border:1px solid var(--amber-gold)}
+.amber-inspector {padding:40px 0 0 24px;margin:24px 0;border-left:1px solid #ffffff15}
+.amber-inspector-title {font-size:17px;line-height:1.4;font-weight:500}
+.amber-readout {margin-top:20px}
+.amber-coordinate {display:flex;flex-direction:column;border-bottom:1px solid #ffffff20;padding:14px 0;gap:6px}
+.amber-coordinate-value {font:24px/1.3 ui-monospace,monospace;color:#f3d5a2;letter-spacing:-.045em;min-height:32px}
+.amber-selection-state {font-size:13px;color:var(--amber-muted);line-height:1.6;margin-top:16px!important;min-height:62px}
+.amber-direction-pad {display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:16px}
+.amber-direction-pad .amber-button {padding:0;font-size:18px!important;min-width:0}
+.amber-motion {display:flex;align-items:center;gap:8px;font-size:13px;color:#d0cbc0;margin-top:16px;cursor:pointer;min-height:44px}
+.amber-motion input {accent-color:var(--amber-gold);width:16px;height:16px}
+.amber-inspector-note {font-size:12px;line-height:1.6;color:var(--amber-muted);margin-top:12px!important}
+.amber-footer {margin:0 32px;min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:20px;border-top:1px solid #ffffff20}
+.amber-controls {display:flex;align-items:center;gap:8px}
+.amber-square {width:44px;padding:0;font-size:22px!important}
+.amber-zoom {font:13px ui-monospace,monospace;min-width:45px;text-align:center;color:#e2d7c4}
+.amber-control-separator {width:1px;height:24px;background:#ffffff30;margin:0 7px}
+.amber-rotate {border-color:#9a7039;color:#ffcf87}
+.amber-credit {font-size:11px;color:var(--amber-muted)}
+@media(min-width:1600px){.amber-layout{grid-template-columns:180px minmax(0,1fr) 220px}.amber-viewport,.amber-canvas{min-height:600px}}
+@media(max-width:1000px){.amber-layout{grid-template-columns:140px minmax(0,1fr) 185px;padding:0 24px}.amber-header,.amber-footer{margin:0 24px}.amber-title{font-size:44px}.amber-inspector{padding-left:16px}.amber-description{max-width:130px}.amber-footer-caption,.amber-credit{display:none}.amber-footer{justify-content:center}}
+@media(max-width:800px){.amber-header{height:64px;margin:0 16px}.amber-brand-name{font-size:12px}.amber-mode{font-size:12px}.amber-layout{display:flex;flex-direction:column;padding:0 16px;min-height:0}.amber-intro{padding-top:24px}.amber-title{font-size:40px}.amber-description{max-width:none;font-size:14px;margin-top:10px!important}.amber-regions{max-width:none;margin-top:20px;gap:8px}.amber-regions h2{width:100%}.amber-viewport{height:350px;min-height:350px;margin:0 -6px}.amber-canvas{min-height:350px;height:350px}.amber-viewport-caption{top:14px;left:6px;font-size:11px}.amber-hint{bottom:12px;font-size:10px}.amber-inspector{border-left:0;border-top:1px solid #ffffff20;margin:0;padding:20px 0}.amber-readout{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:6px}.amber-coordinate-value{font-size:23px}.amber-selection-state{min-height:0;margin-top:12px!important}.amber-direction-pad{max-width:230px;margin-top:16px}.amber-motion{margin-top:12px}.amber-inspector-note{max-width:360px}.amber-footer{margin:0 16px;min-height:80px;padding:18px 0}.amber-controls{flex-wrap:wrap;gap:7px;width:100%}.amber-control-separator{display:none}.amber-controls .amber-button:last-child{margin-left:auto}.amber-rotate{padding:10px}.amber-controls .amber-button{font-size:12px!important}}
+@media(prefers-reduced-motion:reduce){.amber-app *{transition:none!important;scroll-behavior:auto!important}}
