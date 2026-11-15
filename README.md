@@ -1,5 +1,9 @@
 # TheEarthInformationJukebox
 
+## Cérebro de engenharia
+
+Antes de contribuir, leia [AGENTS.md](AGENTS.md) e o [cérebro do projeto](docs/brain/README.md), com diagnóstico, contratos, roadmap e handoff. O MVP ainda não está implementado; consulte as [verificações e limitações atuais](docs/brain/current-state.md).
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.21.
 
 ## Development server
