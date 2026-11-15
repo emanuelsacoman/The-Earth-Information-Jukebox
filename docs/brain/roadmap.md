@@ -1,16 +1,22 @@
 # Roadmap operacional F0–F7
 
-Snapshot de **15/11/2026**, revisado no fechamento documental sobre `brain`/`6fbc52f`. F0 é a única fase executada nesta branch. A instrução atual autoriza finalizar a documentação na `brain`; F1–F7 continuam planejamento. Responsáveis humanos pelas tarefas futuras permanecem **UNASSIGNED**, sem atribuição presumida pelo nome da branch.
+Atualização de **15/11/2026**, árvore `feat/f3-sonification` sobre `brain`/`64659fba`. A sessão atual autoriza F3-01/02/03, integração mínima F4-01/02 e dependências mínimas F2. Implementação, comandos e limites em [entrega de sonificação](sonification-delivery.md). Responsáveis humanos permanecem **UNASSIGNED**; execução técnica por Codex. Escuta humana, instalação isolada e validações assistivas continuam pendentes; não concluir fases inteiras pela fatia implementada.
 
-Existe uma entrega independente de exploração do mundo em `luiz`/`53b577e`, descrita em [entrega do mundo](world-delivery.md). Ela oferece código e evidências para avaliação futura, mas não foi integrada à `brain` e não encerra automaticamente F1, F4-04 ou F6-02. Os estados abaixo são relativos à execução nesta branch.
+O mundo originalmente entregue em `luiz`/`53b577e` já foi integrado à brain pelo PR #6 em `64659fb`, conforme [entrega do mundo](world-delivery.md). Isso não encerra automaticamente F1, F4-04 ou F6-02: faltam os aceites completos. As evidências e os textos iniciais abaixo preservam a auditoria F0; os estados atuais incorporam somente o trabalho conferido nesta sessão.
 
 Estados de tarefa: `NOT_STARTED` (sem execução), `IN_PROGRESS` (execução em curso), `BLOCKED` (dependência/impedimento identificado), `VALIDATED` (aceite verificado, fechamento pendente), `DONE` (aceite e registros concluídos). A matriz IMPLEMENTED/PARTIAL/MOCK/TODO/BLOCKED/UNKNOWN pertence ao [estado funcional](current-state.md), não ao andamento deste roadmap.
 
-Cada item abaixo define prioridade, **estado inicial → atual**, dependências, responsável, entrega/área, aceite e risco. Estados de F1–F7 permanecem `NOT_STARTED`, mesmo onde a auditoria já demonstrou defeito; a evidência inicial explicita o que falta. Não marcar `DONE` com gate obrigatório pendente. Definições dos gates: [quality-gates](quality-gates.md); riscos: [risks](risks.md).
+Cada item abaixo define prioridade, **estado inicial → atual**, dependências, responsável, entrega/área, aceite e risco. Não marcar `DONE` com gate obrigatório pendente. Definições dos gates: [quality-gates](quality-gates.md); riscos: [risks](risks.md).
+
+## Execução atual e limites de aceite
+
+F2-01/02 foram concluídas para os dois frames curados, com origem/uso/transformação/manifesto/bytes/hash/dimensões conferidos. F1-01 tem somente runtime e dependências locais verificados; instalação limpa não foi repetida. As correções de boot/SSR vieram do mundo; F1-03/04 tiveram checks atuais, sem fechar suas dependências formais. F2-03, F3-01/02/03 e F4-01/02 possuem código/testes na fatia, permanecendo IN_PROGRESS pelos gates/dependências ainda pendentes. G-MAP não encerra sozinho F3-01 enquanto F1-04 não fecha. F4-03 tem volume/velocidade fundamentais cobertos em F3-03, mas seu aceite amplo não foi executado. Nenhuma fase adicional foi autorizada automaticamente.
+
+Próxima validação: **F3-03**, escuta e dez ciclos humanos; F4-02 para fechamento da sincronização e F1-01 para reprodução isolada. F5/G-A11Y e G-PERF integral seguem pendentes. O registro histórico de caminho crítico abaixo continua referência de dependências, sem atribuir um prazo vigente.
 
 ## Caminho crítico e ordem de execução
 
-**Primeira tarefa de desenvolvimento recomendada: F1-01**, quando houver autorização de implementação. Em paralelo, **F7-01** exige confirmar os requisitos e o prazo vigentes com a equipe. A referência temporal da auditoria F0 é histórica e não comprova elegibilidade ou prazo atual.
+Na auditoria F0, a primeira tarefa recomendada era F1-01; a sessão atual autorizou a fatia acima sem dispensar seus gates pendentes. **F7-01** ainda exige confirmar requisitos e prazo vigentes com a equipe. A referência temporal da F0 é histórica e não comprova elegibilidade ou prazo atual.
 
 ```text
 F0-01 → F0-02 → F0-03
@@ -25,7 +31,7 @@ F0-03 → F7-01 (em paralelo)                               → F7-02 → F7-03 
 
 As dependências exatas estão em cada tarefa (o desenho é resumo). A **primeira demonstração funcional** exige F2-03, F3-03, F4-02 e fundamentos F5-01/02 + F6-01, além da baseline F1. F4-03 completa os controles do MVP. Revisão de qualidade/publicação/submissão segue F7. F1-05, F2-04, F4-04, F5-03, F6-02/03 não devem impedir uma demonstração mínima; partes essenciais dos gates de acessibilidade/performance continuam obrigatórias nas tarefas P0.
 
-## F0 — Cérebro de engenharia (única fase executada)
+## F0 — Cérebro de engenharia (execução histórica)
 
 ### F0-01 — Auditar código, Git e fontes oficiais
 
@@ -50,7 +56,7 @@ Gate de saída: projeto executável e validável de forma reproduzível — G-IN
 
 ### F1-01 — Estabelecer runtime e instalação limpa isolada
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F0-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F0-03 · Responsável: UNASSIGNED.**
 Entrega/área: baseline Node/npm/SO e procedimento de instalação do lockfile; README técnico e configuração de versão se autorizada. Inicial: NVM sem versão ativa no PATH; Node 20.20.0 existente usado pontualmente; node_modules prévio. Aceite: `node --version`/`npm --version` e `npm ci` em checkout isolado registrados; package/lock sem mudança involuntária; confirmar faltas de configuração para F1-02, sem expor segredos ou sobrescrever arquivos humanos. Risco: R01.
 
 ### F1-02 — Tornar configuração de ambiente reproduzível e revisar Firebase
@@ -60,12 +66,12 @@ Entrega/área: estratégia de ambientes/documentação segura, decisão sobre ne
 
 ### F1-03 — Corrigir fronteira browser/SSR
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-02 · Responsável: UNASSIGNED.**
 Entrega/área: bootstrap/URL/storage/clipboard/foco seguros no servidor; Dashboard, configs server e bootstrap. Inicial: ReferenceError `window` comprovado no prerender. Aceite: `ng build` sem esse erro; SSR/prerender contém conteúdo correto e app inicia no browser; APIs de áudio/canvas futuras ficam restritas ao browser; decisão de manter ou simplificar SSR documentada antes de mudar configuração. Risco: R02.
 
 ### F1-04 — Recuperar testes e consolidar baseline
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-03 · Responsável: UNASSIGNED.**
 Entrega/área: specs relevantes e registro reproduzível de start/build/test, revisão de integrações/dependências não usadas; `src/**/*.spec.ts`, docs. Inicial: 14/15 passam, teste raiz espera título scaffold. Aceite: corrigir expectativa conforme comportamento real sem só desabilitar teste; G-TEST e G-BUILD aprovados; smoke do app; lacunas do pipeline continuam explícitas. Riscos: R02/R08/R10.
 
 ### F1-05 — Propor automação de checks
@@ -79,17 +85,17 @@ Gate de saída: uma visualização EIC real, identificável e creditada disponí
 
 ### F2-01 — Qualificar fonte, interpretação e condições de uso
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F0-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F0-03 · Responsável: UNASSIGNED.**
 Entrega/área: dossiê mínimo de fonte/candidato em `data-and-sources.md`. Inicial: Night Lights e Currents confirmados na galeria; direitos específicos/frames ainda não qualificados. Aceite: consultar item oficial e condições de mídia, registrar créditos/terceiros, significado da legenda, período e limitações; justificar candidato primário Night Lights ou recomendar alternativa sem fingir validação. Riscos: R04/R11.
 
 ### F2-02 — Selecionar recursos reais e manifesto científico
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F2-01 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → DONE · Dependências: F2-01 · Responsável: UNASSIGNED.**
 Entrega/área: pequeno conjunto curado de assets reais e ScientificRecord/ScientificFrame conforme contratos; futuro catálogo e `public` quando apropriado. Inicial: zero assets NASA; índice Night Lights inacessível; totalFrames atual é mock. Aceite: origem/hash/transformação/créditos/dimensões por arquivo; verificar datas e distinguir observação de transição/zoom; priorizar frames anuais comprovados; se inviável, imagem única com ausência temporal explícita; não fabricar datas/unidades. Riscos: R03/R04/R09.
 
 ### F2-03 — Implementar carregamento e fallback legítimo
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-03, F2-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-03, F2-02 · Responsável: UNASSIGNED.**
 Entrega/área: Records Repository/Frame Loader e estados loading/error; futuros serviços e assets, Dashboard. Inicial: loadRecords/loadFrame vazios. Aceite: seleção carrega imagem/metadados reais; testar decode, CORS e leitura de pixels; falha remota usa cópia local creditada equivalente ou erro compreensível; cancelar resultado antigo ao trocar registro; G-DATA aprovado. Riscos: R01/R04/R09.
 
 ### F2-04 — Avaliar segunda visualização
@@ -103,17 +109,17 @@ Gate de saída: variação da característica produz mudança sonora previsível
 
 ### F3-01 — Definir e verificar extração e mapeamento
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-04, F2-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-04, F2-02 · Responsável: UNASSIGNED.**
 Entrega/área: extrator/mapper puros versionados, legenda e casos de referência; futuros módulos de domínio e testes. Inicial: somente legenda textual genérica. Aceite: ROI/máscara exclui anotações/sem dados, normalização e escala documentadas; mesma entrada/config gera mesmos eventos; mínimo/médio/máximo/missing testados; pixel não vira unidade física sem calibração; G-MAP. Riscos: R04/R05/R10.
 
 ### F3-02 — Sintetizar áudio real a partir dos eventos
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F1-03, F3-01 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F1-03, F3-01 · Responsável: UNASSIGNED.**
 Entrega/área: Audio Engine browser com timbre inicial simples e envelopes. Inicial: startAudio TODO. Aceite: ação do usuário cria/retoma contexto; evento rastreável gera som audível; variação de entrada produz diferença prevista; frequência/ganho/vozes limitados; caso sem dados explícito; teste de eventos e escuta real registrados. Riscos: R05/R09.
 
 ### F3-03 — Validar transporte, parâmetros e liberação de áudio
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F3-02 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F3-02 · Responsável: UNASSIGNED.**
 Entrega/área: play/pause/resume, volume/mute/velocidade e teardown no motor. Inicial: pauseAudio/applySoundSettings vazios. Aceite: pausa cancela scheduling e preserva posição; mute/volume atuam no ganho; velocidade tem semântica definida; 10 ciclos/trocas sem sobreposição/clipping/fontes órfãs; G-AUDIO. Riscos: R05/R09.
 
 ## F4 — Integração de ponta a ponta (P0)
@@ -122,12 +128,12 @@ Gate de saída: usuário relaciona a mudança visual ao som real — G-SYNC, com
 
 ### F4-01 — Conectar seleção, carregamento e visualização 2D
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F2-03, F3-03 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F2-03, F3-03 · Responsável: UNASSIGNED.**
 Entrega/área: Playback Coordinator e Visualization Adapter incrementais; Dashboard/Index e serviços necessários. Inicial: estado concentrado, componentes irmãos sem comunicação. Aceite: único record/frame confirmado; loading/erro bloqueia play inválido; troca em carga descarta resposta antiga e áudio anterior; imagem e metadados vêm do mesmo manifesto; sem dependência de globo. Riscos: R03/R05/R09.
 
 ### F4-02 — Integrar Sweep, timeline e leitura atual
 
-**P0 · NOT_STARTED → NOT_STARTED · Dependências: F4-01, F3-01 · Responsável: UNASSIGNED.**
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F4-01, F3-01 · Responsável: UNASSIGNED.**
 Entrega/área: percurso selecionar→play→pausa→seek, cursor visual, evento/feature/texto corrente. Inicial: booleano/índice e reading `?`, sem clock. Aceite: G-SYNC com pausa/retomada/seek/troca durante carga; timeline científica só se houver frames datados, varredura espacial rotulada separadamente; legenda explica som e fonte; execução básica repetível. Riscos: R04/R05/R10.
 
 ### F4-03 — Conectar configurações musicais reais
@@ -171,7 +177,7 @@ Entrega/área: layout funcional de imagem/controles/texto em Dashboard/Index. In
 ### F6-02 — Avaliar/integrar globo somente com justificativa
 
 **P2 · NOT_STARTED → NOT_STARTED · Dependências: F7-02 · Responsável: UNASSIGNED.**
-Atualização documental: há um candidato implementado fora desta branch, [Observatório Âmbar](world-delivery.md). A prioridade 2D/Sweep da ADR 0001 permanece. Avaliar o candidato não implica copiar sua substituição da tela inicial nem aprovar os critérios científicos, de fallback e desempenho desta tarefa.
+Atualização atual: o [Observatório Âmbar](world-delivery.md) já foi integrado à brain em 64659fb, antes desta sessão. A prioridade 2D/Sweep da ADR 0001 permanece e orienta o painel de áudio. A integração preexistente não aprova os critérios científicos, de fallback e desempenho desta tarefa.
 Entrega/área: decisão custo/benefício e, se autorizada, evolução de PlanetEarth. Inicial: componente vazio e handlers TODO. Aceite: rotação/zoom reais e teclado alternativo; dado geográfico corresponde à textura/posição, nenhum lat/lon inventado; fallback 2D preservado; medições CPU/GPU. Pós-MVP por padrão. Riscos: R04/R09/R13.
 
 ### F6-03 — Refinar animação e desempenho medido

@@ -1,5 +1,24 @@
 # Registro de riscos
 
+## Mitigações verificadas na fatia de sonificação — 15/11/2026
+
+Referência `feat/f3-sonification`, árvore local sobre `64659fba`; responsáveis humanos UNASSIGNED. A tabela F0 abaixo é preservada como histórico. Evidências atuais em [entrega de sonificação](sonification-delivery.md).
+
+| Risco | Situação atual / limite |
+|---|---|
+| R01 | Boot presente já dispensa environments locais; runtime explícito funciona. Instalação limpa nesta árvore não repetida: ABERTO |
+| R02 | MITIGADO no fluxo montado: correção preexistente integrada pelo mundo, build e SSR atuais sem erro. Dashboard legado não montado continua com APIs browser; não generalizar para ele |
+| R03/R04 | MITIGADOS no painel novo para dois PNGs reais com SHA-256, máscara, proveniência e domínio visual explícito. Catálogo legado desmontado continua mock; ausência científica e georreferência não resolvidas |
+| R05 | Motor/coordenador presentes, testes de cancelamento e revisão aprovados. ABERTO até escuta humana e fechamento dos gates de áudio/sincronização |
+| R06/R13 | Controles semânticos/foco/texto/sem autoplay no painel. Validação assistiva, contraste medido, zoom e aparelho real pendentes: ABERTOS |
+| R08 | Providers ausentes do boot por mudança anterior; dependências duplicadas preservadas. Nenhuma auditoria de dependências nesta sessão |
+| R09 | Recursos locais evitam CORS remoto; loader real verifica bytes/hash/decode/Canvas. Amostra pequena e nós limitados; G-PERF móvel e perfil integral pendentes |
+| R10 | MITIGADO para comportamento automatizado da fatia: 74 testes Angular, incluindo mocks de áudio e PNG real. Mocks não comprovam audição/conforto; roteiro humano continua necessário |
+
+R07/R11/R12 continuam abertos, sem deploy, confirmação de submissão ou inspeção de proteção remota. A densidade baixa de luz na imagem pode concentrar notas graves; isso é limitação do mapa visual, sem expandir artificialmente os dados. Não declarar riscos encerrados fora deste subconjunto.
+
+## Snapshot F0 — histórico
+
 Snapshot: **15/11/2026**, evidências completas em [estado atual](current-state.md) e [fontes](data-and-sources.md). Responsável de todos os riscos: **UNASSIGNED** até atribuição explícita. Severidade considera impacto no MVP; probabilidade considera recorrência/exposição. `CONFIRMADO` indica condição observada; `SUSPEITA` exige investigação. Nenhum risco foi resolvido apenas por documentá-lo.
 
 | ID | Condição / natureza | Severidade / probabilidade | Evidência | Impacto | Mitigação / tarefa | Estado |

@@ -2,7 +2,13 @@
 
 [Índice](README.md) · [Contratos](contracts.md) · [Roadmap](roadmap.md) · [Decisão de escopo](decisions/0001-mvp-scope.md)
 
-## Estado atual
+## Implementação presente — 15/11/2026
+
+Na árvore `feat/f3-sonification` sobre `64659fba`, App → Index monta AudioPanel e o Observatório Âmbar já integrado pela brain. O Index fornece um PlaybackCoordinator para a experiência e recebe pointSelected do wrapper. Os módulos nativos do globo foram preservados; o Dashboard legado não está montado. Fonte local curada → FrameLoader → funções puras de extração/mapa → WebAudioEngine; o coordenador publica signals consumidos pelo painel, com revisão para descarte de resultados/callbacks. Detalhes e evidências em [entrega de sonificação](sonification-delivery.md).
+
+Construtores não acessam APIs browser; o painel carrega somente no navegador, o motor cria/retoma contexto somente em Play e o servidor renderiza explicações/controles inativos. O boot existente já não utiliza Firebase/environments locais e passa SSR; essa correção veio com o mundo, sem remoção de dependências nesta sessão. Não há adaptador lat/lon→pixel, calibração física ou backend novo.
+
+## Estado na auditoria F0 — histórico
 
 A aplicação usa componentes Angular standalone: `AppComponent` renderiza `IndexComponent`, que reúne `DashboardComponent` e `PlanetEarthComponent`. As seis páginas do painel são seções do Dashboard, sem rotas próprias; `app.routes.ts` contém uma lista vazia. Referências: [App](../../src/app/app.component.ts), [Index](../../src/app/view/index/index.component.html) e [rotas](../../src/app/app.routes.ts).
 
@@ -10,9 +16,9 @@ O Dashboard concentra catálogo demonstrativo, navegação, parâmetros musicais
 
 AngularFire/Auth e SSR estão configurados, mas não constituem requisitos já comprovados do produto. O build auditado gerou bundles e terminou com código zero, porém registrou `ReferenceError: window is not defined` ao executar `readSettingsFromUrl` no servidor. Portanto, SSR/prerender ainda não passa no gate; tratar em **F1-03**. Não remover ou ampliar Firebase/SSR nesta F0.
 
-## Arquitetura-alvo proposta
+## Arquitetura-alvo da F0 — referência de evolução
 
-Esta seção orienta implementações futuras; nenhum módulo descrito foi implementado pela F0. Preservar o Angular existente e integrar por incrementos, começando com uma imagem ou sequência 2D real. Um backend próprio e um globo 3D não são dependências do primeiro MVP.
+Esta seção preserva a proposta histórica; nenhum módulo descrito foi implementado pela F0. A fatia atual aplica essas fronteiras conforme o registro acima; funcionalidades e gates fora dela continuam futuros. Um backend próprio e um globo 3D não são dependências do primeiro MVP.
 
 ```mermaid
 flowchart LR

@@ -2,6 +2,22 @@
 
 Gate só é aprovado com **comando/roteiro, resultado, data, commit, ambiente e evidência inspecionável**. Registrar também limitações e responsável que validou; revisão humana continua necessária para integrar/publicar. `exit 0`, screenshot isolado ou flag `playing=true` não comprovam uma experiência funcional.
 
+## Evidência da sonificação — 15/11/2026
+
+Árvore local `feat/f3-sonification` sobre `64659fba`, execução Codex, revisão humana UNASSIGNED. Ambiente, comandos e limites em [entrega de sonificação](sonification-delivery.md); o quadro F0 abaixo permanece histórico.
+
+| Gate | Resultado atual para a fatia |
+|---|---|
+| G-BUILD | APROVADO: build production sem erro SSR/prerender e smoke do servidor; painel renderizado no servidor sem áudio/pixels |
+| G-TEST | APROVADO: 74/74 Angular, 8/8 Node; leitura real do PNG e falhas de fronteira, regressões do motor/coordenador/interface |
+| G-DATA | APROVADO para dois derivados locais da SVS 5276 vinculada à EIC 5313; hashes, dimensões, máscara visual, datas e uso. Sem calibração física/georreferência |
+| G-MAP | APROVADO para encoded-rgb-grid/v1 + brightness-pentatonic/v1; fórmulas, origem, min/médio/max/ausente/inválido/máscara e determinismo testados |
+| G-AUDIO | PARCIAL: motor e controles automatizados; escuta humana PENDENTE, não aprovar integralmente |
+| G-SYNC | APROVADO no desktop automatizado: amostra de 60,616 s, 274 leituras no roteiro, máximo 25,67 ms; frequência/texto/marcador coincidem; revisões e slots sem dados também testados |
+| G-DOC | Fechamento desta implementação com links/IDs/estado/diff verificados conforme relatório; a restrição “apenas documentação” da F0 não se aplica à tarefa atual autorizada |
+| G-INSTALL / G-A11Y / G-PERF | PENDENTES para aceite integral: instalação isolada, leitor de tela/medições e dispositivo móvel real não demonstrados nesta sessão |
+| G-PUBLISH / G-DEMO | NÃO EXECUTADOS; sem publicação nem afirmação de MVP completo |
+
 ## Gates e baseline F0
 
 Os resultados da tabela pertencem à auditoria histórica `aab5471`, preservada em [estado atual](current-state.md). A revisão documental não executou novamente build/testes nem validou o produto. As evidências do mundo em outra branch estão separadas em [entrega do mundo](world-delivery.md); não são aprovação dos gates da `brain`.
