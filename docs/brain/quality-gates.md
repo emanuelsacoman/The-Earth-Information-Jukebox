@@ -1,6 +1,46 @@
 # Gates de qualidade
 
+## Apresentação em docs/demo — 15/11/2026
+
+Fatia F7-04 sobre `feat/single-screen-observatory`/`2c424b0`: PPTX atualizado por pacote Open XML em cópia privada, renderizado antes/depois com PowerPoint 16.0. Seis slides finais inspecionados; 27 caixas editáveis em Arial, dimensões preservadas, texto/objetos dentro dos frames, 58 entradas únicas e 56 relações internas válidas. Hash da cópia entregue confere com o arquivo validado. **QA documental/visual aprovada** para a atualização; **G-DEMO integral permanece pendente** de revisão/identificação/aceites humanos e requisitos oficiais. Artifact Tool e playback do slideshow não executados. Não repetir build/áudio para esta alteração exclusiva da demo/documentação. Detalhes no [handoff](handoff.md).
+
+## F6-04 — camada NASA e tipografia, 15/11/2026
+
+Árvore local `feat/single-screen-observatory` sobre `2c424b0`; Windows/Node 20.20.0 e 24.22.2/Chrome 157; execução Codex, humano UNASSIGNED. [Relatório completo](night-lights-globe-delivery.md).
+
+| Gate | Resultado nesta tarefa |
+|---|---|
+| G-BUILD/G-TEST | APROVADOS: produção/SSR uma rota, 309,56 kB inicial/86,15 kB estimados, observatório tardio 103,65 kB; 79 Angular, 11 Node; smoke de SSR/HTTP/assets incluindo novo PNG/manifesto/hash. |
+| G-DATA visual | APROVADO no subconjunto 2012: GeoTIFF com CRS/tiepoint/scale/PixelIsArea e derivado de média 2×2 conferidos. Não valida georreferência dos PNGs de áudio ou radiância física. |
+| G-SYNC/G-AUDIO automatizado | Smoke real aprovado, 60,101 s/273 leituras/máximo 25,67 ms, volume ~4× RMS, mute zero, um contexto e zero vozes após Pause. G-AUDIO integral continua pendente de escuta. |
+| G-PERF parcial | 2.454 amostras de superfície em três rotações, erro ≤0,5 byte; zoom/seleção/fallback/recuperação. ~30 fps com/sem camada, p95 da superfície 14,8/20,0 ms. Uma requisição/decode, +14.392 bytes retidos após 40 alternâncias. Sem aceite integral em aparelho físico. |
+| G-A11Y parcial | Cinco larguras, controles/painéis, foco/inert, movimento reduzido e reflow 640×450 aprovados; capturas inspecionadas. Zoom nativo de 200%, leitor de tela e aparelho real pendentes. |
+| G-PUBLISH/G-INSTALL | Nenhum deploy/publicação nem nova instalação nesta tarefa. Configuração Firebase, package/lock preservados. |
+
+G-DOC APROVADO: 23 Markdown em docs/brain, 235 links locais sem destinos ausentes, 31 IDs únicos com dependências existentes/sem ciclos, históricos preservados por adições e `git diff --check` limpo. Os registros seguintes são históricos e preservam suas métricas originais.
+
 Gate só é aprovado com **comando/roteiro, resultado, data, commit, ambiente e evidência inspecionável**. Registrar também limitações e responsável que validou; revisão humana continua necessária para integrar/publicar. `exit 0`, screenshot isolado ou flag `playing=true` não comprovam uma experiência funcional.
+
+## F4-05 — tela única, validação final automatizada em 15/11/2026
+
+Árvore local **`feat/single-screen-observatory`**, base **`2c424b0474c7c96589d02d3db5e21a922aee258c`**, Windows; execução técnica Codex e revisão humana **UNASSIGNED**. Os resultados abaixo são da rodada final após ajustes de foco/inert/CSS. Comandos, runtime, resultados e artefatos em [single-screen-delivery](single-screen-delivery.md) e no [relatório automatizado](evidence/single-screen-2026-11-15/report.json).
+
+| Gate / comando ou roteiro | Evidência disponível e limite |
+|---|---|
+| G-BUILD — `npm run build` | APROVADO: uma rota prerenderizada sem erro SSR; bundle inicial 306,63 kB bruto / 85,44 kB estimados, módulo tardio do globo 99,84 kB. |
+| G-TEST — `npm test -- --watch=false --browsers=ChromeHeadless` | APROVADO: 78/78, repetidos após foco/inert/CSS. Spec legado corrigido para a API atual sem reduzir cobertura; nenhum teste desabilitado. |
+| G-TEST — `node --test tests/amber-earth.test.mjs` | 8/8 aprovados; núcleo do renderer/modelo geográfico preservado. |
+| G-BUILD — `node tests/production-smoke.mjs` | APROVADO: HTML prerenderizado da composição, SSR direto em runtime, HTTP, scripts e recursos locais de produção. Configuração Firebase e saída estática preservadas; nenhum deploy. |
+| G-DATA/G-MAP | Catálogo, PNGs, manifesto, máscaras, hashes e algoritmos sem diff. Inspeção dos originais sustenta estratégia B, não uma projeção validada; ver [decisão científica](single-screen-science.md). |
+| G-SYNC — `node tests/sonification-browser-smoke.mjs` | APROVADO no desktop automatizado: contexto/osciladores reais e AnalyserNode, amostra de 60,199 s, 274 leituras, atraso máximo 25,6667 ms. Notas/texto/marcador, cancelamento, volume/mute/seek/velocidade/trocas conferidos. RMS a 20%: 0,00440914879; a 80%: 0,01763709999; mute: 0. Um contexto, até duas vozes alocadas/uma simultânea e zero após Pause. Não comprova audição física. |
+| G-A11Y/G-PERF — roteiro de interface | PARCIAL: rodada final exercitou 320/390/768/1280/1920 CSS px, painel aberto/fechado/em reprodução, altura do documento/base do player em 900 px; Shift+Tab com inert, loading/erro/recuperação, fallback, arrasto e movimento reduzido. Reflow 640×450 com ajustes/barra alcançáveis. TaskDuration da amostra 1,906093 s; heap final 4.658.424 bytes, sem equivaler à memória total. Capturas CDP reais inspecionadas. Zoom nativo de 200%, leitor de tela e dispositivo físico permanecem pendentes. CUA indisponível por falha de conexão ao navegador neste ambiente. |
+| G-AUDIO | PARCIAL: sinal digital e transporte exercitados; escuta/conforto humanos pendentes em F3-03. |
+| G-DOC | APROVADO: 22 Markdown em docs/brain, 204 links locais sem destino ausente, 30 IDs únicos, dependências existentes e sem ciclos. Os seis históricos foram preservados integralmente após normalizar CRLF/LF; UTF-8/newline e git diff --check aprovados. |
+| G-INSTALL/G-PUBLISH/G-DEMO | Instalação limpa não repetida nesta tarefa; nenhuma publicação, deploy ou nova demonstração humana. Registros anteriores continuam vinculados a seus próprios commits. |
+
+Capturas selecionadas: [desktop em reprodução](evidence/single-screen-2026-11-15/layout-1280-playing.png), [320 px fechado](evidence/single-screen-2026-11-15/layout-320-closed.png), [390 px aberto](evidence/single-screen-2026-11-15/layout-390-open.png), [reflow equivalente a 200%](evidence/single-screen-2026-11-15/reflow-200-percent-equivalent.png) e [erro de carregamento](evidence/single-screen-2026-11-15/loading-error.png). A equivalência de viewport não substitui zoom nativo.
+
+F4-05 permanece **IN_PROGRESS** somente pelos aceites humanos/dependências ainda abertos e revisão humana. G-BUILD/G-TEST/G-SYNC automatizado estão aprovados para esta entrega; G-AUDIO/G-A11Y/G-PERF integrais continuam pendentes. Não declarar conformidade integral de acessibilidade ou o MVP completo.
 
 ## Evidência atual de release
 

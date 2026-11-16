@@ -1,4 +1,9 @@
-export interface PixelRegion { x: number; y: number; width: number; height: number; }
+export interface PixelRegion {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 export interface ScientificFrame {
   id: string;
@@ -44,7 +49,13 @@ export interface ExtractedFeature {
 
 export interface SonificationEvent {
   id: string;
-  origin: { recordId: string; frameId: string; featureId: string; resourceVersion: string; extractionMethod: string };
+  origin: {
+    recordId: string;
+    frameId: string;
+    featureId: string;
+    resourceVersion: string;
+    extractionMethod: string;
+  };
   featureSnapshot: ExtractedFeature;
   mappingVersion: string;
   frequencyHz: number;
@@ -56,7 +67,14 @@ export interface SonificationEvent {
   textDescription: string;
 }
 
-export type PlaybackStatus = 'idle' | 'loading' | 'ready' | 'playing' | 'paused' | 'ended' | 'error';
+export type PlaybackStatus =
+  | 'idle'
+  | 'loading'
+  | 'ready'
+  | 'playing'
+  | 'paused'
+  | 'ended'
+  | 'error';
 export interface PlaybackState {
   status: PlaybackStatus;
   sessionRevision: number;
@@ -70,7 +88,13 @@ export interface PlaybackState {
   audioStatus: 'uninitialized' | AudioContextState | 'unavailable';
   currentEvent: SonificationEvent | null;
   currentFeature: ExtractedFeature | null;
-  execution: { eventId: string; sessionRevision: number; scheduledAudioTimeSeconds: number; observedAudioTimeSeconds: number | null; status: 'executed' } | null;
+  execution: {
+    eventId: string;
+    sessionRevision: number;
+    scheduledAudioTimeSeconds: number;
+    observedAudioTimeSeconds: number | null;
+    status: 'executed';
+  } | null;
   error: string | null;
   announcement: string;
 }

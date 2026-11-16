@@ -1,6 +1,48 @@
-<main class="index">
-  <a class="skip-link" href="#sonification">Skip to NASA sonification</a>
-  <app-planet-earth id="observatory" (pointSelected)="playback.receiveGlobePoint($event)"></app-planet-earth>
-  <a class="audio-shortcut" href="#sonification">Listen to NASA imagery</a>
-  <app-audio-panel></app-audio-panel>
+<main class="experience" [class.science-open]="scienceOpen()">
+  <a class="skip-link" href="#sonification" (click)="openScience($event)"
+    >Skip to NASA sonification</a
+  >
+  <header class="experience-header">
+    <div class="identity">
+      <span class="orbit-symbol" aria-hidden="true">◉</span>
+      <div>
+        <h1>Earth Jukebox</h1>
+        <p>Earth observatory</p>
+      </div>
+    </div>
+    <p class="source-label">
+      NASA Black Marble
+      <span> / {{ playback.frame()?.observationYear ?? "Image pending" }}</span>
+    </p>
+    <nav aria-label="Experience controls">
+      <button
+        type="button"
+        class="about-button"
+        (click)="openScience($event, true)"
+        aria-label="About this experience"
+      >
+        About &amp; credits
+      </button>
+      <button
+        #listenButton
+        id="listen-earth"
+        type="button"
+        class="listen-button"
+        (click)="openScience()"
+        aria-controls="sonification"
+        [attr.aria-expanded]="scienceOpen()"
+      >
+        Listen to Earth <span aria-hidden="true">↗</span>
+      </button>
+    </nav>
+  </header>
+  <app-planet-earth
+    id="observatory"
+    [attr.inert]="compact() && scienceOpen() ? '' : null"
+    (pointSelected)="playback.receiveGlobePoint($event)"
+  ></app-planet-earth>
+  <app-audio-panel
+    [expanded]="scienceOpen()"
+    (expandedChange)="setScienceOpen($event)"
+  ></app-audio-panel>
 </main>

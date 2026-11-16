@@ -1,0 +1,2596 @@
+{
+  "measuredOn": "2026-11-16T00:50:16.467Z",
+  "origin": "http://127.0.0.1:47833",
+  "browser": {
+    "protocolVersion": "1.3",
+    "product": "Chrome/157.0.8103.51",
+    "revision": "@653674df293788cf4932c40d914e9e15b41a2d31",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36",
+    "jsVersion": "15.7.112.23"
+  },
+  "sampleDurationSeconds": 60.101,
+  "maximumLatencyMilliseconds": 25.666666666673166,
+  "signal": {
+    "quietRms": 0.0044068022199328675,
+    "loudRms": 0.0176370999892616,
+    "mutedRms": 0
+  },
+  "cpuTaskDurationSeconds": 2.4928500000000002,
+  "jsHeapUsedBytes": 5046036,
+  "layouts": [
+    {
+      "width": 320,
+      "closed": {
+        "width": 320,
+        "height": 900,
+        "documentWidth": 320,
+        "documentHeight": 900,
+        "clientWidth": 320,
+        "player": {
+          "x": 0,
+          "y": 692.609375,
+          "width": 320,
+          "height": 207.390625,
+          "right": 320,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 131.5,
+          "width": 320,
+          "height": 409.609375,
+          "right": 320,
+          "bottom": 541.109375
+        },
+        "globeReceivesPointer": true
+      },
+      "opened": {
+        "width": 320,
+        "height": 900,
+        "documentWidth": 320,
+        "documentHeight": 900,
+        "clientWidth": 320,
+        "player": {
+          "x": 0,
+          "y": 692.609375,
+          "width": 320,
+          "height": 207.390625,
+          "right": 320,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 131.5,
+          "width": 320,
+          "height": 409.609375,
+          "right": 320,
+          "bottom": 541.109375
+        },
+        "globeReceivesPointer": false
+      }
+    },
+    {
+      "width": 390,
+      "closed": {
+        "width": 390,
+        "height": 900,
+        "documentWidth": 390,
+        "documentHeight": 900,
+        "clientWidth": 390,
+        "player": {
+          "x": 0,
+          "y": 692.609375,
+          "width": 390,
+          "height": 207.390625,
+          "right": 390,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 131.5,
+          "width": 390,
+          "height": 409.609375,
+          "right": 390,
+          "bottom": 541.109375
+        },
+        "globeReceivesPointer": true
+      },
+      "opened": {
+        "width": 390,
+        "height": 900,
+        "documentWidth": 390,
+        "documentHeight": 900,
+        "clientWidth": 390,
+        "player": {
+          "x": 0,
+          "y": 692.609375,
+          "width": 390,
+          "height": 207.390625,
+          "right": 390,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 131.5,
+          "width": 390,
+          "height": 409.609375,
+          "right": 390,
+          "bottom": 541.109375
+        },
+        "globeReceivesPointer": false
+      }
+    },
+    {
+      "width": 768,
+      "closed": {
+        "width": 768,
+        "height": 900,
+        "documentWidth": 768,
+        "documentHeight": 900,
+        "clientWidth": 768,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 768,
+          "height": 111.796875,
+          "right": 768,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 71.5,
+          "width": 768,
+          "height": 597.203125,
+          "right": 768,
+          "bottom": 668.703125
+        },
+        "globeReceivesPointer": true
+      },
+      "opened": {
+        "width": 768,
+        "height": 900,
+        "documentWidth": 768,
+        "documentHeight": 900,
+        "clientWidth": 768,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 768,
+          "height": 111.796875,
+          "right": 768,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 71.5,
+          "width": 768,
+          "height": 597.203125,
+          "right": 768,
+          "bottom": 668.703125
+        },
+        "globeReceivesPointer": false
+      }
+    },
+    {
+      "width": 1280,
+      "closed": {
+        "width": 1280,
+        "height": 900,
+        "documentWidth": 1280,
+        "documentHeight": 900,
+        "clientWidth": 1280,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 1280,
+          "height": 111.796875,
+          "right": 1280,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 80.890625,
+          "width": 1280,
+          "height": 639.8125,
+          "right": 1280,
+          "bottom": 720.703125
+        },
+        "globeReceivesPointer": true
+      },
+      "opened": {
+        "width": 1280,
+        "height": 900,
+        "documentWidth": 1280,
+        "documentHeight": 900,
+        "clientWidth": 1280,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 1280,
+          "height": 111.796875,
+          "right": 1280,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 80.890625,
+          "width": 900,
+          "height": 639.8125,
+          "right": 900,
+          "bottom": 720.703125
+        },
+        "globeReceivesPointer": true
+      }
+    },
+    {
+      "width": 1920,
+      "closed": {
+        "width": 1920,
+        "height": 900,
+        "documentWidth": 1920,
+        "documentHeight": 900,
+        "clientWidth": 1920,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 1920,
+          "height": 111.796875,
+          "right": 1920,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 87.5,
+          "width": 1920,
+          "height": 633.203125,
+          "right": 1920,
+          "bottom": 720.703125
+        },
+        "globeReceivesPointer": true
+      },
+      "opened": {
+        "width": 1920,
+        "height": 900,
+        "documentWidth": 1920,
+        "documentHeight": 900,
+        "clientWidth": 1920,
+        "player": {
+          "x": 0,
+          "y": 788.203125,
+          "width": 1920,
+          "height": 111.796875,
+          "right": 1920,
+          "bottom": 900
+        },
+        "canvas": {
+          "x": 0,
+          "y": 87.5,
+          "width": 1500,
+          "height": 633.203125,
+          "right": 1500,
+          "bottom": 720.703125
+        },
+        "globeReceivesPointer": true
+      }
+    }
+  ],
+  "zoomReflow": {
+    "width": 640,
+    "height": 450,
+    "documentWidth": 625,
+    "documentHeight": 676,
+    "clientWidth": 625,
+    "player": {
+      "x": 0,
+      "y": 424,
+      "width": 625,
+      "height": 251.59375,
+      "right": 625,
+      "bottom": 675.59375
+    },
+    "canvas": {
+      "x": 0,
+      "y": 64,
+      "width": 615,
+      "height": 260,
+      "right": 615,
+      "bottom": 324
+    },
+    "globeReceivesPointer": false
+  },
+  "contexts": 1,
+  "contextState": "running",
+  "masterGain": 0.30000001192092896,
+  "rms": 0,
+  "allocatedVoices": 0,
+  "liveVoices": 0,
+  "voiceCount": 281,
+  "maximumAllocated": 2,
+  "maximumSimultaneous": 1,
+  "readings": [
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 25.666666666666664,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 6.99999999999995,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 25.666666666666615,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 25.66666666666673,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 4.333333333333522,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 4.333333333333744,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 1,
+      "latencyMilliseconds": 7.000000000000117,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 2,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 3,
+      "latencyMilliseconds": 25.66666666666695,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 2,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 3,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 4,
+      "latencyMilliseconds": 7.000000000000561,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 5,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 6,
+      "latencyMilliseconds": 6.999999999999673,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 7,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 22,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 23,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 24,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2012",
+      "cell": 25,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 2,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 3,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 4,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 5,
+      "latencyMilliseconds": 14.99999999999968,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 6,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 7,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 8,
+      "latencyMilliseconds": 25.666666666667837,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 9,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 10,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 11,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 12,
+      "latencyMilliseconds": 14.999999999998792,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 13,
+      "latencyMilliseconds": 25.666666666667837,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 14,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 15,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 16,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 17,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 18,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 19,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 20,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 21,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 22,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 23,
+      "latencyMilliseconds": 25.666666666667837,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 24,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 25,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 26,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 27,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 28,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 29,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 30,
+      "latencyMilliseconds": 14.999999999998792,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 31,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 32,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 33,
+      "latencyMilliseconds": 25.666666666667837,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 34,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 35,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 36,
+      "latencyMilliseconds": 4.3333333333333,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 37,
+      "latencyMilliseconds": 14.999999999998792,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 38,
+      "latencyMilliseconds": 25.666666666667837,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 39,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 40,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 41,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 42,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 43,
+      "latencyMilliseconds": 25.666666666669613,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 44,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 45,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 46,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 47,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 48,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 49,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 50,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 51,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 52,
+      "latencyMilliseconds": 14.999999999997016,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 53,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 54,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 55,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 56,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 57,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 58,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 59,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 60,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 61,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 62,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 63,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 64,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 65,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 66,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 67,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 68,
+      "latencyMilliseconds": 25.666666666669613,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 69,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 70,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 71,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 72,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 73,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 74,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 75,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 76,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 77,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 78,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 79,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 80,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 81,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 82,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 83,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 84,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 85,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 86,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 87,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 88,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 89,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 90,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 91,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 92,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 93,
+      "latencyMilliseconds": 25.666666666669613,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 94,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 95,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 96,
+      "latencyMilliseconds": 4.333333333331524,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 97,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 98,
+      "latencyMilliseconds": 25.666666666669613,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 99,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 100,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 101,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 102,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 103,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 104,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 105,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 106,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 107,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 108,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 109,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 110,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 111,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 112,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 113,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 114,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 115,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 116,
+      "latencyMilliseconds": 4.333333333342182,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 117,
+      "latencyMilliseconds": 14.999999999993463,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 118,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 119,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 120,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 121,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 122,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 123,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 124,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 125,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 126,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 127,
+      "latencyMilliseconds": 15.000000000007674,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 128,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 129,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 130,
+      "latencyMilliseconds": 15.000000000007674,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 131,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 132,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 133,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 134,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 135,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 136,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 137,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 138,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 139,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 140,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 141,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 142,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 143,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 144,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 145,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 146,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 147,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 148,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 149,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 150,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 151,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 152,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 153,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 154,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 155,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 156,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 157,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 158,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 159,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 160,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 161,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 162,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 163,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 164,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 165,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 166,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 167,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 168,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 169,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 170,
+      "latencyMilliseconds": 15.000000000007674,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 171,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 172,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 173,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 174,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 175,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 176,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 177,
+      "latencyMilliseconds": 15.000000000007674,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 178,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 179,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 180,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 181,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 182,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 183,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 184,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 185,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 186,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 187,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 188,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 189,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 190,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 191,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 192,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 1,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 2,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 3,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 4,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 5,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 6,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 7,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 8,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 9,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 10,
+      "latencyMilliseconds": 14.999999999993463,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 11,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 12,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 13,
+      "latencyMilliseconds": 22.999999999996135,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 14,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 15,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 16,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 17,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 18,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 19,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 20,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 21,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 22,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 23,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 24,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 25,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 26,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 27,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 28,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 29,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 30,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 31,
+      "latencyMilliseconds": 25.666666666673166,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 32,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 33,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 34,
+      "latencyMilliseconds": 4.333333333327971,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 35,
+      "latencyMilliseconds": 14.999999999993463,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 36,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 37,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 38,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 39,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 40,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 41,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 42,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 43,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 44,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 45,
+      "latencyMilliseconds": 15.000000000007674,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 46,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 47,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 48,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 49,
+      "latencyMilliseconds": 4.3333333333350765,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 50,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 51,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 146.8,
+      "oscillatorFrequencyHz": 146.8323839587038,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 52,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 53,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 54,
+      "latencyMilliseconds": 4.333333333320866,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 55,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 56,
+      "latencyMilliseconds": 25.66666666666606,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    },
+    {
+      "frameId": "night-lights-2023",
+      "cell": 57,
+      "latencyMilliseconds": 15.000000000000568,
+      "textualFrequencyHz": 130.8,
+      "oscillatorFrequencyHz": 130.8127826502993,
+      "markerMatches": true
+    }
+  ],
+  "canvasReads": [
+    {
+      "width": 1440,
+      "height": 720,
+      "milliseconds": 3.6000000089406967
+    },
+    {
+      "width": 1800,
+      "height": 900,
+      "milliseconds": 3.2000000029802322
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.299999997019768
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 4.699999988079071
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.9000000059604645
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.100000008940697
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.5
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.9000000059604645
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.0999999940395355
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 4.700000002980232
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.299999997019768
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.699999988079071
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 7
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 4.799999997019768
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.600000008940697
+    },
+    {
+      "width": 2048,
+      "height": 1152,
+      "milliseconds": 5.600000008940697
+    }
+  ],
+  "status": "paused",
+  "frameId": "night-lights-2023",
+  "errors": [],
+  "limitations": [
+    "Human listening PENDING: a signal measurement does not prove physical audibility.",
+    "Screen-reader, native 200% browser zoom and physical mobile-device validation remain pending.",
+    "The 640x450 check emulates the CSS reflow area of 1280x900 at 200%; it is not native browser zoom.",
+    "Navigation closes the page; Coordinator teardown is covered by unit tests."
+  ],
+  "fallback": {
+    "coordinates": "LATITUDE3.00° SLONGITUDE55.00° W",
+    "contexts": 0
+  }
+}

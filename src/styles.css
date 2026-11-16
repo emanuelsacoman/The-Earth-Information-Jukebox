@@ -1,4 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --font-ui: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-data: ui-monospace, 'Cascadia Code', monospace;
+  --type-body: 16px;
+  --type-control: 15px;
+  --type-label: 13px;
+  --weight-label: 600;
+  --text-secondary: #c8c2b7;
+}
 * {
     padding: 0;
     margin: 0;

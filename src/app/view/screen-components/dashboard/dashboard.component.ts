@@ -1,18 +1,32 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http';
 
 /* ============================================================================
  * TIPOS
  * ========================================================================== */
 
-type SecaoId = 'discos' | 'som' | 'ouvindo' | 'globo' | 'acessibilidade' | 'sobre';
+type SecaoId =
+  | 'discos'
+  | 'som'
+  | 'ouvindo'
+  | 'globo'
+  | 'acessibilidade'
+  | 'sobre';
 type Modo = 'varredura' | 'explorar';
 
 interface Secao {
   id: SecaoId;
   rotulo: string;
-  /** Atributo "d" do ícone (SVG 24x24, só contorno). */
+  /** Atributo "d" do ï¿½cone (SVG 24x24, sï¿½ contorno). */
   icone: string;
 }
 
@@ -50,7 +64,7 @@ interface Regiao {
   lon: number;
 }
 
-/** O que o motor de áudio informa ao dashboard a cada nota tocada. */
+/** O que o motor de ï¿½udio informa ao dashboard a cada nota tocada. */
 interface Leitura {
   regiao: string;
   valor: string;
@@ -85,7 +99,7 @@ const CHAVE_PREFERENCIAS = 'earth-jukebox:acessibilidade';
 @Component({
   selector: 'app-dashboard',
   // Se o projeto usa app.module.ts (NgModule), apague as duas linhas abaixo
-  // e declare o DashboardComponent no módulo.
+  // e declare o DashboardComponent no mï¿½dulo.
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
@@ -95,16 +109,44 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild('botaoComecar') botaoComecar?: ElementRef<HTMLButtonElement>;
 
   /* ==========================================================================
-   * NAVEGAÇÃO ENTRE AS PÁGINAS DO PAINEL
+   * NAVEGAï¿½ï¿½O ENTRE AS Pï¿½GINAS DO PAINEL
    * ======================================================================== */
 
   readonly secoes: Secao[] = [
-    { id: 'discos', rotulo: 'Discs', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z' },
-    { id: 'som', rotulo: 'Sound', icone: 'M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4M16 4v4M8 10v4M14 16v4' },
-    { id: 'ouvindo', rotulo: 'Listening', icone: 'M4 10v4M8 7v10M12 4v16M16 8v8M20 10v4' },
-    { id: 'globo', rotulo: 'Globe and time', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18' },
-    { id: 'acessibilidade', rotulo: 'Accessibility', icone: 'M12 3.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zM5 9h14M12 9v5M12 14l-3 6M12 14l3 6' },
-    { id: 'sobre', rotulo: 'About', icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 11v6M12 7v1' },
+    {
+      id: 'discos',
+      rotulo: 'Discs',
+      icone:
+        'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6z',
+    },
+    {
+      id: 'som',
+      rotulo: 'Sound',
+      icone:
+        'M4 6h10M18 6h2M4 12h2M10 12h10M4 18h8M16 18h4M16 4v4M8 10v4M14 16v4',
+    },
+    {
+      id: 'ouvindo',
+      rotulo: 'Listening',
+      icone: 'M4 10v4M8 7v10M12 4v16M16 8v8M20 10v4',
+    },
+    {
+      id: 'globo',
+      rotulo: 'Globe and time',
+      icone:
+        'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
+    },
+    {
+      id: 'acessibilidade',
+      rotulo: 'Accessibility',
+      icone:
+        'M12 3.5a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3zM5 9h14M12 9v5M12 14l-3 6M12 14l3 6',
+    },
+    {
+      id: 'sobre',
+      rotulo: 'About',
+      icone: 'M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18zM12 11v6M12 7v1',
+    },
   ];
 
   secaoAtiva: SecaoId = 'discos';
@@ -112,18 +154,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   mostrarBoasVindas = true;
 
   /* ==========================================================================
-   * 1. DISCOS (visualizações do EIC)
+   * 1. DISCOS (visualizaï¿½ï¿½es do EIC)
    * ======================================================================== */
 
   /**
-   * Catálogo de exemplo. Os textos entre colchetes são espaços reservados:
-   * o conteúdo real deve vir de carregarDiscos() (backend).
+   * Catï¿½logo de exemplo. Os textos entre colchetes sï¿½o espaï¿½os reservados:
+   * o conteï¿½do real deve vir de carregarDiscos() (backend).
    */
   discos: Disco[] = [
     {
       id: 'temperatura',
       titulo: 'Global temperature',
-      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      descricao:
+        '[Description of the visualization: what it shows and how to read the colors.]',
       periodo: '[Data period]',
       fonte: 'NASA Earth Information Center',
       cores: ['#1D4ED8', '#7DD3FC', '#FDE68A', '#F97316', '#B91C1C'],
@@ -134,7 +177,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     {
       id: 'correntes',
       titulo: 'Ocean currents',
-      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      descricao:
+        '[Description of the visualization: what it shows and how to read the colors.]',
       periodo: '[Data period]',
       fonte: 'NASA Earth Information Center',
       cores: ['#082F49', '#0369A1', '#38BDF8', '#E0F2FE'],
@@ -145,7 +189,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     {
       id: 'disco-3',
       titulo: '[3rd visualization]',
-      descricao: '[Description of the visualization: what it shows and how to read the colors.]',
+      descricao:
+        '[Description of the visualization: what it shows and how to read the colors.]',
       periodo: '[Data period]',
       fonte: 'NASA Earth Information Center',
       cores: ['#0F172A', '#475569', '#CBD5E1'],
@@ -175,9 +220,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ];
 
   readonly predefinicoes: Predefinicao[] = [
-    { id: 'calmo', rotulo: 'Calm', descricao: 'Slow, strings, pentatonic', escala: 'pentatonica', instrumento: 'cordas', velocidade: 60 },
-    { id: 'dramatico', rotulo: 'Dramatic', descricao: 'Fast, synthesizer, minor', escala: 'menor', instrumento: 'sintetizador', velocidade: 130 },
-    { id: 'cientifico', rotulo: 'Scientific', descricao: 'Moderate, piano, major', escala: 'maior', instrumento: 'piano', velocidade: 90 },
+    {
+      id: 'calmo',
+      rotulo: 'Calm',
+      descricao: 'Slow, strings, pentatonic',
+      escala: 'pentatonica',
+      instrumento: 'cordas',
+      velocidade: 60,
+    },
+    {
+      id: 'dramatico',
+      rotulo: 'Dramatic',
+      descricao: 'Fast, synthesizer, minor',
+      escala: 'menor',
+      instrumento: 'sintetizador',
+      velocidade: 130,
+    },
+    {
+      id: 'cientifico',
+      rotulo: 'Scientific',
+      descricao: 'Moderate, piano, major',
+      escala: 'maior',
+      instrumento: 'piano',
+      velocidade: 90,
+    },
   ];
 
   readonly velocidadeMin = 40;
@@ -199,20 +265,36 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    * 3. OUVINDO
    * ======================================================================== */
 
-  /** Atualizada por receberLeitura(), que o motor de áudio deve chamar. */
+  /** Atualizada por receberLeitura(), que o motor de ï¿½udio deve chamar. */
   leitura: Leitura = { regiao: '?', valor: '?', nota: '?' };
 
-  /** Posição do cursor no modo Explorar. */
+  /** Posiï¿½ï¿½o do cursor no modo Explorar. */
   cursor = { lat: 0, lon: 0 };
 
-  /** Barras do visualizador de áudio (animação decorativa até ligar o áudio real). */
+  /** Barras do visualizador de ï¿½udio (animaï¿½ï¿½o decorativa atï¿½ ligar o ï¿½udio real). */
   readonly barras: number[] = Array.from({ length: 28 }, (_, i) => i);
 
   readonly mapeamento: { visual: string; sonoro: string; detalhe: string }[] = [
-    { visual: 'Color', sonoro: 'Pitch', detalhe: 'Low values sound low; high values sound high.' },
-    { visual: 'Brightness', sonoro: 'Volume', detalhe: 'The brighter the region, the louder the sound.' },
-    { visual: 'Variation', sonoro: 'Rhythm', detalhe: 'Areas with a lot of change play more notes per second.' },
-    { visual: 'Position', sonoro: 'Left and right', detalhe: 'The sound travels from one ear to the other.' },
+    {
+      visual: 'Color',
+      sonoro: 'Pitch',
+      detalhe: 'Low values sound low; high values sound high.',
+    },
+    {
+      visual: 'Brightness',
+      sonoro: 'Volume',
+      detalhe: 'The brighter the region, the louder the sound.',
+    },
+    {
+      visual: 'Variation',
+      sonoro: 'Rhythm',
+      detalhe: 'Areas with a lot of change play more notes per second.',
+    },
+    {
+      visual: 'Position',
+      sonoro: 'Left and right',
+      detalhe: 'The sound travels from one ear to the other.',
+    },
   ];
 
   /* ==========================================================================
@@ -247,11 +329,31 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   };
 
   readonly opcoesDeAcessibilidade: OpcaoDeAcessibilidade[] = [
-    { chave: 'altoContraste', rotulo: 'High contrast', descricao: 'Black background, white text and borders.' },
-    { chave: 'textoGrande', rotulo: 'Larger text', descricao: 'Makes all the text bigger.' },
-    { chave: 'menosMovimento', rotulo: 'Reduce motion', descricao: 'Turns off transitions and the visualizer.' },
-    { chave: 'vibracao', rotulo: 'Vibrate on peaks', descricao: 'Only on supported phones.' },
-    { chave: 'anuncios', rotulo: 'Screen reader announcements', descricao: 'Says what is playing and where.' },
+    {
+      chave: 'altoContraste',
+      rotulo: 'High contrast',
+      descricao: 'Black background, white text and borders.',
+    },
+    {
+      chave: 'textoGrande',
+      rotulo: 'Larger text',
+      descricao: 'Makes all the text bigger.',
+    },
+    {
+      chave: 'menosMovimento',
+      rotulo: 'Reduce motion',
+      descricao: 'Turns off transitions and the visualizer.',
+    },
+    {
+      chave: 'vibracao',
+      rotulo: 'Vibrate on peaks',
+      descricao: 'Only on supported phones.',
+    },
+    {
+      chave: 'anuncios',
+      rotulo: 'Screen reader announcements',
+      descricao: 'Says what is playing and where.',
+    },
   ];
 
   readonly atalhos: { tecla: string; acao: string }[] = [
@@ -262,7 +364,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     { tecla: 'Esc', acao: 'Close the panel' },
   ];
 
-  /** Texto lido pelo leitor de tela (região aria-live no HTML). */
+  /** Texto lido pelo leitor de tela (regiï¿½o aria-live no HTML). */
   anuncio = '';
 
   /* ==========================================================================
@@ -293,7 +395,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   /* ==========================================================================
-   * AÇÕES: NAVEGAÇÃO
+   * Aï¿½ï¿½ES: NAVEGAï¿½ï¿½O
    * ======================================================================== */
 
   get tituloDaSecao(): string {
@@ -313,14 +415,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.painelAberto = false;
   }
 
-  /** Botão "Compartilhar" do topo: abre a página Sobre e já copia o link. */
+  /** Botï¿½o "Compartilhar" do topo: abre a pï¿½gina Sobre e jï¿½ copia o link. */
   abrirCompartilhar(): void {
     this.secaoAtiva = 'sobre';
     this.painelAberto = true;
     void this.compartilhar();
   }
 
-  /** Fecha a tela de abertura. O clique também libera o áudio no navegador. */
+  /** Fecha a tela de abertura. O clique tambï¿½m libera o ï¿½udio no navegador. */
   comecar(): void {
     this.mostrarBoasVindas = false;
     if (!this.tocando) {
@@ -329,7 +431,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   /* ==========================================================================
-   * AÇÕES: DISCOS
+   * Aï¿½ï¿½ES: DISCOS
    * ======================================================================== */
 
   get gradienteDaLegenda(): string {
@@ -351,7 +453,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   discoAnterior(): void {
     const i = this.discos.indexOf(this.discoAtual);
-    this.selecionarDisco(this.discos[(i - 1 + this.discos.length) % this.discos.length]);
+    this.selecionarDisco(
+      this.discos[(i - 1 + this.discos.length) % this.discos.length],
+    );
   }
 
   alternarSequencia(): void {
@@ -359,7 +463,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   /* ==========================================================================
-   * AÇÕES: SOM
+   * Aï¿½ï¿½ES: SOM
    * ======================================================================== */
 
   alternarReproducao(): void {
@@ -376,7 +480,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   definirModo(modo: Modo): void {
     this.som.modo = modo;
     this.aoMudarAjustes();
-    this.anunciar(modo === 'varredura' ? 'Sweep mode' : 'Explore mode: use the arrow keys to move the cursor');
+    this.anunciar(
+      modo === 'varredura'
+        ? 'Sweep mode'
+        : 'Explore mode: use the arrow keys to move the cursor',
+    );
   }
 
   definirEscala(id: string): void {
@@ -415,14 +523,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.anunciar(p.rotulo + ' preset applied');
   }
 
-  /** Qualquer ajuste manual desmarca a predefinição e avisa o motor de áudio. */
+  /** Qualquer ajuste manual desmarca a predefiniï¿½ï¿½o e avisa o motor de ï¿½udio. */
   private aoMudarAjustes(): void {
     this.predefinicaoAtiva = null;
     this.aplicarAjustesDeSom(this.som);
   }
 
   /* ==========================================================================
-   * AÇÕES: GLOBO E TEMPO
+   * Aï¿½ï¿½ES: GLOBO E TEMPO
    * ======================================================================== */
 
   definirQuadro(valor: string | number): void {
@@ -463,7 +571,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   /* ==========================================================================
-   * AÇÕES: ACESSIBILIDADE
+   * Aï¿½ï¿½ES: ACESSIBILIDADE
    * ======================================================================== */
 
   alternarAcessibilidade(chave: keyof Acessibilidade): void {
@@ -471,7 +579,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.salvarPreferencias();
   }
 
-  /** Envia um texto ao leitor de tela, se os anúncios estiverem ligados. */
+  /** Envia um texto ao leitor de tela, se os anï¿½ncios estiverem ligados. */
   anunciar(texto: string): void {
     if (this.acess.anuncios) {
       this.anuncio = texto;
@@ -479,20 +587,28 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   private vibrar(ms = 40): void {
-    if (this.acess.vibracao && typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+    if (
+      this.acess.vibracao &&
+      typeof navigator !== 'undefined' &&
+      'vibrate' in navigator
+    ) {
       navigator.vibrate(ms);
     }
   }
 
   @HostListener('document:keydown', ['$event'])
   aoPressionarTecla(evento: KeyboardEvent): void {
-
     if (evento.key === 'Tab') {
-    this.manterFocoEmCiclo(evento);
-    return;
+      this.manterFocoEmCiclo(evento);
+      return;
     }
-    
-    if (this.mostrarBoasVindas || evento.ctrlKey || evento.metaKey || evento.altKey) {
+
+    if (
+      this.mostrarBoasVindas ||
+      evento.ctrlKey ||
+      evento.metaKey ||
+      evento.altKey
+    ) {
       return;
     }
 
@@ -501,9 +617,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Dentro de botões, campos e listas, as teclas mantêm o comportamento normal.
+    // Dentro de botï¿½es, campos e listas, as teclas mantï¿½m o comportamento normal.
     const alvo = evento.target as HTMLElement | null;
-    if (alvo && ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'A'].includes(alvo.tagName)) {
+    if (
+      alvo &&
+      ['INPUT', 'SELECT', 'TEXTAREA', 'BUTTON', 'A'].includes(alvo.tagName)
+    ) {
       return;
     }
 
@@ -529,7 +648,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     try {
       localStorage.setItem(CHAVE_PREFERENCIAS, JSON.stringify(this.acess));
     } catch {
-      // Sem armazenamento disponível: as preferências valem só para esta visita.
+      // Sem armazenamento disponï¿½vel: as preferï¿½ncias valem sï¿½ para esta visita.
     }
   }
 
@@ -540,12 +659,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.acess = { ...this.acess, ...JSON.parse(salvo) };
       }
     } catch {
-      // Ignora preferências ilegíveis.
+      // Ignora preferï¿½ncias ilegï¿½veis.
     }
   }
 
   /* ==========================================================================
-   * AÇÕES: COMPARTILHAR
+   * Aï¿½ï¿½ES: COMPARTILHAR
    * ======================================================================== */
 
   async compartilhar(): Promise<void> {
@@ -556,21 +675,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       instrumento: this.som.instrumento,
       velocidade: String(this.som.velocidade),
     });
-    this.linkCompartilhavel = window.location.origin + window.location.pathname + '?' + parametros.toString();
+    this.linkCompartilhavel =
+      window.location.origin +
+      window.location.pathname +
+      '?' +
+      parametros.toString();
 
     try {
       await navigator.clipboard.writeText(this.linkCompartilhavel);
       this.linkCopiado = true;
       this.anunciar('Link copied');
     } catch {
-      // Sem permissão para copiar: o link fica visível no campo para cópia manual.
+      // Sem permissï¿½o para copiar: o link fica visï¿½vel no campo para cï¿½pia manual.
       this.linkCopiado = false;
     }
   }
 
-  /** Abre o site já com o disco e os ajustes que vieram no link compartilhado. */
+  /** Abre o site jï¿½ com o disco e os ajustes que vieram no link compartilhado. */
   private lerAjustesDaUrl(): void {
-    // No servidor (SSR) não existe "window"; só lê a URL no navegador.
+    // No servidor (SSR) nï¿½o existe "window"; sï¿½ lï¿½ a URL no navegador.
     if (typeof window === 'undefined') return;
 
     const p = new URLSearchParams(window.location.search);
@@ -582,29 +705,32 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     if (modo === 'varredura' || modo === 'explorar') this.som.modo = modo;
 
     const escala = p.get('escala');
-    if (this.escalas.some((e) => e.id === escala)) this.som.escala = escala as string;
+    if (this.escalas.some((e) => e.id === escala))
+      this.som.escala = escala as string;
 
     const instrumento = p.get('instrumento');
-    if (this.instrumentos.some((i) => i.id === instrumento)) this.som.instrumento = instrumento as string;
+    if (this.instrumentos.some((i) => i.id === instrumento))
+      this.som.instrumento = instrumento as string;
 
     const velocidade = Number(p.get('velocidade'));
-    if (velocidade >= this.velocidadeMin && velocidade <= this.velocidadeMax) this.som.velocidade = velocidade;
+    if (velocidade >= this.velocidadeMin && velocidade <= this.velocidadeMax)
+      this.som.velocidade = velocidade;
   }
 
   /* ==========================================================================
-   * INTEGRAÇÃO: BACKEND, MOTOR DE ÁUDIO E GLOBO 3D
+   * INTEGRAï¿½ï¿½O: BACKEND, MOTOR DE ï¿½UDIO E GLOBO 3D
    *
-   * Nada abaixo está implementado. Cada função descreve o que o dashboard
-   * espera da outra parte do projeto. O ideal é mover estas funções para
-   * serviços (ex.: DiscosService, AudioService, GloboService) e injetá-los.
+   * Nada abaixo estï¿½ implementado. Cada funï¿½ï¿½o descreve o que o dashboard
+   * espera da outra parte do projeto. O ideal ï¿½ mover estas funï¿½ï¿½es para
+   * serviï¿½os (ex.: DiscosService, AudioService, GloboService) e injetï¿½-los.
    * ======================================================================== */
 
   // ---- Backend --------------------------------------------------------------
 
   /**
-   * BACKEND: buscar o catálogo de visualizações do EIC.
-   * Esperado: lista de Disco (id, título, descrição, período, fonte, cores da
-   * legenda, valores mínimo e máximo, total de quadros).
+   * BACKEND: buscar o catï¿½logo de visualizaï¿½ï¿½es do EIC.
+   * Esperado: lista de Disco (id, tï¿½tulo, descriï¿½ï¿½o, perï¿½odo, fonte, cores da
+   * legenda, valores mï¿½nimo e mï¿½ximo, total de quadros).
    * Ao receber: this.discos = resposta; this.discoAtual = this.discos[0].
    */
 
@@ -613,62 +739,65 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   private carregarDiscos(): void {
     if (!this.http) return;
     this.http.get<Disco[]>('/api/discos').subscribe({
-    next: (discos) => {
-      if (discos.length) {
-        this.discos = discos;
-        this.discoAtual = discos[0];
-      }
-    },
-    error: () => this.anunciar('Could not load the visualizations'),
-  });
+      next: (discos) => {
+        if (discos.length) {
+          this.discos = discos;
+          this.discoAtual = discos[0];
+        }
+      },
+      error: () => this.anunciar('Could not load the visualizations'),
+    });
   }
 
   /**
-   * BACKEND: buscar um quadro (imagem) de uma visualização.
+   * BACKEND: buscar um quadro (imagem) de uma visualizaï¿½ï¿½o.
    * Esperado: a imagem do quadro e a data correspondente.
    * Ao receber: atualizar this.dataDoQuadro e entregar a imagem ao globo 3D
-   * (textura) e ao motor de áudio (pixels a sonificar).
+   * (textura) e ao motor de ï¿½udio (pixels a sonificar).
    */
   private carregarQuadro(discoId: string, indice: number): void {
     if (!this.http) return;
-     this.http.get<{ data: string }>("/api/discos/${discoId}/quadros/${indice}")
-     .subscribe((quadro) => (this.dataDoQuadro = quadro.data));
+    this.http
+      .get<{ data: string }>('/api/discos/${discoId}/quadros/${indice}')
+      .subscribe((quadro) => (this.dataDoQuadro = quadro.data));
   }
 
-  // ---- Motor de áudio (sonificação) -----------------------------------------
+  // ---- Motor de ï¿½udio (sonificaï¿½ï¿½o) -----------------------------------------
 
   /**
-   * ÁUDIO: iniciar a sonificação do quadro atual com os ajustes de this.som.
-   * No modo "varredura", percorrer a imagem; no modo "explorar", tocar só o
+   * ï¿½UDIO: iniciar a sonificaï¿½ï¿½o do quadro atual com os ajustes de this.som.
+   * No modo "varredura", percorrer a imagem; no modo "explorar", tocar sï¿½ o
    * ponto de this.cursor. Se this.tocarEmSequencia for true, chamar
-   * proximoDisco() quando a varredura do último quadro terminar.
+   * proximoDisco() quando a varredura do ï¿½ltimo quadro terminar.
    */
   private iniciarAudio(): void {
-    // TODO(áudio): criar ou retomar o AudioContext e começar a tocar.
+    // TODO(ï¿½udio): criar ou retomar o AudioContext e comeï¿½ar a tocar.
   }
 
-  /** ÁUDIO: pausar a sonificação sem perder a posição da varredura. */
+  /** ï¿½UDIO: pausar a sonificaï¿½ï¿½o sem perder a posiï¿½ï¿½o da varredura. */
   private pausarAudio(): void {
-    // TODO(áudio)
+    // TODO(ï¿½udio)
   }
 
   /**
-   * ÁUDIO: aplicar modo, escala, instrumento, velocidade (40 a 160),
-   * volume (0 a 100) e mudo. Chamada a cada mudança nos controles.
+   * ï¿½UDIO: aplicar modo, escala, instrumento, velocidade (40 a 160),
+   * volume (0 a 100) e mudo. Chamada a cada mudanï¿½a nos controles.
    */
   private aplicarAjustesDeSom(ajustes: AjustesDeSom): void {
-    // TODO(áudio)
+    // TODO(ï¿½udio)
   }
 
   /**
-   * ÁUDIO -> DASHBOARD: o motor de áudio deve chamar esta função a cada nota,
-   * informando região, valor do dado e nota tocada. "pico" indica um valor
-   * extremo, usado para a vibração no celular.
-   * Para o visualizador de áudio real, ligar um AnalyserNode às barras do HTML.
+   * ï¿½UDIO -> DASHBOARD: o motor de ï¿½udio deve chamar esta funï¿½ï¿½o a cada nota,
+   * informando regiï¿½o, valor do dado e nota tocada. "pico" indica um valor
+   * extremo, usado para a vibraï¿½ï¿½o no celular.
+   * Para o visualizador de ï¿½udio real, ligar um AnalyserNode ï¿½s barras do HTML.
    */
   receberLeitura(leitura: Leitura, pico = false): void {
     this.leitura = leitura;
-    this.anunciar(leitura.regiao + ': ' + leitura.valor + ', note ' + leitura.nota);
+    this.anunciar(
+      leitura.regiao + ': ' + leitura.valor + ', note ' + leitura.nota,
+    );
     if (pico) {
       this.vibrar();
     }
@@ -681,65 +810,65 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     // TODO(globo)
   }
 
-  /** GLOBO: aproximar (+1) ou afastar (-1) a câmera. */
+  /** GLOBO: aproximar (+1) ou afastar (-1) a cï¿½mera. */
   private zoomGlobo(passo: number): void {
     // TODO(globo)
   }
 
-  /** GLOBO: ligar ou desligar a rotação contínua. */
+  /** GLOBO: ligar ou desligar a rotaï¿½ï¿½o contï¿½nua. */
   private definirRotacaoAutomaticaDoGlobo(ligada: boolean): void {
     // TODO(globo)
   }
 
-  /** GLOBO: girar até centralizar a latitude e a longitude da região. */
+  /** GLOBO: girar atï¿½ centralizar a latitude e a longitude da regiï¿½o. */
   private focarRegiaoNoGlobo(regiao: Regiao): void {
     // TODO(globo)
   }
 
   /**
-   * GLOBO + ÁUDIO: mostrar o cursor em (lat, lon) no globo e tocar a nota
-   * daquele ponto. O globo também deve chamar moverCursor() ou atualizar
+   * GLOBO + ï¿½UDIO: mostrar o cursor em (lat, lon) no globo e tocar a nota
+   * daquele ponto. O globo tambï¿½m deve chamar moverCursor() ou atualizar
    * this.cursor quando a pessoa passar o mouse ou o dedo sobre ele.
    */
   private explorarPonto(lat: number, lon: number): void {
-    // TODO(globo + áudio)
+    // TODO(globo + ï¿½udio)
   }
 
   rotacao = 0;
 
-definirRotacao(valor: string | number): void {
-  this.rotacao = Number(valor);
-  this.regiaoAtiva = null;
-  this.definirRotacaoDoGlobo(this.rotacao);
-}
-
-/** GLOBO: posicionar o globo na longitude indicada (-180 a 180). */
-private definirRotacaoDoGlobo(graus: number): void {
-  // TODO(globo)
-}
-
-constructor(private host: ElementRef<HTMLElement>) {}
-
-private manterFocoEmCiclo(evento: KeyboardEvent): void {
-  const raiz = this.mostrarBoasVindas
-    ? this.host.nativeElement.querySelector<HTMLElement>('.abertura')
-    : this.host.nativeElement;
-  if (!raiz) return;
-
-  const focaveis = Array.from(
-    raiz.querySelectorAll<HTMLElement>('button, a[href], input, select')
-  ).filter((el) => el.offsetParent !== null);
-  if (!focaveis.length) return;
-
-  const primeiro = focaveis[0];
-  const ultimo = focaveis[focaveis.length - 1];
-
-  if (!evento.shiftKey && document.activeElement === ultimo) {
-    evento.preventDefault();
-    primeiro.focus();
-  } else if (evento.shiftKey && document.activeElement === primeiro) {
-    evento.preventDefault();
-    ultimo.focus();
+  definirRotacao(valor: string | number): void {
+    this.rotacao = Number(valor);
+    this.regiaoAtiva = null;
+    this.definirRotacaoDoGlobo(this.rotacao);
   }
-}
+
+  /** GLOBO: posicionar o globo na longitude indicada (-180 a 180). */
+  private definirRotacaoDoGlobo(graus: number): void {
+    // TODO(globo)
+  }
+
+  constructor(private host: ElementRef<HTMLElement>) {}
+
+  private manterFocoEmCiclo(evento: KeyboardEvent): void {
+    const raiz = this.mostrarBoasVindas
+      ? this.host.nativeElement.querySelector<HTMLElement>('.abertura')
+      : this.host.nativeElement;
+    if (!raiz) return;
+
+    const focaveis = Array.from(
+      raiz.querySelectorAll<HTMLElement>('button, a[href], input, select'),
+    ).filter((el) => el.offsetParent !== null);
+    if (!focaveis.length) return;
+
+    const primeiro = focaveis[0];
+    const ultimo = focaveis[focaveis.length - 1];
+
+    if (!evento.shiftKey && document.activeElement === ultimo) {
+      evento.preventDefault();
+      primeiro.focus();
+    } else if (evento.shiftKey && document.activeElement === primeiro) {
+      evento.preventDefault();
+      ultimo.focus();
+    }
+  }
 }

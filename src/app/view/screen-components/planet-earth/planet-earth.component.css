@@ -1,4 +1,24 @@
-@import './observatory.css';
+@import "./observatory.css";
 
-.amber-host { display: block; min-height: 100dvh; }
-.amber-loading { padding: 32px; color: #ffb547; background: #0b0d10; min-height: 100dvh; font-family: system-ui, sans-serif; }
+.amber-host {
+  display: block;
+  height: 100%;
+  min-height: 340px;
+}
+.amber-loading {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  color: #ffb547;
+  background: #0b0d10;
+  height: 100%;
+  min-height: 340px;
+  font:
+    14px/1.6 system-ui,
+    sans-serif;
+}
+@media (max-width: 760px) {
+  .amber-host {
+    min-height: 360px;
+  }
+}

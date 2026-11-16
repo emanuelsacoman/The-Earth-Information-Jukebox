@@ -1,5 +1,36 @@
 # Registro de riscos
 
+## Atualização da demo — 15/11/2026
+
+R03/R04 mitigados no material atualizado: captura e texto distinguem a camada geográfica NASA 2012 dos recursos de áudio 2012/2023; a seleção do globo não gera notas e radiância continua sem calibração. R10/R13: seis slides renderizados pelo PowerPoint e inspecionados, texto/objetos dentro das áreas e relações do PPTX válidas. R06/R11 permanecem abertos para validação humana, identificação e submissão; nenhuma certificação assistiva ou envio oficial é alegado. Ambiente sem Artifact Tool: não se repete a alegação antiga de importação por esse runtime para o PPTX atualizado. Evidência e limites em [handoff](handoff.md).
+
+## Camada NASA/legibilidade — 15/11/2026
+
+Branch local `feat/single-screen-observatory`, base `2c424b0`; responsáveis humanos UNASSIGNED. [Evidências e limites](night-lights-globe-delivery.md).
+
+- **R03/R04:** MITIGADOS para a nova camada visual 2012 com GeoTIFF EPSG:4326/PixelIsArea, hash e transformação conferidos. A limitação de georreferenciamento/calibração dos recursos de áudio permanece; seleção geográfica não gera notas. Sem camada visual 2023 ou interpolação de anos. Brilho/âmbar continuam apresentação, não radiância física.
+- **R05/R10:** áudio sem diff, 79 Angular/11 Node/smokes aprovados e zero vozes após Pause; escuta/conforto humanos ainda pendentes. Corrida de foco corrigida por callback após render Angular, com regressão.
+- **R06/R13:** fontes maiores/mais fortes, contraste secundário elevado e cinco larguras/reflow emulado conferidos. Leitor de tela, zoom nativo e aparelho físico continuam pendentes; sem certificação WCAG.
+- **R09:** raster cinza persistente limitado a 1,62 MB, bitmap/canvas temporários liberados, fetch/decode únicos; p95 da superfície 20,0 ms em ~30 fps desktop, crescimento retido de 14.392 bytes após 40 alternâncias. Perfil não mede memória total ou desempenho móvel universal. Falha de camada mantém base/seleção/zoom e permite retry, comprovada no smoke.
+
+Nenhum risco global foi encerrado integralmente. Favicon, pipeline de áudio, manifests de build/Firebase e trabalho anterior permanecem preservados; sem publicação.
+
+## Tela única — situação atual em 15/11/2026
+
+Referência **`feat/single-screen-observatory`**, base **`2c424b0474c7c96589d02d3db5e21a922aee258c`**. Responsável técnico: Codex; responsáveis humanos: **UNASSIGNED**. Esta seção atualiza o subconjunto afetado por F4-05 e preserva os registros históricos seguintes. Evidências científicas em [single-screen-science](single-screen-science.md); validação final em [single-screen-delivery](single-screen-delivery.md).
+
+| Risco | Situação, mitigação e limite atuais |
+|---|---|
+| R02 | MITIGADO no fluxo ativo: fronteiras browser/SSR preservadas. Novo matchMedia é restrito ao browser e remove listener no teardown; foco adiado é cancelado. Build/prerender e smoke final de SSR direto/HTTP/recursos aprovados após os últimos ajustes. |
+| R03/R04 | Estratégia B evita inferência de latitude/longitude→pixel. TIFFs originais e PNGs foram revalidados por hashes/dimensões; os originais não oferecem tags GeoTIFF de transformação/CRS. Imagem, célula, leitura e explicação da independência geográfica continuam na mesma tela. Ausência científica, calibração e georreferência seguem não resolvidas. |
+| R05 | Mesmo coordenador, engine, relógio e regras de cancelamento. Recolher painel não desmonta a reprodução; abrir ciência não inicia som. Smoke final de 60,199 s comprovou sinal digital, transporte, trocas e sincronização máxima de 25,67 ms, um contexto e zero vozes após Pause. Escuta/conforto humanos continuam pendentes, sem aprovação integral de G-AUDIO. |
+| R06/R13 | Layout responsivo, rolagem interna, player acessível e reflow em alturas pequenas; Close/Escape restauram foco ao CTA e globo fica inert sob o drawer compacto. Cinco larguras, Shift+Tab com inert e reflow emulado 640×450 passaram na rodada final. Leitor de tela, zoom nativo de 200% e aparelho físico continuam pendentes. |
+| R09 | Nenhum asset, cache, algoritmo ou renderer novo. Os recursos locais/hash e limites existentes são preservados. Smoke final: até duas vozes alocadas/uma simultânea, TaskDuration de 1,906093 s na amostra e heap final 4.658.424 bytes; não representam memória total nem performance móvel real, ainda pendente. |
+| R10 | Suíte final passou com 78 Angular e 8 Node; smokes de produção e navegador aprovados após foco/inert/CSS. Foi encontrada incompatibilidade preexistente entre spec inglês e API pt-BR do Dashboard legado em HEAD; somente o spec foi alinhado, preservando dez testes/19 expectativas. Nenhum teste desabilitado. |
+| R07/R12 | Firebase/configuração/caminhos estáticos preservados, sem deploy. Remotos main/brain conferidos no mesmo commit-base; main local divergente não foi alterada. Branch de tarefa isolada; favicon humano concorrente preservado fora do escopo. Revisão humana permanece necessária, sem alegar proteção GitHub ou autorização de push/merge. |
+
+Nenhum risco foi encerrado integralmente por esta mudança visual. A decisão segura B mitiga a apresentação enganosa; não resolve a falta de georreferenciamento nem substitui os gates humanos. R01/R08/R11 e pendências de publicação/submissão não foram reavaliados fora do necessário à tarefa.
+
 ## Mitigações verificadas na fatia de sonificação — 15/11/2026
 
 Referência `feat/f3-sonification`, árvore local sobre `64659fba`; responsáveis humanos UNASSIGNED. A tabela F0 abaixo é preservada como histórico. Evidências atuais em [entrega de sonificação](sonification-delivery.md).

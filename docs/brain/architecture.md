@@ -1,6 +1,26 @@
 # Arquitetura
 
+## Camada visual georreferenciada — 15/11/2026
+
+O renderer Canvas2D existente consulta um raster próprio NASA Black Marble 2012 em sua inversa ortográfica por pixel. `night-lights.mjs` verifica/decode uma única imagem local e fornece consulta bilinear EPSG:4326/PixelIsArea; `GlobeRenderer` reutiliza buffer/LUT e compõe âmbar com intensidade limitada. O módulo nativo guarda somente estado dessa camada visual, com cache único/toggle/status/abort/fallback. Seu ano é fixo em 2012 e não segue o seletor do áudio. Nenhuma latitude/longitude passa a gerar notas. PNGs e pipeline sonoros permanecem separados e inalterados.
+
+Tokens tipográficos compartilhados em `src/styles.css`, fonte do sistema e controles maiores preservam a composição única. O foco do painel agora usa `afterNextRender` cancelável para aguardar o DOM expandido. Fonte, transformação, orçamento de buffers, desempenho e consequências em [night-lights-globe-delivery](night-lights-globe-delivery.md). Trata-se de evolução da apresentação dentro das fronteiras existentes; não há novo backend, contexto de áudio, biblioteca ou alteração dos contratos de sonificação.
+
 [Índice](README.md) · [Contratos](contracts.md) · [Roadmap](roadmap.md) · [Decisão de escopo](decisions/0001-mvp-scope.md)
+
+## Composição de tela única — 15/11/2026
+
+Implementação local em **`feat/single-screen-observatory`**, base **`2c424b0474c7c96589d02d3db5e21a922aee258c`**. A autorização atual reúne as experiências existentes. A [decisão científica](single-screen-science.md) recomenda a estratégia B antes da integração: preservar a varredura 2D NASA e comunicar explicitamente a independência da seleção geográfica. Isso mantém as fronteiras e a prioridade científica da [ADR 0001](decisions/0001-mvp-scope.md), sem mudar contratos, fonte ou algoritmos.
+
+`App → Index` fornece um único PlaybackCoordinator e compõe uma área principal com cabeçalho, PlanetEarth e AudioPanel. O Index mantém apenas estado de apresentação (`scienceOpen` e breakpoint compacto), recebe os pontos geográficos do wrapper e envia-os ao coordenador pelo contrato existente. O `GlobeModel` mantém exploração, seleção, destinos e zoom. Não há estado de áudio novo em `observatory.mjs`.
+
+O AudioPanel foi reaproveitado em duas regiões da mesma composição: painel científico contextual e player na base. Ele continua montado ao recolher a ciência; imagem, loading/erro, leitura e comandos consomem os signals do coordenador existente. Play revela o painel e envia o comando de reprodução. “Listen to Earth” abre/focaliza a ciência, e “About & credits” abre o método; esses comandos não iniciam áudio. Os dados podem ser preparados no navegador sem criar um AudioContext antes de Play.
+
+Em telas a partir de 1000 CSS px, a ciência fica na lateral com o planeta em destaque. Abaixo disso, abre em drawer dentro do observatório e preserva o player acessível. Close/Escape restauram foco ao CTA; o planeta fica `inert` enquanto o drawer compacto está aberto. `matchMedia` só é acessado no browser e seu listener é removido por DestroyRef. O foco adiado do painel usa requestAnimationFrame cancelado ao recolher/destruir. Painéis permitem rolagem interna; telas baixas e reflow podem crescer sem impor corte absoluto em 100vh. A fronteira SSR e o teardown do globo/coordenador permanecem existentes.
+
+O percurso de dados continua `catálogo → FrameLoader → extração/mapa → WebAudioEngine`, coordenado pelo PlaybackCoordinator. O marcador NASA deriva da extensão da feature aceita e seu destaque de execução usa o feedback real do evento. Nenhuma latitude/longitude é convertida em pixel científico. Não há segundo motor, contexto, pipeline, backend ou dependência.
+
+Foram alterados composição Angular, templates/CSS e DOM de apresentação do observatório, com testes correspondentes. Nenhum componente foi removido; Dashboard permanece desmontado e somente seu spec foi compatibilizado com os nomes pt-BR já presentes na base. Motor, loader, catálogo, assets/hashes/máscaras, núcleo do renderer e configurações de build/Firebase permanecem. A saída estática e os caminhos públicos do Firebase Hosting são preservados; não houve deploy. A validação final passou em build/SSR, 78 testes Angular, oito Node, smoke de produção e smoke de navegador com contexto/osciladores reais. Resultados, artefatos e limites humanos em [single-screen-delivery](single-screen-delivery.md).
 
 ## Implementação presente — 15/11/2026
 
