@@ -5,7 +5,10 @@ export interface AudioPlaybackOptions {
   duration: number;
   speed: number;
   revision: number;
-  onEvent: (event: SonificationEvent, scheduledAudioTimeSeconds: number) => void;
+  onEvent: (
+    event: SonificationEvent,
+    scheduledAudioTimeSeconds: number,
+  ) => void;
   onPosition: (position: number) => void;
   onEnded: () => void;
   onError: (message: string) => void;
@@ -45,8 +48,13 @@ interface Session {
 }
 
 function browserContext(): AudioContext {
-  if (typeof window === 'undefined' || typeof window.AudioContext !== 'function') {
-    throw new Error('This browser does not support Web Audio. Use a compatible browser.');
+  if (
+    typeof window === 'undefined' ||
+    typeof window.AudioContext !== 'function'
+  ) {
+    throw new Error(
+      'This browser does not support Web Audio. Use a compatible browser.',
+    );
   }
   return new window.AudioContext();
 }
@@ -65,30 +73,50 @@ export class WebAudioEngine {
   private muted = false;
   private unavailable = false;
 
-  constructor(private readonly contextFactory: () => AudioContext = browserContext) {}
+  constructor(
+    private readonly contextFactory: () => AudioContext = browserContext,
+  ) {}
 
   get audioStatus(): 'uninitialized' | AudioContextState | 'unavailable' {
-    return this.context?.state ?? (this.unavailable ? 'unavailable' : 'uninitialized');
+    return (
+      this.context?.state ??
+      (this.unavailable ? 'unavailable' : 'uninitialized')
+    );
   }
 
-  get currentAudioTime(): number | null { return this.context?.currentTime ?? null; }
+  get currentAudioTime(): number | null {
+    return this.context?.currentTime ?? null;
+  }
 
   get position(): number {
     const session = this.session;
     if (!session || !this.context) return this.positionValue;
-    return Math.min(session.options.duration, Math.max(session.options.position,
-      session.options.position + (this.context.currentTime - session.anchor) * session.options.speed));
+    return Math.min(
+      session.options.duration,
+      Math.max(
+        session.options.position,
+        session.options.position +
+          (this.context.currentTime - session.anchor) * session.options.speed,
+      ),
+    );
   }
 
-  get diagnostics(): { activeVoices: number; allocatedVoices: number; schedulerActive: boolean } {
+  get diagnostics(): {
+    activeVoices: number;
+    allocatedVoices: number;
+    schedulerActive: boolean;
+  } {
     return {
-      activeVoices: [...this.voices].filter(voice => !voice.cancelled).length,
+      activeVoices: [...this.voices].filter((voice) => !voice.cancelled).length,
       allocatedVoices: this.voices.size,
       schedulerActive: this.timer !== undefined,
     };
   }
 
-  async play(events: readonly SonificationEvent[], options: AudioPlaybackOptions): Promise<void> {
+  async play(
+    events: readonly SonificationEvent[],
+    options: AudioPlaybackOptions,
+  ): Promise<void> {
     if (this.disposed) throw new Error('The audio experience has been closed.');
     this.pause();
     this.validate(events, options);
@@ -103,13 +131,17 @@ export class WebAudioEngine {
       if (context.state === 'suspended') await context.resume();
       if (generation !== this.generation || this.disposed) return;
       if (context.state !== 'running') {
-        throw new Error('The browser blocked or suspended audio. Press Play to try again.');
+        throw new Error(
+          'The browser blocked or suspended audio. Press Play to try again.',
+        );
       }
       this.session = {
         events,
         options,
         anchor: context.currentTime + AUDIO_POLICY.leadSeconds,
-        nextIndex: events.findIndex(event => event.timelineOffsetSeconds >= options.position),
+        nextIndex: events.findIndex(
+          (event) => event.timelineOffsetSeconds >= options.position,
+        ),
         pending: [],
       };
       if (this.session.nextIndex < 0) this.session.nextIndex = events.length;
@@ -117,8 +149,11 @@ export class WebAudioEngine {
       if (this.session && generation === this.generation) {
         this.timer = setInterval(() => {
           if (generation !== this.generation) return;
-          try { this.tick(generation); }
-          catch { this.fail('Could not continue synthesis. Press Play to try again.'); }
+          try {
+            this.tick(generation);
+          } catch {
+            this.fail('Could not continue synthesis. Press Play to try again.');
+          }
         }, AUDIO_POLICY.tickMilliseconds);
       }
     } catch (error) {
@@ -139,13 +174,19 @@ export class WebAudioEngine {
   }
 
   setVolume(value: number, muted: boolean): void {
-    this.volume = Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0.3;
+    this.volume = Number.isFinite(value)
+      ? Math.max(0, Math.min(1, value))
+      : 0.3;
     this.muted = muted;
-    if (!this.master || !this.context || this.context.state === 'closed') return;
+    if (!this.master || !this.context || this.context.state === 'closed')
+      return;
     const parameter = this.master.gain;
     const now = this.context.currentTime;
     this.hold(parameter, now, parameter.value);
-    parameter.linearRampToValueAtTime(this.muted ? 0 : this.volume, now + 0.015);
+    parameter.linearRampToValueAtTime(
+      this.muted ? 0 : this.volume,
+      now + 0.015,
+    );
   }
 
   destroy(): void {
@@ -156,20 +197,25 @@ export class WebAudioEngine {
     this.master?.disconnect();
     if (this.context) {
       this.context.onstatechange = null;
-      if (this.context.state !== 'closed') void this.context.close().catch(() => undefined);
+      if (this.context.state !== 'closed')
+        void this.context.close().catch(() => undefined);
     }
   }
 
   private ensureContext(): AudioContext {
     if (this.context) {
-      if (this.context.state === 'closed') throw new Error('The audio context was closed. Reload the page.');
+      if (this.context.state === 'closed')
+        throw new Error('The audio context was closed. Reload the page.');
       return this.context;
     }
     let context: AudioContext | undefined;
     try {
       context = this.contextFactory();
       const master = context.createGain();
-      master.gain.setValueAtTime(this.muted ? 0 : this.volume, context.currentTime);
+      master.gain.setValueAtTime(
+        this.muted ? 0 : this.volume,
+        context.currentTime,
+      );
       master.connect(context.destination);
       this.context = context;
       this.master = master;
@@ -182,7 +228,8 @@ export class WebAudioEngine {
       return context;
     } catch (error) {
       this.unavailable = true;
-      if (context && context.state !== 'closed') void context.close().catch(() => undefined);
+      if (context && context.state !== 'closed')
+        void context.close().catch(() => undefined);
       throw error;
     }
   }
@@ -198,7 +245,10 @@ export class WebAudioEngine {
     const now = context.currentTime;
     while (session.nextIndex < session.events.length) {
       const event = session.events[session.nextIndex];
-      const time = session.anchor + (event.timelineOffsetSeconds - session.options.position) / session.options.speed;
+      const time =
+        session.anchor +
+        (event.timelineOffsetSeconds - session.options.position) /
+          session.options.speed;
       if (time > now + AUDIO_POLICY.lookaheadSeconds) break;
       session.nextIndex++;
       // A throttled tab must never burst old events on returning to the foreground.
@@ -209,7 +259,8 @@ export class WebAudioEngine {
     }
     while (session.pending.length && session.pending[0].time <= now) {
       const pending = session.pending.shift()!;
-      if (pending.end > now) session.options.onEvent(pending.event, pending.time);
+      if (pending.end > now)
+        session.options.onEvent(pending.event, pending.time);
       if (generation !== this.generation) return;
     }
     session.options.onPosition(this.position);
@@ -224,12 +275,22 @@ export class WebAudioEngine {
   private schedule(event: SonificationEvent, start: number, end: number): void {
     const context = this.context!;
     // Ended callbacks can arrive after a busy main thread catches up.
-    for (const voice of this.voices) if (voice.end <= context.currentTime) this.release(voice);
-    if (this.voices.size >= AUDIO_POLICY.maxVoices) throw new Error('Simultaneous voice limit reached.');
+    for (const voice of this.voices)
+      if (voice.end <= context.currentTime) this.release(voice);
+    if (this.voices.size >= AUDIO_POLICY.maxVoices)
+      throw new Error('Simultaneous voice limit reached.');
     const oscillator = context.createOscillator();
     const gain = context.createGain();
     const panner = context.createStereoPanner();
-    const voice: Voice = { oscillator, gain, panner, start, end, peak: event.intensity, cancelled: false };
+    const voice: Voice = {
+      oscillator,
+      gain,
+      panner,
+      start,
+      end,
+      peak: event.intensity,
+      cancelled: false,
+    };
     this.voices.add(voice);
     oscillator.onended = () => this.release(voice);
     try {
@@ -237,8 +298,17 @@ export class WebAudioEngine {
       oscillator.frequency.setValueAtTime(event.frequencyHz, start);
       panner.pan.setValueAtTime(event.pan, start);
       gain.gain.setValueAtTime(0, start);
-      gain.gain.linearRampToValueAtTime(event.intensity, start + AUDIO_POLICY.attackSeconds);
-      gain.gain.setValueAtTime(event.intensity, Math.max(start + AUDIO_POLICY.attackSeconds, end - AUDIO_POLICY.releaseSeconds));
+      gain.gain.linearRampToValueAtTime(
+        event.intensity,
+        start + AUDIO_POLICY.attackSeconds,
+      );
+      gain.gain.setValueAtTime(
+        event.intensity,
+        Math.max(
+          start + AUDIO_POLICY.attackSeconds,
+          end - AUDIO_POLICY.releaseSeconds,
+        ),
+      );
       gain.gain.linearRampToValueAtTime(0, end);
       oscillator.connect(gain);
       gain.connect(panner);
@@ -246,7 +316,11 @@ export class WebAudioEngine {
       oscillator.start(start);
       oscillator.stop(end);
     } catch (error) {
-      try { oscillator.stop(); } catch { /* The source may not have started. */ }
+      try {
+        oscillator.stop();
+      } catch {
+        /* The source may not have started. */
+      }
       this.release(voice);
       throw error;
     }
@@ -259,24 +333,51 @@ export class WebAudioEngine {
     for (const voice of this.voices) {
       if (voice.cancelled && !immediate) continue;
       voice.cancelled = true;
-      if (immediate || context.state !== 'running' || voice.start > now || voice.end <= now) {
+      if (
+        immediate ||
+        context.state !== 'running' ||
+        voice.start > now ||
+        voice.end <= now
+      ) {
         voice.gain.gain.cancelScheduledValues(now);
         voice.gain.gain.setValueAtTime(0, now);
-        try { voice.oscillator.stop(now); } catch { /* Already stopped. */ }
+        try {
+          voice.oscillator.stop(now);
+        } catch {
+          /* Already stopped. */
+        }
         this.release(voice);
       } else {
-        const attack = Math.min(1, Math.max(0, (now - voice.start) / AUDIO_POLICY.attackSeconds));
-        const release = Math.min(1, Math.max(0, (voice.end - now) / AUDIO_POLICY.releaseSeconds));
+        const attack = Math.min(
+          1,
+          Math.max(0, (now - voice.start) / AUDIO_POLICY.attackSeconds),
+        );
+        const release = Math.min(
+          1,
+          Math.max(0, (voice.end - now) / AUDIO_POLICY.releaseSeconds),
+        );
         this.hold(voice.gain.gain, now, voice.peak * Math.min(attack, release));
-        voice.gain.gain.linearRampToValueAtTime(0, now + AUDIO_POLICY.cancellationSeconds);
+        voice.gain.gain.linearRampToValueAtTime(
+          0,
+          now + AUDIO_POLICY.cancellationSeconds,
+        );
         voice.end = now + AUDIO_POLICY.cancellationSeconds;
-        try { voice.oscillator.stop(voice.end); } catch { this.release(voice); }
+        try {
+          voice.oscillator.stop(voice.end);
+        } catch {
+          this.release(voice);
+        }
       }
     }
   }
 
-  private hold(parameter: AudioParam, time: number, fallbackValue: number): void {
-    if (typeof parameter.cancelAndHoldAtTime === 'function') parameter.cancelAndHoldAtTime(time);
+  private hold(
+    parameter: AudioParam,
+    time: number,
+    fallbackValue: number,
+  ): void {
+    if (typeof parameter.cancelAndHoldAtTime === 'function')
+      parameter.cancelAndHoldAtTime(time);
     else {
       parameter.cancelScheduledValues(time);
       parameter.setValueAtTime(fallbackValue, time);
@@ -297,21 +398,49 @@ export class WebAudioEngine {
     onError?.(message);
   }
 
-  private validate(events: readonly SonificationEvent[], options: AudioPlaybackOptions): void {
-    if (!Number.isFinite(options.duration) || options.duration <= 0 || !Number.isFinite(options.position) ||
-      options.position < 0 || options.position > options.duration || !Number.isFinite(options.speed) ||
-      options.speed < 0.5 || options.speed > 2 || !Number.isSafeInteger(options.revision) || options.revision < 0 || !events.length) {
+  private validate(
+    events: readonly SonificationEvent[],
+    options: AudioPlaybackOptions,
+  ): void {
+    if (
+      !Number.isFinite(options.duration) ||
+      options.duration <= 0 ||
+      !Number.isFinite(options.position) ||
+      options.position < 0 ||
+      options.position > options.duration ||
+      !Number.isFinite(options.speed) ||
+      options.speed < 0.5 ||
+      options.speed > 2 ||
+      !Number.isSafeInteger(options.revision) ||
+      options.revision < 0 ||
+      !events.length
+    ) {
       throw new Error('The scan has invalid playback parameters.');
     }
     let previous = -1;
     for (const event of events) {
-      const values = [event.frequencyHz, event.intensity, event.durationSeconds, event.timelineOffsetSeconds, event.pan];
-      if (!values.every(Number.isFinite) || event.frequencyHz < AUDIO_POLICY.minFrequencyHz ||
-        event.frequencyHz > AUDIO_POLICY.maxFrequencyHz || event.intensity < 0 || event.intensity > AUDIO_POLICY.maxVoiceGain ||
-        event.durationSeconds < AUDIO_POLICY.minDurationSeconds || event.durationSeconds > AUDIO_POLICY.maxDurationSeconds ||
-        event.timelineOffsetSeconds < previous || event.timelineOffsetSeconds < 0 ||
-        event.timelineOffsetSeconds + event.durationSeconds > options.duration + 0.000001 || Math.abs(event.pan) > 1 ||
-        event.featureSnapshot.validity !== 'valid') {
+      const values = [
+        event.frequencyHz,
+        event.intensity,
+        event.durationSeconds,
+        event.timelineOffsetSeconds,
+        event.pan,
+      ];
+      if (
+        !values.every(Number.isFinite) ||
+        event.frequencyHz < AUDIO_POLICY.minFrequencyHz ||
+        event.frequencyHz > AUDIO_POLICY.maxFrequencyHz ||
+        event.intensity < 0 ||
+        event.intensity > AUDIO_POLICY.maxVoiceGain ||
+        event.durationSeconds < AUDIO_POLICY.minDurationSeconds ||
+        event.durationSeconds > AUDIO_POLICY.maxDurationSeconds ||
+        event.timelineOffsetSeconds < previous ||
+        event.timelineOffsetSeconds < 0 ||
+        event.timelineOffsetSeconds + event.durationSeconds >
+          options.duration + 0.000001 ||
+        Math.abs(event.pan) > 1 ||
+        event.featureSnapshot.validity !== 'valid'
+      ) {
         throw new Error('An audio event is invalid. Select the image again.');
       }
       previous = event.timelineOffsetSeconds;

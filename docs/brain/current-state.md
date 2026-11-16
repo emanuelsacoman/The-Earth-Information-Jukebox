@@ -1,5 +1,32 @@
 # Estado atual
 
+## Demo atualizada — 15/11/2026
+
+A [apresentação editável](../demo/earth-jukebox-demo.pptx) mantém seis slides em inglês e agora representa o observatório de tela única com a camada geográfica NASA 2012, player integrado, painel científico recolhível e capturas desktop/mobile atuais. Explicita a independência do ano da camada e das imagens sonoras 2012/2023. Textos/fontes Arial e identidade grafite/âmbar preservados; fontes e limitações atualizadas nas notas. Renderização pelo PowerPoint 16.0, inspeção dos seis slides, estrutura/relacionamentos, dimensões e encaixe de texto aprovados. Identificação da equipe, escuta/aceite assistivo e submissão oficial continuam pendentes.
+
+## Globo NASA e tipografia — 15/11/2026
+
+Na mesma branch local `feat/single-screen-observatory`/base `2c424b0`, a camada visual **NASA Black Marble 2012** está IMPLEMENTED no Canvas2D existente, com georreferenciamento próprio EPSG:4326 conferido no GeoTIFF, PNG local de 215.356 bytes, SHA-256, amostragem bilinear, rotação/zoom, toggle e fallback. Ela é independente dos recursos de sonificação 2012/2023, que permanecem sem alterações. Isso não encerra a limitação geográfica dos PNGs de áudio. Tipografia ativa ampliada com tokens system-ui, pesos 500–700 e reflow preservado, sem fonte externa obrigatória. [Relatório, fonte e evidências](night-lights-globe-delivery.md).
+
+Build/SSR, **79 Angular**, **11 Node**, smoke de produção, smoke do globo e smoke de áudio aprovados. Perfil desktop: ~30 fps com/sem camada, p95 da superfície 14,8→20,0 ms; uma requisição/decode e crescimento retido de 14.392 bytes após 40 alternâncias. Sinal de áudio, um contexto, cancelamento e cinco larguras conferidos. Zoom nativo, leitor de tela, dispositivo físico e escuta humana continuam UNKNOWN/PENDENTES; não há conformidade assistiva integral declarada. Sem commit/push/merge/deploy, favicon e entrega anterior preservados.
+
+## Tela única — implementação atual em 15/11/2026
+
+Branch **`feat/single-screen-observatory`**, alterações locais sobre **`2c424b0474c7c96589d02d3db5e21a922aee258c`** da `brain`. A tarefa atual autoriza a implementação integrada; as seções seguintes preservam snapshots anteriores. Registro de entrega e resultados finais em [single-screen-delivery](single-screen-delivery.md); decisão científica em [single-screen-science](single-screen-science.md).
+
+| Capacidade atual | Classificação e evidência disponível |
+|---|---|
+| Composição em uma experiência | IMPLEMENTED: Index reúne topo discreto, globo Canvas2D, painel científico contextual e player na base. A antiga seção inferior deixou de existir; nenhum componente foi excluído. |
+| Imagem e leitura NASA | IMPLEMENTED: AudioPanel reaproveitado, imagem real 2012/2023, célula e leitura da revisão aceita pelo coordenador, fonte/legenda/créditos acessíveis. Estratégia B; seleção do globo não determina a nota. |
+| Controles de áudio | IMPLEMENTED: Play/Pause, Restart, Mute, volume, velocidade e seek usam o PlaybackCoordinator existente. Play revela a ciência; abrir/recolher o painel não desmonta o player nem reinicia a posição. Escuta humana continua PENDENTE. |
+| Exploração geográfica | IMPLEMENTED: mesmo renderer e GlobeModel; mudanças de composição DOM/CSS preservam rotação, zoom, seleção, destinos, teclado, movimento reduzido e fallback. |
+| Layout e foco | IMPLEMENTED na interface: painel lateral a partir de 1000 CSS px e drawer abaixo desse limite, player acessível, painéis com rolagem interna e reflow em alturas pequenas. CTA/skip link levam ao painel; About abre método/créditos; Close/Escape retornam ao CTA. Globo fica inert sob o drawer aberto, com listener de breakpoint removido no teardown. Validação assistiva integral UNKNOWN. |
+| Build e regressão automatizada | APROVADOS na árvore final: build/SSR de uma rota, 78 Angular repetidos após foco/inert/CSS, 8 Node, smoke de produção e smoke de navegador. G-SYNC automatizado aprovado em amostra de 60,199 s e 274 leituras, com atraso máximo de 25,67 ms. |
+
+O estado sonoro continua somente no PlaybackCoordinator; o estado geográfico continua no GlobeModel. Motor, catálogo, loader, extrator/mapper, PNGs, manifesto, núcleo/projeção do renderer, Firebase, package e lock permanecem sem alterações. Dashboard legado continua fora da aplicação; somente seu spec foi alinhado à API pt-BR já presente na base, mantendo dez testes e 19 expectativas.
+
+As verificações finais incluem cinco larguras 320/390/768/1280/1920 CSS px, estados aberto/fechado/em reprodução, erro/loading e recuperação, fallback, arrasto, movimento reduzido, Shift+Tab com inert e reflow emulado 640×450 com ajustes/barra alcançáveis. A altura do documento e a base do player permaneceram em 900 px na matriz de cinco larguras. Capturas CDP reais foram inspecionadas; [relatório automatizado](evidence/single-screen-2026-11-15/report.json) e capturas estão versionáveis junto à entrega. CUA não pôde conectar ao navegador neste ambiente. Escuta humana, leitor de tela, zoom nativo de 200% e dispositivo físico permanecem pendentes. A tarefa **F4-05 permanece IN_PROGRESS** por esses aceites e revisão humana. Sem commit, push, PR, merge ou deploy; o favicon humano concorrente foi preservado fora do escopo.
+
 ## Release atual — 15/11/2026
 
 `brain` sobre `6581f24`: interface ativa e manifesto em inglês, composição Observatório enxuta, skip link, controles legíveis e detalhes científicos recolhidos. Instalação isolada, development/production, SSR, 75/75 Angular e 8/8 Node aprovados. Demo de seis slides validada. Algoritmos, identidades dos recursos e package/lock preservados; apenas textos mudaram no núcleo. Aceites humanos e identidade da equipe pendentes. Evidências completas em [handoff](handoff.md).

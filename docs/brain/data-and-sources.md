@@ -1,5 +1,9 @@
 # Dados e fontes
 
+## Nova fonte visual geográfica — 15/11/2026
+
+Para a camada do globo foi qualificado um recurso **independente**: GeoTIFF grayscale global 2012 da [NASA Earth at Night — Flat Maps](https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/). EPSG:4326/PixelIsArea, tiepoint `[0,0,0,-180,90,0]` e escala 0,1° comprovados nos metadados; derivado PNG 1800×900 a 0,2° por média exata 2×2. [Manifesto visual separado](../../public/data/globe-night-lights/manifest.json), [investigação, URLs/hashes/créditos/transformação e limites](night-lights-globe-delivery.md). Camada fixa em 2012, sem calibração física, sem vínculo sonoro com coordenadas e sem textura 2023 qualificada. Os recursos 2012/2023 do pipeline de áudio abaixo permanecem integralmente.
+
 [Índice](README.md) · [Contratos](contracts.md) · [Roadmap](roadmap.md) · [Riscos](risks.md)
 
 ## Fonte incorporada — 15/11/2026

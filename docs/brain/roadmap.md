@@ -1,5 +1,35 @@
 # Roadmap operacional F0–F7
 
+## Atualização atual da demo — 15/11/2026
+
+**F7-04: IN_PROGRESS**, responsável técnico Codex e humano UNASSIGNED, somente na fatia autorizada de atualizar a apresentação existente. Seis slides em inglês revisados para camada NASA 2012/observatório integrado/tipografia e fontes atuais; renderização e QA estrutural/visual aprovadas conforme [handoff](handoff.md). A revisão não encerra F7-01/F7-02/F7-03, identificação da equipe, escuta, aceite assistivo ou submissão oficial. Nenhuma publicação. Próximo passo: revisão humana da demo e detalhes da equipe/evento quando fornecidos.
+
+## Execução atual — camada NASA e tipografia, 15/11/2026
+
+### F6-04 — Renderizar luzes NASA georreferenciadas e ampliar tipografia
+
+**P1 · NOT_STARTED → IN_PROGRESS · Dependências: F4-05, F2-02 · Responsável técnico: Codex; humano: UNASSIGNED.**
+
+Autorização atual: implementar as duas melhorias na branch local `feat/single-screen-observatory`, preservando a entrega anterior e favicon, sem commit/push/merge/deploy. Aceite: fonte/ano/CRS/transformação rastreáveis, alinhamento em rotação/zoom, nenhuma luz fictícia, cache/fallback/teardown, desempenho e áudio preservados, tipografia maior, reflow/teclado e registros. Entrega técnica concluída: camada 2012 independente do áudio, system-ui com tokens/pesos maiores, checks verdes (79 Angular/11 Node/build/SSR/smokes). Evidências, arquivos e limites em [night-lights-globe-delivery](night-lights-globe-delivery.md). Riscos: R03/R04/R05/R06/R09/R10/R13.
+
+IN_PROGRESS refere-se aos aceites humanos/dependências formais ainda abertos, sobretudo F5-03 (zoom nativo/leitor/dispositivo físico), F3-03 (escuta) e revisão humana; não há rodada automatizada pendente. Próximo passo exato: **F5-03**, acompanhado da escuta F3-03. A fonte 2023 para a camada visual não foi qualificada e não é apresentada como disponível. Não encerrar fases inteiras pela melhoria visual.
+
+## Execução atual — tela única, 15/11/2026
+
+Branch **`feat/single-screen-observatory`**, base **`2c424b0474c7c96589d02d3db5e21a922aee258c`** da `brain`. A tarefa anexada autoriza implementar a experiência de tela única e seus testes/documentação. Este escopo substitui a restrição histórica da TASK 0 somente para o trabalho solicitado; não autoriza publicação ou merge. Responsável técnico: **Codex**; responsável humano: **UNASSIGNED**. As seções abaixo preservam o histórico F0–F7.
+
+### F4-05 — Unificar observatório, ciência e player em uma tela
+
+**P0 · NOT_STARTED → IN_PROGRESS · Dependências: F4-01, F4-02, F6-01 · Responsável técnico: Codex; responsável humano: UNASSIGNED.**
+
+Entrega/área: Index, AudioPanel reaproveitado, composição DOM/CSS do observatório e testes de integração. Inicial: globo e sonificação ocupavam duas seções. Implementação atual: topo compacto, planeta central, painel científico lateral/drawer e player na base, com os controles existentes, imagem NASA real, leitura, método e proveniência na mesma experiência. Nenhum componente excluído, novo motor/contexto ou transformação geográfica.
+
+Aceite: página principal com uma experiência visual; globo operável; imagem científica e todos os controles essenciais acessíveis; marcador/leitura correspondentes ao evento aceito; nenhuma associação geográfica fictícia; teclado/foco, movimento reduzido e reflow; build/SSR/testes e assets compatíveis com Firebase Hosting; cérebro atualizado. Riscos: R03/R04/R05/R06/R09/R10/R13.
+
+Decisão científica: **estratégia B**, justificada por inspeção dos originais e fontes em [single-screen-science](single-screen-science.md). As dependências e gates humanos anteriores não são encerrados pela mudança de composição. Validação final após foco/inert/CSS: build/SSR, 78 Angular, 8 Node, smoke de produção e smoke de navegador aprovados; G-SYNC automatizado aprovado com 60,199 s, 274 leituras e atraso máximo de 25,67 ms. Cinco larguras, drawer/foco/inert, loading/erro/recuperação, fallback e reflow emulado conferidos. Evidências finais em [single-screen-delivery](single-screen-delivery.md).
+
+F4-05 não está VALIDATED/DONE: escuta humana (F3-03), leitor de tela/zoom nativo/dispositivo físico (F5-03) e revisão humana continuam pendentes. Próxima tarefa exata: **F3-03**, escuta e ciclos humanos, seguida de **F5-03** para experiência assistiva. Nenhum commit, push, PR, merge ou deploy executado.
+
 Atualização de **15/11/2026**, árvore `feat/f3-sonification` sobre `brain`/`64659fba`. A sessão atual autoriza F3-01/02/03, integração mínima F4-01/02 e dependências mínimas F2. Implementação, comandos e limites em [entrega de sonificação](sonification-delivery.md). Responsáveis humanos permanecem **UNASSIGNED**; execução técnica por Codex. Escuta humana, instalação isolada e validações assistivas continuam pendentes; não concluir fases inteiras pela fatia implementada.
 
 O mundo originalmente entregue em `luiz`/`53b577e` já foi integrado à brain pelo PR #6 em `64659fb`, conforme [entrega do mundo](world-delivery.md). Isso não encerra automaticamente F1, F4-04 ou F6-02: faltam os aceites completos. As evidências e os textos iniciais abaixo preservam a auditoria F0; os estados atuais incorporam somente o trabalho conferido nesta sessão.

@@ -1,5 +1,6 @@
 import {GlobeModel} from './globe-core.mjs';
 import {GlobeRenderer} from './globe-renderer.mjs';
+import {loadNightLights} from './night-lights.mjs';
 
 let instanceId = 0;
 const destinations = [
@@ -24,6 +25,7 @@ export function mountObservatory(host, options = {}) {
   root.setAttribute('aria-label', 'Earth observatory — free exploration');
   const helpId = `amber-help-${++instanceId}`;
   let renderer = null, disposed = false, lastSelection = '';
+  let nightRaster = null, nightLoading = false;
   const button = (text, title, handler, className = '') => {
     const node = element('button', `amber-button ${className}`, text);
     node.type = 'button';
@@ -33,20 +35,11 @@ export function mountObservatory(host, options = {}) {
     return node;
   };
 
-  const header = element('header', 'amber-header');
-  const brand = element('div', 'amber-brand');
-  const symbol = element('span', 'amber-brand-symbol', '◉');
-  symbol.setAttribute('aria-hidden', 'true');
-  const brandText = element('div');
-  brandText.append(element('span', 'amber-brand-name', 'EARTH JUKEBOX'));
-  brand.append(symbol, brandText);
-  const mode = element('div', 'amber-mode');
-  mode.append(element('span', '', 'Explore Earth'));
-  header.append(brand, mode);
-
-  const layout = element('div', 'amber-layout');
-  const intro = element('aside', 'amber-intro');
-  intro.append(element('h1', 'amber-title', 'Earth'), element('p', 'amber-description', 'Drag to rotate. Choose a place.'));
+  // The Angular composition owns branding and the scientific player. This
+  // disclosure contains only geographic exploration, never playback state.
+  const exploration = element('details', 'amber-explore');
+  const explorationSummary = element('summary', 'amber-explore-summary', 'Places & coordinates');
+  const explorationContent = element('div', 'amber-explore-content');
   const regionBlock = element('div', 'amber-regions');
   regionBlock.append(element('h2', 'amber-label', 'PLACES'));
   const regionButtons = [];
@@ -59,7 +52,6 @@ export function mountObservatory(host, options = {}) {
     regionButtons.push({node, lat, lon});
     regionBlock.append(node);
   }
-  intro.append(regionBlock);
 
   const viewport = element('div', 'amber-viewport');
   const canvas = element('canvas', 'amber-canvas');
@@ -68,7 +60,9 @@ export function mountObservatory(host, options = {}) {
   canvas.setAttribute('aria-label', 'Interactive globe. Use arrow keys to select, plus and minus to zoom, and Home to reset.');
   canvas.setAttribute('aria-describedby', helpId);
   const viewportTop = element('div', 'amber-viewport-caption');
-  viewportTop.append(element('span', '', 'Geographic base map'));
+  const layerCaption = element('span', '', 'Natural Earth · geographic base map');
+  layerCaption.dataset.layerCaption = '';
+  viewportTop.append(element('span', '', 'EARTH OBSERVATORY'), layerCaption);
   const hint = element('p', 'amber-hint', 'DRAG TO ROTATE · CLICK TO SELECT');
   hint.id = helpId;
   const unavailable = element('p', 'amber-fallback');
@@ -78,7 +72,6 @@ export function mountObservatory(host, options = {}) {
 
   const inspector = element('aside', 'amber-inspector');
   inspector.setAttribute('aria-label', 'Selected point');
-  inspector.append(element('h2', 'amber-inspector-title', 'Coordinates'));
   const readout = element('div', 'amber-readout');
   const coordinate = (label, key) => {
     const wrap = element('div', 'amber-coordinate');
@@ -108,13 +101,24 @@ export function mountObservatory(host, options = {}) {
   motionLabel.append(motionInput, element('span', '', 'Reduce motion'));
   motionInput.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
   media.addEventListener('change', () => {model.setReducedMotion(motionInput.checked || media.matches); update();}, {signal});
-  inspector.append(readout, announcement, navigation, motionLabel, element('p', 'amber-inspector-note', 'Geographic selection only. This point does not control the sound.'));
-  layout.append(intro, viewport, inspector);
+  inspector.append(readout, navigation, motionLabel, element('p', 'amber-inspector-note', 'Geographic selection only. This point does not control the sound.'));
+  explorationContent.append(regionBlock, inspector);
+  const layerCredit = element('p', 'amber-layer-credit', 'Globe layer: NASA Earth Observatory / Joshua Stevens, Suomi NPP VIIRS / Miguel Román, NASA GSFC. 2012 composite, independent of the audio year. Display brightness, not calibrated radiance. ');
+  for (const [text, href] of [
+    ['NASA source', 'https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/'],
+    ['Layer manifest', '/data/globe-night-lights/manifest.json'],
+  ]) {
+    const link = element('a', '', text);
+    link.href = href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    layerCredit.append(link, document.createTextNode(' · '));
+  }
+  explorationContent.append(layerCredit);
+  exploration.append(explorationSummary, explorationContent);
 
   const footer = element('footer', 'amber-footer');
-  const footerText = element('div', 'amber-footer-caption');
-  footerText.append(element('span', 'amber-label', 'View'));
   const controls = element('div', 'amber-controls');
+  controls.setAttribute('role', 'group');
+  controls.setAttribute('aria-label', 'Globe view controls');
   const zoomOut = button('−', 'Zoom out', () => {model.zoomBy(1 / 1.15); update();}, 'amber-square');
   const zoomValue = element('output', 'amber-zoom', '100%');
   zoomValue.dataset.zoom = '';
@@ -124,11 +128,56 @@ export function mountObservatory(host, options = {}) {
   rotateButton.dataset.rotation = '';
   const reset = button('Reset view', 'Reset view', () => {model.reset(); update();});
   controls.append(zoomOut, zoomValue, zoomIn, element('span', 'amber-control-separator'), rotateButton, reset);
-  const credit = element('div', 'amber-credit');
-  credit.append(element('span', '', 'Natural Earth'));
-  footer.append(footerText, controls, credit);
-  root.append(header, layout, footer);
+  const layerControl = element('div', 'amber-layer-control');
+  const layerLabel = element('label', 'amber-layer-toggle');
+  const layerInput = document.createElement('input');
+  layerInput.type = 'checkbox';
+  layerInput.checked = true;
+  layerInput.dataset.nightLightsToggle = '';
+  layerLabel.append(layerInput, element('span', '', 'NASA lights · 2012'));
+  const layerStatus = element('span', 'amber-layer-status');
+  layerStatus.setAttribute('role', 'status');
+  layerStatus.setAttribute('aria-live', 'polite');
+  layerStatus.dataset.nightLights = 'loading';
+  layerControl.append(layerLabel, layerStatus);
+  layerInput.addEventListener('change', applyNightLayer, {signal});
+  footer.append(controls, layerControl, exploration);
+  // Keep selection feedback outside the closed disclosure so keyboard users
+  // still hear their selected coordinates while exploring the canvas.
+  root.append(viewport, announcement, footer);
   host.append(root);
+
+  async function applyNightLayer() {
+    if (disposed || !renderer) return;
+    renderer.setNightLights(layerInput.checked ? nightRaster : null);
+    if (!layerInput.checked) {
+      layerStatus.dataset.nightLights = 'off';
+      layerStatus.textContent = 'Base map';
+      layerCaption.textContent = 'Natural Earth · geographic base map';
+      return;
+    }
+    if (nightRaster) {
+      layerStatus.dataset.nightLights = 'ready';
+      layerStatus.textContent = '2012 layer ready';
+      layerCaption.textContent = 'NASA night lights · 2012';
+      return;
+    }
+    layerStatus.dataset.nightLights = 'loading';
+    layerStatus.textContent = 'Loading NASA layer…';
+    if (nightLoading) return;
+    nightLoading = true;
+    try {
+      const raster = await loadNightLights(signal);
+      if (disposed) return;
+      nightRaster = raster;
+    } catch {
+      if (disposed) return;
+      layerStatus.dataset.nightLights = layerInput.checked ? 'error' : 'off';
+      layerStatus.textContent = layerInput.checked ? 'Unavailable · base map. Toggle to retry.' : 'Base map';
+      return;
+    } finally { nightLoading = false; }
+    void applyNightLayer();
+  }
 
   function update() {
     if (disposed) return;
@@ -172,6 +221,12 @@ export function mountObservatory(host, options = {}) {
     unavailable.hidden = false;
     canvas.setAttribute('aria-label', 'Coordinate exploration. Use arrow keys or the direction buttons.');
   }
+  if (renderer) void applyNightLayer();
+  else {
+    layerInput.disabled = true;
+    layerStatus.dataset.nightLights = 'error';
+    layerStatus.textContent = 'Base map controls available';
+  }
   update();
   return {
     select(point) {if (model.select(point, true)) update();},
@@ -179,6 +234,7 @@ export function mountObservatory(host, options = {}) {
       disposed = true;
       abort.abort();
       renderer?.dispose();
+      nightRaster = null;
       root.remove();
     },
   };

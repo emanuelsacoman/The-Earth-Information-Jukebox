@@ -1,5 +1,6 @@
 import { project, unproject, isClickGesture } from './globe-core.mjs';
 import { landPolygons } from './land-polygons.mjs';
+import { sampleNightLight } from './night-lights.mjs';
 
 const RAD = Math.PI / 180;
 
@@ -33,6 +34,8 @@ export class GlobeRenderer {
     this.ctx = canvas.getContext('2d');
     if (!this.ctx) throw new Error('This browser cannot draw the globe. Use the places and direction controls.');
     this.mask = createLandMask();
+    this.nightLights = null;
+    this.nightLightLevels = Float32Array.from({length: 256}, (_, i) => Math.pow(i / 255, 0.85) * 0.9);
     this.surface = document.createElement('canvas');
     this.surface.width = 440;
     this.surface.height = 440;
@@ -69,6 +72,12 @@ export class GlobeRenderer {
   }
 
   changed() { this.onChange(); this.invalidate(); }
+
+  setNightLights(raster) {
+    if (this.disposed) return;
+    this.nightLights = raster;
+    this.invalidate();
+  }
 
   invalidate() {
     this.dirty = true;
@@ -170,13 +179,22 @@ export class GlobeRenderer {
         const tx = ((Math.floor((lon + 180) * 4) % 1440) + 1440) % 1440;
         const ty = Math.max(0, Math.min(719, Math.floor((90 - lat) * 4)));
         const land = this.mask[(ty * 1440 + tx) * 4 + 3] > 100;
-        const edge = land && [((tx + 2) % 1440), ((tx + 1438) % 1440)].some(xx => this.mask[(ty * 1440 + xx) * 4 + 3] < 100);
+        const edge = land && (this.mask[(ty * 1440 + (tx + 2) % 1440) * 4 + 3] < 100 || this.mask[(ty * 1440 + (tx + 1438) % 1440) * 4 + 3] < 100);
         const light = Math.max(0, -x * 0.45 + y * 0.45 + z * 0.76);
         const grain = ((tx * 17 + ty * 31) % 11) * 0.4;
         const limb = Math.pow(1 - z, 5);
         data[index] = edge ? 174 + light * 50 : (land ? 30 + light * 44 + grain : 9 + light * 12) + limb * 26;
         data[index + 1] = edge ? 119 + light * 36 : (land ? 29 + light * 40 + grain : 14 + light * 14) + limb * 14;
         data[index + 2] = edge ? 49 + light * 14 : (land ? 25 + light * 32 + grain : 18 + light * 18);
+        if (this.nightLights) {
+          const brightness = this.nightLightLevels[Math.round(sampleNightLight(this.nightLights, lat, lon))];
+          // Amber is a display choice. Positions and emission strength come
+          // exclusively from NASA pixels, independent of the land mask.
+          const fade = 0.65 + z * 0.35;
+          data[index] = data[index] * 0.42 * (1 - brightness) + brightness * 245 * fade;
+          data[index + 1] = data[index + 1] * 0.42 * (1 - brightness) + brightness * 205 * fade;
+          data[index + 2] = data[index + 2] * 0.55 * (1 - brightness) + brightness * 125 * fade;
+        }
         data[index + 3] = 255;
       }
     }
@@ -261,6 +279,8 @@ export class GlobeRenderer {
     }
     this.pointers.clear();
     this.mask = null;
+    this.nightLights = null;
+    this.nightLightLevels = null;
     this.pixels = null;
     this.surface.width = 0;
     this.surface.height = 0;

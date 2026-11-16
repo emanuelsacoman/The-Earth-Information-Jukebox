@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, NgZone, OnDestroy, Output, ViewChild, ViewEncapsulation, inject } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  NgZone,
+  OnDestroy,
+  Output,
+  ViewChild,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import type { GeoPoint, ObservatoryHandle } from './observatory.mjs';
 
 @Component({
@@ -10,24 +21,31 @@ import type { GeoPoint, ObservatoryHandle } from './observatory.mjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class PlanetEarthComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('observatoryHost', { static: true }) private host!: ElementRef<HTMLElement>;
+  @ViewChild('observatoryHost', { static: true })
+  private host!: ElementRef<HTMLElement>;
   @Output() readonly pointSelected = new EventEmitter<GeoPoint>();
   private readonly zone = inject(NgZone);
   private observatory?: ObservatoryHandle;
   private disposed = false;
 
   ngAfterViewInit(): void {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    if (typeof window === 'undefined' || typeof document === 'undefined')
+      return;
     this.zone.runOutsideAngular(() => {
-      void import('./observatory.mjs').then(({ mountObservatory }) => {
-        if (this.disposed) return;
-        this.host.nativeElement.replaceChildren();
-        this.observatory = mountObservatory(this.host.nativeElement, {
-          onSelect: (point) => this.zone.run(() => this.pointSelected.emit(point)),
+      void import('./observatory.mjs')
+        .then(({ mountObservatory }) => {
+          if (this.disposed) return;
+          this.host.nativeElement.replaceChildren();
+          this.observatory = mountObservatory(this.host.nativeElement, {
+            onSelect: (point) =>
+              this.zone.run(() => this.pointSelected.emit(point)),
+          });
+        })
+        .catch(() => {
+          if (!this.disposed)
+            this.host.nativeElement.textContent =
+              'Could not open the observatory. Reload the page to try again.';
         });
-      }).catch(() => {
-        if (!this.disposed) this.host.nativeElement.textContent = 'Could not open the observatory. Reload the page to try again.';
-      });
     });
   }
 

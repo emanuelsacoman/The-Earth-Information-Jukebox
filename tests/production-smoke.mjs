@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {readFile, access} from 'node:fs/promises';
 import {spawn} from 'node:child_process';
 import {setTimeout as delay} from 'node:timers/promises';
@@ -9,6 +10,12 @@ const prerendered = await readFile(new URL('browser/index.html', dist), 'utf8');
 assert.match(prerendered, /<app-planet-earth[\s>]/, 'Prerender must include the Angular Earth component');
 assert.match(prerendered, /Preparing the Earth observatory/, 'Prerender must provide server-rendered content');
 assert.match(prerendered, /<app-audio-panel[\s>]/, 'Prerender must include the sonification panel');
+assert.match(prerendered, /class="[^"]*\bexperience\b/, 'The observatory and sonification must share one experience');
+assert.match(prerendered, /Listen to Earth/, 'SSR must expose the listening entry point');
+assert.match(prerendered, /class="[^"]*\bscience-panel\b/, 'SSR must preserve the contextual scientific image panel');
+assert.match(prerendered, /class="[^"]*\bplayer\b/, 'SSR must preserve the integrated player');
+assert.equal([...prerendered.matchAll(/<app-audio-panel[\s>]/g)].length, 1, 'Only one sonification component owns the controls');
+assert.doesNotMatch(prerendered, /Back to Earth|Listen to NASA imagery/, 'The former second-section navigation must be removed');
 assert.match(prerendered, /Night lights/);
 assert.doesNotMatch(prerendered, /ReferenceError|window is not defined|document is not defined/);
 await access(new URL('server/server.mjs', dist));
@@ -29,6 +36,8 @@ assert.match(rendered, /<app-planet-earth[\s>]/);
 assert.match(rendered, /Preparing the Earth observatory/);
 assert.match(rendered, /<app-audio-panel[\s>]/);
 assert.match(rendered, /Night lights/);
+assert.match(rendered, /Listen to Earth/);
+assert.match(rendered, /class="[^"]*\bplayer\b/);
 
 const port = 47831;
 const origin = `http://127.0.0.1:${port}`;
@@ -61,6 +70,15 @@ try {
     assert.match(asset.headers.get('content-type'), /image\/png/);
     assert.equal((await asset.arrayBuffer()).byteLength, frame.bytes);
   }
+  const globeManifest = await (await fetch(`${origin}/data/globe-night-lights/manifest.json`)).json();
+  assert.equal(globeManifest.observationYear, 2012);
+  assert.equal(globeManifest.georeference.crs, 'EPSG:4326');
+  const globeAsset = await fetch(new URL(globeManifest.derivative.resourceUrl, origin));
+  assert.equal(globeAsset.status, 200);
+  assert.match(globeAsset.headers.get('content-type'), /image\/png/);
+  const globeBytes = Buffer.from(await globeAsset.arrayBuffer());
+  assert.equal(globeBytes.length, globeManifest.derivative.bytes);
+  assert.equal(createHash('sha256').update(globeBytes).digest('hex'), globeManifest.derivative.sha256);
   const scripts = [...html.matchAll(/<script[^>]+src="([^"]+)"/g)].map(match => match[1]);
   assert.ok(scripts.length > 0, 'Angular scripts must be present');
   for (const path of scripts) {

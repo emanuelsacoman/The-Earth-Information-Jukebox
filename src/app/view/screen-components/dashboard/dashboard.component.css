@@ -5,7 +5,7 @@
 .dash {
   --fundo: #152346;
   --fundo-2: #1d305e;
-  --painel: rgba(32, 50, 94, 0.70);
+  --painel: rgba(32, 50, 94, 0.7);
   --superficie: rgba(206, 225, 255, 0.12);
   --borda: rgba(210, 233, 255, 0.23);
   --borda-forte: rgba(221, 238, 255, 0.43);
@@ -13,13 +13,14 @@
   --texto-suave: #a9cbfa;
   --destaque: #f2a33a;
   --destaque-forte: #d47b1c;
-  --sobre-destaque:#150d02;
+  --sobre-destaque: #150d02;
   --desfoque: blur(12px);
 
-
-  --fonte-texto: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --fonte-texto:
+    "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --fonte-titulo: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
-  --fonte-dados: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fonte-dados:
+    "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
   --letra-p: 0.8125rem;
   --letra-m: 0.9375rem;
@@ -46,7 +47,6 @@
   line-height: 1.5;
   overflow: hidden;
 }
-
 
 /* Granulado bem leve por cima do fundo. */
 .dash::before {
@@ -87,7 +87,6 @@
   --sobre-destaque: #000;
   --desfoque: none;
   background: #000;
-  
 }
 
 .dash.alto-contraste::before {
@@ -194,7 +193,10 @@ kbd {
   padding: 0 18px;
   border-radius: 22px;
   font-weight: 600;
-  transition: background var(--transicao), border-color var(--transicao), color var(--transicao);
+  transition:
+    background var(--transicao),
+    border-color var(--transicao),
+    color var(--transicao);
 }
 
 .botao-contorno {
@@ -233,7 +235,9 @@ kbd {
   border: 1px solid var(--borda-forte);
   border-radius: 50px;
   color: var(--texto-suave);
-  transition: background var(--transicao), color var(--transicao);
+  transition:
+    background var(--transicao),
+    color var(--transicao);
 }
 
 .botao-icone:hover {
@@ -276,7 +280,7 @@ kbd {
 }
 
 .marca-nome {
-  font-family: var(--fonte-titulo); 
+  font-family: var(--fonte-titulo);
   font-size: var(--letra-g);
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -296,7 +300,6 @@ kbd {
 }
 
 .nav-botao {
-  
   display: flex;
   align-items: center;
   gap: 8px;
@@ -307,7 +310,9 @@ kbd {
   border-radius: 10px;
   color: var(--texto-suave);
   font-weight: 500;
-  transition: background var(--transicao), color var(--transicao);
+  transition:
+    background var(--transicao),
+    color var(--transicao);
 }
 
 .nav-botao:hover {
@@ -370,7 +375,6 @@ kbd {
 }
 
 .palco-titulo h1 {
-  
   font-size: var(--letra-g);
   font-weight: 600;
   font-weight: 600;
@@ -523,7 +527,9 @@ kbd {
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--raio);
-  transition: background var(--transicao), border-color var(--transicao);
+  transition:
+    background var(--transicao),
+    border-color var(--transicao);
 }
 
 .disco:hover {
@@ -542,7 +548,9 @@ kbd {
   height: 48px;
   border-radius: 50%;
   border: 2px solid var(--fundo);
-  box-shadow: 0 0 0 1px var(--borda-forte), inset 0 0 0 16px transparent;
+  box-shadow:
+    0 0 0 1px var(--borda-forte),
+    inset 0 0 0 16px transparent;
 }
 
 .disco-texto {
@@ -615,7 +623,9 @@ kbd {
   background: var(--superficie);
   border: 1px solid var(--borda-forte);
   border-radius: 12px;
-  transition: background var(--transicao), border-color var(--transicao);
+  transition:
+    background var(--transicao),
+    border-color var(--transicao);
 }
 
 .chave-trilho::after {
@@ -627,7 +637,9 @@ kbd {
   height: 18px;
   background: var(--texto suave);
   border-radius: 50%;
-  transition: transform var(--transicao), background var(--transicao);
+  transition:
+    transform var(--transicao),
+    background var(--transicao);
 }
 
 .chave[aria-checked="true"] .chave-trilho {
@@ -656,7 +668,9 @@ kbd {
   background: transparent;
   border: 1px solid var(--borda);
   border-radius: var(--raio);
-  transition: background var(--transicao), border-color var(--transicao);
+  transition:
+    background var(--transicao),
+    border-color var(--transicao);
 }
 
 .cartao-opcao:hover {
@@ -692,7 +706,9 @@ kbd {
   font-size: var(--letra-p);
   font-weight: 600;
   color: var(--texto-suave);
-  transition: background var(--transicao), color var(--transicao);
+  transition:
+    background var(--transicao),
+    color var(--transicao);
 }
 
 .segmentos button:hover {
@@ -880,7 +896,9 @@ input[type="range"]:hover::-moz-range-thumb {
   border: 1px solid var(--borda-forte);
   border-radius: 20px;
   font-size: var(--letra-p);
-  transition: background var(--transicao), color var(--transicao);
+  transition:
+    background var(--transicao),
+    color var(--transicao);
 }
 
 .etiquetas {
@@ -896,7 +914,9 @@ input[type="range"]:hover::-moz-range-thumb {
   border: 1px solid var(--borda);
   border-radius: 20px;
   font-size: var(--letra-p);
-  transition: border-color var(--transicao), color var(--transicao);
+  transition:
+    border-color var(--transicao),
+    color var(--transicao);
 }
 
 .etiqueta:hover {
@@ -1036,7 +1056,11 @@ input[type="range"].progresso-barra {
 
 input[type="range"].progresso-barra::-webkit-slider-runnable-track {
   height: 3px;
-  background: linear-gradient(to right, var(--destaque) var(--prog, 0%), var(--borda-forte) var(--prog, 0%));
+  background: linear-gradient(
+    to right,
+    var(--destaque) var(--prog, 0%),
+    var(--borda-forte) var(--prog, 0%)
+  );
 }
 
 input[type="range"].progresso-barra::-moz-range-track {
@@ -1200,7 +1224,7 @@ input[type="range"].progresso-barra::-moz-range-thumb {
     overflow: visible;
   }
 
-   .palco-titulo {
+  .palco-titulo {
     position: static;
   }
 

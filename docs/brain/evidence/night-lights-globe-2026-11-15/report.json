@@ -1,0 +1,56 @@
+{
+  "measuredOn": "2026-11-16T00:48:51.591Z",
+  "alignment": [
+    {
+      "center": {
+        "lat": 36,
+        "lon": 138
+      },
+      "checked": 818,
+      "zeroSource": 708,
+      "maxChannelError": 0.5
+    },
+    {
+      "center": {
+        "lat": 23,
+        "lon": 13
+      },
+      "checked": 818,
+      "zeroSource": 671,
+      "maxChannelError": 0.5
+    },
+    {
+      "center": {
+        "lat": -3,
+        "lon": -60
+      },
+      "checked": 818,
+      "zeroSource": 699,
+      "maxChannelError": 0.5
+    }
+  ],
+  "performanceRuns": [
+    {
+      "enabled": false,
+      "frames": 122,
+      "medianMs": 13.700000002980232,
+      "p95Ms": 14.799999997019768
+    },
+    {
+      "enabled": true,
+      "frames": 122,
+      "medianMs": 19.299999997019768,
+      "p95Ms": 20
+    }
+  ],
+  "heapBefore": 3459536,
+  "heapAfter": 3473928,
+  "retainedHeapGrowth": 14392,
+  "initialLayerRequests": 1,
+  "rasterBytes": 1620000,
+  "layerFailureRecovered": true,
+  "limitations": [
+    "Desktop emulation; physical mobile, native 200% zoom, screen-reader review and human listening remain pending.",
+    "Heap and CPU measurements cover this controlled sample, not a universal performance guarantee."
+  ]
+}
